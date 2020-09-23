@@ -109,6 +109,10 @@ module.exports.ROOMS = {
             // exits
             hff00ea: { cmd: "enter", room: "oldspaceLounge", label: "Lounge", point: [125, 79], enterPoint: [7, 80], obstacle: false },
         },
+        things: {
+            //sprite spreadsheets only 1 row ok?
+            table: { file: "item_oldspace_main_table.png", position: [39, 55] }
+        }
     },
 
     oldspaceOutside: {
