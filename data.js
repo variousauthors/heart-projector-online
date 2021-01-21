@@ -151,11 +151,12 @@ module.exports.ROOMS = {
             // exits
             hf000ff: { cmd: "enter", room: "TPCAHallway", label: "Hall", point: [7, 83], enterPoint: [96, 22], obstacle: false },
             hffff00: { cmd: "enter", room: "ForestPathShallow", label: "Forest", point: [113, 60], enterPoint: [12, 83], obstacle: false },
+            h0000ff: { cmd: "text", label: "Sign", txt: "Forest Loop Trail", align: "center", lines: 1, point: [78, 67] },
         },
         things: {
             //scenery
-            bush: { file: "FireExit-bush.png", frames: 1, position: [0, 0], label: "A bush", depthAdjust:3 },
-            trees: { file: "FireExit-trees.png", frames: 1, position: [0, 0], label: "Trees", depthAdjust:126 },
+            bush: { file: "FireExit-bush.png", frames: 1, position: [0, 0], depthAdjust:3 },
+            trees: { file: "FireExit-trees.png", frames: 1, position: [0, 0], depthAdjust:126 },
         },
     },
     
@@ -276,6 +277,7 @@ module.exports.ROOMS = {
         bubblesY: 160,
         spawn: [65, 92, 32, 75],
         area: "ForestPath-Fountain-areas.png",
+        secret: true,
         areaColors: {
             // exits
             hffff00: { cmd: "enter", room: "ForestPathLoop", label: "Forest Loop", point: [8, 58],  enterPoint: [92, 72], obstacle: false },
@@ -315,6 +317,10 @@ module.exports.ROOMS = {
             //scenery
             fire: { file: "ForestPath-Bonfire-fire.png", frames: 9, frameDelay: 15, position: [55, 3], depthAdjust:20 },
             smoke: { file: "ForestPath-Bonfire-smoke.png", frames: 11, frameDelay: 100, position: [52, 0], depthAdjust:-2 },
+            log1: { file: "ForestPath-Bonfire-Log1.png", position: [39, 88], depthAdjust:1 },
+            log2: { file: "ForestPath-Bonfire-Log2.png", position: [30, 71], depthAdjust:-2 },
+            log3: { file: "ForestPath-Bonfire-Log3.png", position: [75, 89], depthAdjust:1 },
+            log4: { file: "ForestPath-Bonfire-Log4.png", position: [95, 82], depthAdjust:1 },
         },
     }, 
     
