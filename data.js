@@ -83,12 +83,12 @@ module.exports.ROOMS = {
         tint: "#ffffff",
         pageBg: "#292929",
         bubblesY: 160,
-        spawn: [17, 84, 60, 95],
+        spawn: [72, 73, 53, 63],
         area: "elevator-areas.png",
         areaColors: {
             // exits
             h00ffff: { cmd: "enter", room: "oldspaceLounge", label: "Heart Projector", point: [66, 60], enterPoint: [50, 70], obstacle: false },
-            hff002a: { cmd: "enter", room: "TPCAHallway", label: "The Papercut Arcade", point: [66, 60], enterPoint: [65, 90], obstacle: false },
+            hff002a: { cmd: "enter", room: "TPCAHallway", label: "The Papercut Arcade", point: [66, 60], enterPoint: [89, 95], obstacle: false },
         },
     },
 
@@ -106,6 +106,8 @@ module.exports.ROOMS = {
             h00ff00: { cmd: "enter", room: "TPCAMapRoom", label: "War Room", point: [121, 52], enterPoint: [8, 75], obstacle: false },
             hf000ff: { cmd: "enter", room: "TPCATavern", label: "Tavern", point: [121, 52], enterPoint: [3, 50], obstacle: false },
             h0000ff: { cmd: "enter", room: "TPCAFireRoom", label: "Bonfire", point: [96, 13], enterPoint: [15, 94], obstacle: false },
+            h55ffff: { cmd: "enter", room: "elevator", label: "Elevator", point: [66, 97], enterPoint: [64, 68], obstacle: false },
+            hfeff00: { cmd: "text", room: "elevator", txt: "The Papercut Arcade collective works to create safer spaces to explore creativity and art with like-minded folks. We're proud to be sharing digital real estate with the folks at Heart Projector.", point: [66, 73], align: "center", lines: 6, },
         },
     },
 
