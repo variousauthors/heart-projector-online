@@ -104,7 +104,7 @@ module.exports.ROOMS = {
             // exits
             hff0000: { cmd: "enter", room: "TPCAGhostsOnlyRoom", label: "GHOSTS ONLY Room", point: [33, 13], enterPoint: [116, 78], obstacle: false },
             h00ff00: { cmd: "enter", room: "TPCAMapRoom", label: "War Room", point: [121, 52], enterPoint: [8, 75], obstacle: false },
-            hf000ff: { cmd: "enter", room: "TPCATavern", label: "Tavern", point: [121, 52], enterPoint: [3, 50], obstacle: false },
+            hf000ff: { cmd: "enter", room: "TPCATavern", label: "Tavern", point: [10, 52], enterPoint: [118, 85], obstacle: false },
             h0000ff: { cmd: "enter", room: "TPCAFireRoom", label: "Bonfire", point: [96, 13], enterPoint: [15, 94], obstacle: false },
             h55ffff: { cmd: "enter", room: "elevator", label: "Elevator", point: [66, 97], enterPoint: [64, 68], obstacle: false },
             hfeff00: { cmd: "text", room: "elevator", txt: "The Papercut Arcade collective works to create safer spaces to explore creativity and art with like-minded folks. We're proud to be sharing digital real estate with the folks at Heart Projector.", point: [66, 73], align: "center", lines: 6, },
@@ -138,7 +138,48 @@ module.exports.ROOMS = {
             ff0000: { cmd: "enter", room: "TPCAHallway", label: "out", point: [4, 15], enterPoint: [32, 16], obstacle: false },
         },
     },
+
+    //Tavern Rooms
+
+    TPCATavern: {
+        bg: "TavernBackground.png",
+        avatarScale: 2,
+	frames: 2,
+	frameDelay: 40,
+        tint: "#ffffff",
+        pageBg: "#292929",
+        bubblesY: 160,
+        spawn: [120, 90, 110, 80],
+        area: "Tavern-animate-map.png",
+        areaColors: {
+            // exits
+            hff0000: { cmd: "enter", room: "TPCAHallway", label: "Hallway", point: [118, 85], enterPoint: [10, 52], obstacle: false },
+	    hff00ff: { cmd: "enter", room: "TavernBasement", label: "Basement", point: [9, 84], enterPoint: [119, 86], obstacle: false },
+        },
+    },
     
+    TavernBasement: {
+        bg: "TavernBasementBackground.png",
+        avatarScale: 2,
+	frames: 2,
+	frameDelay: 40,
+        tint: "#ffffff",
+        pageBg: "#292929",
+        bubblesY: 160,
+        spawn: [120, 90, 110, 80],
+        area: "Tavern-basement-map.png",
+        areaColors: {
+            // exits
+            h00ffff: { cmd: "enter", room: "TPCATavern", label: "Upstairs", point: [119, 86], enterPoint: [10, 86], obstacle: false },
+            hffff00: { cmd: "text", label: "The Filthy Lyre", txt: "Pffft!", align: "center", lines: 1, point: [45, 90], obstacle: true },
+            hff29ff: { cmd: "text", label: "The Filthy Lyre", txt: "Hey! Paws off, y'animal!", align: "center", lines: 1, point: [45, 90], obstacle: false },
+        },
+        things: {
+            //lyre
+            lyre: { file: "TheFilthyLyre.png", frames: 2, frameDelay: 40, position: [21, 72], depthAdjust:3, visible: true },
+        },
+    },
+
     //Fire Rooms    
     
     TPCAFireRoom: {
