@@ -129,6 +129,91 @@ module.exports.initMod = function (io, gameState, DATA) {
 
     }, random(1000, 2000));
 
+    // Tavern NPCs Start
+    var npc_barkeep = new NPC(
+        {
+            id: "barkeep",
+            nickName: "Micah",
+            room: "TPCATavern",
+            x: 23,
+            y: 66,
+            avatar: 37,
+            colors: [2, 2, 1, 5],
+            labelColor: "#1e839d"
+        });
+
+    npc_barkeep.behavior = setTimeout(function ramble() {
+        var dice = random(0, 100);
+
+        if (dice < 15) {
+            //cleans bar
+            npc_barkeep.talk("Arf!");
+            npc_barkeep.move(34, 152);
+            npc_barkeep.behavior = setTimeout(ramble, random(4000, 8000));   
+        }
+        else if (dice < 85) {
+            //mostly a chatterbox
+            npc_barkeep.talk("Barf!");
+            npc_barkeep.talk(global.paranoidTalk[Math.floor(random(0, global.paranoidTalk.length - 1))]);
+            npc_barkeep.move(34, 152);
+            npc_barkeep.behavior = setTimeout(ramble, random(7000, 9000));
+        }
+        else {
+            //just wait
+            npc_barkeep.move(34, 152);
+            npc_barkeep.behavior = setTimeout(ramble, random(1000, 3000));
+
+            //to kill the bot
+            //clearTimeout(npc.behavior);
+            //npc_barkeep.delete();
+        }
+
+
+    }, random(1000, 2000));
+    
+
+    var npc_server = new NPC(
+        {
+            id: "server",
+            nickName: "Marigold",
+            room: "TPCATavern",
+            x: 23,
+            y: 66,
+            avatar: 6,
+            colors: [2, 2, 1, 5],
+            labelColor: "#1e839d"
+        });
+
+    npc_server.behavior = setTimeout(function ramble() {
+        var dice = random(0, 100);
+
+        if (dice < 15) {
+            //cleans bar
+            npc_server.talk("Arf!");
+            npc_server.move(random(17, 113) * 2, random(76, 98) * 2);
+            npc_server.behavior = setTimeout(ramble, random(4000, 8000));   
+        }
+        else if (dice < 85) {
+            //mostly a chatterbox
+            npc_server.talk("Barf!");
+            npc_server.talk(global.paranoidTalk[Math.floor(random(0, global.paranoidTalk.length - 1))]);
+            npc_server.move(random(17, 113) * 2, random(76, 98) * 2);
+            npc_server.behavior = setTimeout(ramble, random(7000, 9000));
+        }
+        else {
+            //just wait
+            npc_server.move(random(17, 113) * 2, random(76, 98) * 2);
+            npc_server.behavior = setTimeout(ramble, random(1000, 3000));
+
+            //to kill the bot
+            //clearTimeout(npc.behavior);
+            //npc_server.delete();
+        }
+
+
+    }, random(1000, 2000));
+
+    // Tavern NPCs End
 
     global.VIPList = [];
 
