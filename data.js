@@ -47,7 +47,7 @@ module.exports.ROOMS = {
         avatarScale: 2,
         tint: "#DAC7F0",
         pageBg: "#3b2751",
-        bubblesY: 160,
+        bubblesY: 50,
         spawn: [5, 76, 70, 95],
         area: "PowellAndClark-areas.png",
         areaColors: {
@@ -67,7 +67,7 @@ module.exports.ROOMS = {
         avatarScale: 2,
         tint: "#ffffff",
         pageBg: "#292929",
-        bubblesY: 160,
+        bubblesY: 50,
         spawn: [17, 84, 60, 95],
         area: "Stairwell-areas.png",
         areaColors: {
@@ -82,13 +82,17 @@ module.exports.ROOMS = {
         avatarScale: 2,
         tint: "#ffffff",
         pageBg: "#292929",
-        bubblesY: 160,
+        bubblesY: 50,
         spawn: [72, 73, 53, 63],
         area: "elevator-areas.png",
         areaColors: {
             // exits
             h00ffff: { cmd: "enter", room: "oldspaceLounge", label: "Heart Projector", point: [66, 60], enterPoint: [50, 70], obstacle: false },
             hff002a: { cmd: "enter", room: "TPCAHallway", label: "The Papercut Arcade", point: [66, 60], enterPoint: [89, 95], obstacle: false },
+			h0000ff: { cmd: "enter", room: "powellAndClark", label: "outside", point: [66, 60], enterPoint: [110, 90], obstacle: false },
+		},
+		things: {
+			elevatorol: { file: "elevator-OL.png", position: [65, 39], depthAdjust: 126 },
         },
     },
 
@@ -97,17 +101,19 @@ module.exports.ROOMS = {
         avatarScale: 1.5,
         tint: "#ffffff",
         pageBg: "#292929",
-        bubblesY: 160,
+        bubblesY: 50,
         spawn: [17, 84, 60, 95],
         area: "TPCAhallway-areas.png",
         areaColors: {
             // exits
-            hff0000: { cmd: "enter", room: "TPCAGhostsOnlyRoom", label: "GHOSTS ONLY Room", point: [33, 13], enterPoint: [116, 78], obstacle: false },
+            hff0000: { cmd: "enter", room: "TPCAColourRoom", label: "COLOUR Room", point: [33, 13], enterPoint: [67, 94], obstacle: false },
             h00ff00: { cmd: "enter", room: "TPCAMapRoom", label: "War Room", point: [121, 52], enterPoint: [8, 75], obstacle: false },
             hf000ff: { cmd: "enter", room: "TPCATavern", label: "Tavern", point: [10, 52], enterPoint: [118, 85], obstacle: false },
             h0000ff: { cmd: "enter", room: "TPCAFireRoom", label: "Bonfire", point: [96, 13], enterPoint: [15, 94], obstacle: false },
             h55ffff: { cmd: "enter", room: "elevator", label: "Elevator", point: [66, 97], enterPoint: [64, 68], obstacle: false },
-            hfeff00: { cmd: "text", room: "elevator", txt: "The Papercut Arcade collective works to create safer spaces to explore creativity and art with like-minded folks. We're proud to be sharing digital real estate with the folks at Heart Projector.", point: [66, 73], align: "center", lines: 6, },
+			
+			//placard
+            hfeff00: { cmd: "text", label: "placard", txt: "The Papercut Arcade collective works to create safer spaces to explore creativity and art with like-minded folks. We're proud to be sharing digital real estate with the folks at Heart Projector.", point: [66, 73], align: "center", lines: 6, },
         },
     },
 
@@ -116,7 +122,7 @@ module.exports.ROOMS = {
         avatarScale: 1,
         tint: "#ffffff",
         pageBg: "#292929",
-        bubblesY: 160,
+        bubblesY: 50,
         spawn: [17, 84, 60, 95],
         area: "GhostsOnlyRoom-areas.png",
         areaColors: {
@@ -130,17 +136,24 @@ module.exports.ROOMS = {
         avatarScale: 2,
         tint: "#ffffff",
         pageBg: "#292929",
-        bubblesY: 160,
+        bubblesY: 50,
         spawn: [17, 84, 60, 95],
         area: "maproom-areas.png",
         areaColors: {
             // exits
             ff0000: { cmd: "enter", room: "TPCAHallway", label: "out", point: [4, 15], enterPoint: [32, 16], obstacle: false },
         },
+		things: {
+            //sprite spreadsheets only 1 row ok?
+            maproom1: { file: "maproom1.png", position: [0, 0], depthAdjust:-150, visible: false },
+            maproom2: { file: "maproom2.png", position: [0, 0], depthAdjust:-150, visible: false },
+            maproom3: { file: "maproom3.png", position: [0, 0], depthAdjust:-150, visible: false },
+            maproom4: { file: "maproom4.png", position: [0, 0], depthAdjust:-150, visible: false },
+			
+		},
     },
 
     //Tavern Rooms
-
     TPCATavern: {
         bg: "TavernBackground.png",
         avatarScale: 2,
@@ -167,6 +180,26 @@ module.exports.ROOMS = {
 	    roundtable: { file: "tavernroundtable.png", frames: 2, frameDelay: 50, position: [78, 84], depthAdjust: -2, visible:true, obstacle: true },
             longtable: { file: "tavernlongtable.png", frames: 1, frameDelay: 50, position: [8, 82], depthAdjust: -2, visible:true, obstacle: true },
         },
+    },
+	
+	    TPCAColourRoom: {
+        bg: "colourRoom.png",
+        avatarScale: 2,
+        tint: "#ffffff",
+        pageBg: "#292929",
+        bubblesY: 40,
+        spawn: [17, 84, 60, 95],
+        area: "colourRoom-areas.png",
+        areaColors: {
+            // exits
+            ff0000: { cmd: "enter", room: "TPCAHallway", label: "out", point: [65, 94], enterPoint: [32, 16], obstacle: false },
+        },
+		things: {
+			instrument: {file: "colourRoom-Music.png", position: [96, 15], obstacle: true },
+			voice: {file: "colourRoom-Voice.png", position: [20, 73], frames: 3, frameDelay: 11, obstacle: true },
+			blender: {file: "colourRoom-Blender.png", position: [95, 58], obstacle: true },
+			Footstep: {file: "colourRoom-Footstep.png", position: [21, 21], frames: 3, frameDelay: 10, obstacle: true },
+		},
     },
     
     TavernBasement: {
@@ -198,7 +231,7 @@ module.exports.ROOMS = {
         avatarScale: 2,
         tint: "#ffffff",
         pageBg: "#292929",
-        bubblesY: 160,
+        bubblesY: 50,
         spawn: [15, 94, 5, 77],
         area: "FireExit-areas.png",
         areaColors: {
@@ -219,7 +252,7 @@ module.exports.ROOMS = {
         avatarScale: 2,
         tint: "#ffffff",
         pageBg: "#292929",
-        bubblesY: 160,
+        bubblesY: 50,
         spawn: [10, 80, 25, 85],
         area: "ForestPath-Shallow-areas.png",
         areaColors: {
@@ -244,7 +277,7 @@ module.exports.ROOMS = {
         avatarScale: 2,
         tint: "#ffffff",
         pageBg: "#292929",
-        bubblesY: 160,
+        bubblesY: 50,
         spawn: [125, 93, 110, 80],
         area: "ForestPath-Lakefront-areas.png",
         areaColors: {
@@ -265,7 +298,7 @@ module.exports.ROOMS = {
         avatarScale: 2,
         tint: "#ffffff",
         pageBg: "#292929",
-        bubblesY: 160,
+        bubblesY: 50,
         spawn: [127, 88, 108, 80],
         area: "ForestPath-Fork-areas.png",
         areaColors: {
@@ -287,7 +320,7 @@ module.exports.ROOMS = {
         avatarScale: 2,
         tint: "#ffffff",
         pageBg: "#292929",
-        bubblesY: 160,
+        bubblesY: 50,
         spawn: [107, 89, 76, 77],
         area: "ForestPath-Rest-areas.png",
         areaColors: {
@@ -307,7 +340,7 @@ module.exports.ROOMS = {
         avatarScale: 2,
         tint: "#ffffff",
         pageBg: "#292929",
-        bubblesY: 160,
+        bubblesY: 50,
         spawn: [15, 90, 5, 77],
         area: "ForestPath-Loop-areas.png",
         areaColors: {
@@ -328,7 +361,7 @@ module.exports.ROOMS = {
         avatarScale: 2,
         tint: "#ffffff",
         pageBg: "#292929",
-        bubblesY: 160,
+        bubblesY: 50,
         spawn: [65, 92, 32, 75],
         area: "ForestPath-Fountain-areas.png",
         secret: true,
@@ -360,7 +393,7 @@ module.exports.ROOMS = {
         avatarScale: 2,
         tint: "#ffffff",
         pageBg: "#292929",
-        bubblesY: 160,
+        bubblesY: 50,
         spawn: [111, 93, 83, 71],
         area: "ForestPath-Bonfire-areas.png",
         areaColors: {

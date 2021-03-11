@@ -2434,9 +2434,7 @@ function createThing(thing, id) {
 		}
 	};
 	
-    if (thing.visible != null) {
-        newSprite.visible = thing.visible;
-    }
+
 
     //if label make it rollover reactive
     newSprite.label = thing.label;

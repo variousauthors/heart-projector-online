@@ -754,3 +754,23 @@ function firstFloorEnter(playerId, roomId) {
         }
     }
 }
+
+
+//Louise fucks around here to get Maproom random backgrounds working
+
+
+function TPCAMapRoomEnter(playerId, roomId) {
+    if (playerId == me.id) {
+		
+        var s = localStorage.getItem("maproom");
+
+        if (s == null) {
+            s = floor(random(1, 5));
+            window.localStorage.setItem("maproom", s);
+        }
+
+        //getSprites is a p5 play function
+        ROOMS[roomId].things["maproom" + s].visible = true;
+    }
+}
+
