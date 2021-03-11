@@ -526,6 +526,43 @@ function mirrorRoomTalk(playerId, bubble) {
 
 }
 
+function TPCATavernEnter(playerId, roomId) {
+    if (playerId == me.id) {
+        longText = "The smell of the fireplace greets you once again.";
+        longTextLines = -1;
+        longTextAlign = "center";
+    }
+}
+
+//Verily, Forsooth
+function TPCATavernTalk(playerId, bubble) {
+    if (playerId != me.id) {
+
+        var l = bubble.message.length - 1;
+        var baa = "B";
+        for (var i = 0; i < l; i++) {
+            if (bubble.message[i] != " ")
+                baa += "A";
+            else
+                baa += " ";
+        }
+
+        bubble.message = baa;
+        bubble.tw = textWidth(bubble.message);
+        bubble.w = round(bubble.tw + TEXT_PADDING * 2);
+
+        bubble.x = round(bubble.px - bubble.w / 2);
+        if (bubble.x + bubble.w + BUBBLE_MARGIN > width) {
+            bubble.x = width - bubble.w - BUBBLE_MARGIN
+        }
+        if (bubble.x < BUBBLE_MARGIN) {
+            bubble.x = BUBBLE_MARGIN;
+        }
+
+    }
+
+}
+
 function censorshipRoomEnter(playerId, roomId) {
     if (playerId == me.id) {
         longText = "In the Censorship Room each word can only be uttered once and never again.";
