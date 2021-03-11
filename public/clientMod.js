@@ -538,16 +538,28 @@ function TPCATavernEnter(playerId, roomId) {
 function TPCATavernTalk(playerId, bubble) {
     if (playerId != me.id) {
 
-        var l = bubble.message.length - 1;
-        var baa = "B";
-        for (var i = 0; i < l; i++) {
-            if (bubble.message[i] != " ")
-                baa += "A";
-            else
-                baa += " ";
-        }
+        var diceroll = random(1,100);
+        var verily = "";
+            if (diceroll < 10) {
+                verily = "Verily!";
+            }
+            else if (diceroll < 20) {
+                verily = "More ale!";
+	    }
+            else if (diceroll < 40) {
+                verily = "Lager lager lager lager!";
+	    }
+            else if (diceroll < 80) {
+                verily = "Hic!";
+	    }
+            else if (diceroll < 100) {
+                verily = "Forsooth?";
+	    }
+            else {
+                verily = "Hasht thousht heard the one bout the one-legged knight?";
+            }
 
-        bubble.message = baa;
+        bubble.message = verily;
         bubble.tw = textWidth(bubble.message);
         bubble.w = round(bubble.tw + TEXT_PADDING * 2);
 

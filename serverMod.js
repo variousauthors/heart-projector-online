@@ -137,7 +137,7 @@ module.exports.initMod = function (io, gameState, DATA) {
             room: "TPCATavern",
             x: 23,
             y: 66,
-            avatar: 37,
+            avatar: 39,
             colors: [2, 2, 1, 5],
             labelColor: "#1e839d"
         });
@@ -147,11 +147,11 @@ module.exports.initMod = function (io, gameState, DATA) {
 
         if (dice < 15) {
             //cleans bar
-            npc_server.talk("Arf!");
+            npc_server.talk("Yarf!");
             npc_server.move(random(17, 113) * 2, random(76, 98) * 2);
             npc_server.behavior = setTimeout(ramble, random(4000, 8000));   
         }
-        else if (dice < 85) {
+        else if (dice < 50) {
             //mostly a chatterbox
             npc_server.talk("Barf!");
             npc_server.talk(global.paranoidTalk[Math.floor(random(0, global.paranoidTalk.length - 1))]);

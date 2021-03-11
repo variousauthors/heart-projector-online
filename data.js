@@ -155,12 +155,17 @@ module.exports.ROOMS = {
             // exits
             hff0000: { cmd: "enter", room: "TPCAHallway", label: "Hallway", point: [118, 85], enterPoint: [10, 52], obstacle: false },
 	    hff00ff: { cmd: "enter", room: "TavernBasement", label: "Basement", point: [9, 84], enterPoint: [119, 86], obstacle: false },
+            h0000ff: { cmd: "text", label: "The Bar", txt: "You're cut off!", align: "center", lines: 1, point: [45, 80], obstacle: true },
+            h00ff00: { cmd: "text", label: "Regular", txt: "No, you are!", align: "center", lines: 1, point: [90, 80], obstacle: true },
+	    hffff00: { cmd: "text", label: "Cozy Fireplace", align: "center", lines: 1, point: [90, 80], obstacle: true },
+            hff7f00: { cmd: "text", label: "Portrait", txt: "Paintings can't talk!", align: "center", lines: 1, point: [92, 75] },
+
 	},
         things: {
 	    bartender: { file: "bartender.png", frames: 81, frameDelay: 30, position: [23, 57], depthAdjust: -2, visible:true },
-            patron: { file: "tavern-patron.png", frames: 2, frameDelay: 50, position: [71, 57], depthAdjust: -2, visible:true },
-	    roundtable: { file: "tavernroundtable.png", frames: 2, frameDelay: 50, position: [78, 84], depthAdjust: -2, visible:true },
-            longtable: { file: "tavernlongtable.png", frames: 1, frameDelay: 50, position: [8, 82], depthAdjust: -2, visible:true },
+            patron: { file: "tavern-patron.png", frames: 2, frameDelay: 150, position: [71, 57], depthAdjust: -2, visible:true },
+	    roundtable: { file: "tavernroundtable.png", frames: 2, frameDelay: 50, position: [78, 84], depthAdjust: -2, visible:true, obstacle: true },
+            longtable: { file: "tavernlongtable.png", frames: 1, frameDelay: 50, position: [8, 82], depthAdjust: -2, visible:true, obstacle: true },
         },
     },
     
