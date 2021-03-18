@@ -540,23 +540,44 @@ function TPCATavernTalk(playerId, bubble) {
 
         var diceroll = random(1,100);
         var verily = "";
-            if (diceroll < 10) {
-                verily = "Verily!";
+            if (diceroll < 1) {
+                verily = "Don't ask about the painting...";
             }
+            else if (diceroll < 10) {
+                verily = "Tell us a tale!";
+	    }
             else if (diceroll < 20) {
                 verily = "More ale!";
 	    }
-            else if (diceroll < 40) {
-                verily = "Lager lager lager lager!";
+            else if (diceroll < 30) {
+                verily = "Bee-yoo-tee-ful!";
 	    }
+            else if (diceroll < 40) {
+                verily = "Bwahaha!";
+	    }
+            else if (diceroll < 45) {
+                verily = "Why it's his missus innit?";
+	    }
+            else if (diceroll < 50) {
+                verily = "What timeizzit?";
+            }
+            else if (diceroll < 60) {
+                verily = "Nah, this one's on me!";
+            }
+            else if (diceroll < 70) {
+                verily = "I.P.A... horsepiss!";
+            }
             else if (diceroll < 80) {
                 verily = "Hic!";
+            }
+            else if (diceroll < 90) {
+                verily = "Bla blah bla...";
 	    }
             else if (diceroll < 100) {
                 verily = "Forsooth?";
 	    }
             else {
-                verily = "Hasht thousht heard the one bout the one-legged knight?";
+                verily = "Hasht thousht heard the one bout the three-legged knight?";
             }
 
         bubble.message = verily;
