@@ -63,13 +63,13 @@ module.exports.ROOMS = {
     },
 
     stairwell: {
-        bg: "stairwell.png",
+        bg: "Stairwell.png",
         avatarScale: 2,
         tint: "#ffffff",
         pageBg: "#292929",
         bubblesY: 50,
         spawn: [17, 84, 60, 95],
-        area: "stairwell-areas.png",
+        area: "Stairwell-areas.png",
         areaColors: {
             // exits
             h00ffff: { cmd: "enter", room: "oldspaceLounge", label: "Heart Projector", point: [67, 59], enterPoint: [50, 70], obstacle: false },
@@ -147,13 +147,13 @@ module.exports.ROOMS = {
     },
 
     TPCAMapRoom: {
-        bg: "TPCAHallway.png",
+        bg: "maproom1.png",
         avatarScale: 2,
         tint: "#ffffff",
         pageBg: "#292929",
         bubblesY: 50,
         spawn: [17, 84, 60, 95],
-        area: "MapRoom-areas.png",
+        area: "maproom-areas.png",
         areaColors: {
             // exits
             ff0000: { cmd: "enter", room: "TPCAHallway", label: "out", point: [4, 15], enterPoint: [32, 16], obstacle: false },
