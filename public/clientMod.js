@@ -756,11 +756,30 @@ function firstFloorEnter(playerId, roomId) {
 }
 
 
-//Louise fucks around here to get Maproom random backgrounds working
+//Louise fucks around here
+
+function TPCAApartmentsTalk (playerId, bubble) {
+  if (isDefined(playerId) && playerId != me.id) {
+    const player = players[playerId]
+
+    const distance = getDistanceBetween(me, player)
+    console.log(distance)
+
+    if (distance > 10) {
+      setBubbleMessageAndUpdateWidth(bubble, [Math.floor(random(0, global.TPCAApartmentsTalk.length - 1))]);
+	  
+    }
+  }
+}
 
 
 function TPCAMapRoomEnter(playerId, roomId) {
     if (playerId == me.id) {
+				
+        longText = "Plan a trip together?";
+        longTextLines = -1;
+        longTextAlign = "center";
+	
 		
         var s = localStorage.getItem("maproom");
 
@@ -774,3 +793,48 @@ function TPCAMapRoomEnter(playerId, roomId) {
     }
 }
 
+function TPCAColourRoomDrawSprite (playerId, sprite, drawingFunction) {
+	const player = players[playerId]
+	const accumulatedLight = [0.0, 0.0, 0.0];
+	
+	for (var thingName in ROOMS.TPCAColourRoom.things){
+		const thing = ROOMS.TPCAColourRoom.things[thingName];
+		
+		if (isDefined(thing.lightEmissionColour)) {
+			const distanceFromThings = distanceFormula(player.x, player.y, thing.position[0], thing.position[1])
+			const attenuationValue = 1 - clamp(0, distanceFromThings - 20, 150) / 150
+			const emittedColour = color(thing.lightEmissionColour);
+			const emittedRed = red(emittedColour)/255.0;
+			const emittedGreen = green(emittedColour)/255.0;
+			const emittedBlue = blue(emittedColour)/255.0;
+			
+			accumulatedLight[0] += emittedRed * attenuationValue
+			accumulatedLight[1] += emittedGreen * attenuationValue
+			accumulatedLight[2] += emittedBlue * attenuationValue
+		};
+	}
+		
+		
+  if (isDefined(playerId) && playerId != me.id) {
+
+    //if (isDefined(player)) {
+      //const distance = getDistanceBetween(me, player.position)
+
+		if(!isDefined(player.colourRoomTintColors)) {
+
+        // somehow generate random colors
+
+			player.colourRoomTintColors = [
+				random(0, 255),
+				random(0, 255),
+				random(0, 255)];
+		}
+    }
+
+	  push();
+      tint(accumulatedLight[0] * 255, accumulatedLight[1] * 255, accumulatedLight[2] * 255);
+      drawingFunction();
+      noTint();
+      pop();
+  }
+  

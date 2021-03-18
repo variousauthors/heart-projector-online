@@ -111,9 +111,24 @@ module.exports.ROOMS = {
             hf000ff: { cmd: "enter", room: "TPCATavern", label: "Tavern", point: [10, 52], enterPoint: [118, 85], obstacle: false },
             h0000ff: { cmd: "enter", room: "TPCAFireRoom", label: "Bonfire", point: [96, 13], enterPoint: [15, 94], obstacle: false },
             h55ffff: { cmd: "enter", room: "elevator", label: "Elevator", point: [66, 97], enterPoint: [64, 68], obstacle: false },
+			h7c7c7c: { cmd: "enter", room: "TPCAApartments", label: "apart meant", point: [63, 7], enterPoint: [67, 94], obstacle: false },
 			
 			//placard
             hfeff00: { cmd: "text", label: "placard", txt: "The Papercut Arcade collective works to create safer spaces to explore creativity and art with like-minded folks. We're proud to be sharing digital real estate with the folks at Heart Projector.", point: [66, 73], align: "center", lines: 6, },
+        },
+    },
+	
+	TPCAApartments: {
+        bg: "TPCA-Apartments.png",
+        avatarScale: 1,
+        tint: "#ffffff",
+        pageBg: "#292929",
+        bubblesY: 50,
+        spawn: [17, 84, 60, 95],
+        area: "TPCA-Apartments-areas.png",
+        areaColors: {
+            // exits
+            ff0000: { cmd: "enter", room: "TPCAHallway", label: "out", point: [4, 15], enterPoint: [32, 16], obstacle: false },
         },
     },
 
@@ -195,10 +210,10 @@ module.exports.ROOMS = {
             ff0000: { cmd: "enter", room: "TPCAHallway", label: "out", point: [65, 94], enterPoint: [32, 16], obstacle: false },
         },
 		things: {
-			instrument: {file: "colourRoom-Music.png", position: [96, 15], obstacle: true },
-			voice: {file: "colourRoom-Voice.png", position: [20, 73], frames: 3, frameDelay: 11, obstacle: true },
-			blender: {file: "colourRoom-Blender.png", position: [95, 58], obstacle: true },
-			Footstep: {file: "colourRoom-Footstep.png", position: [21, 21], frames: 3, frameDelay: 10, obstacle: true },
+			instrument: {file: "colourRoom-Music.png", position: [96, 15], obstacle: true, lightEmissionColour: "#FF0000" },
+			voice: {file: "colourRoom-Voice.png", position: [20, 73], frames: 3, frameDelay: 11, obstacle: true, lightEmissionColour: "#FF00FF"},
+			blender: {file: "colourRoom-Blender.png", position: [95, 58], obstacle: true, lightEmissionColour: "#0000FF"},
+			Footstep: {file: "colourRoom-Footstep.png", position: [21, 21], frames: 3, frameDelay: 10, obstacle: true, lightEmissionColour: "#00ff00" },
 		},
     },
     
