@@ -107,7 +107,7 @@ module.exports.ROOMS = {
         areaColors: {
             // exits
             hff0000: { cmd: "enter", room: "TPCAColourRoom", label: "COLOUR Room", point: [33, 13], enterPoint: [67, 94], obstacle: false },
-            h00ff00: { cmd: "enter", room: "TPCAMapRoom", label: "War Room", point: [121, 52], enterPoint: [8, 75], obstacle: false },
+            h00ff00: { cmd: "enter", room: "TPCAMapRoom", label: "War Room", point: [121, 52], obstacle: false },
             hf000ff: { cmd: "enter", room: "TPCATavern", label: "Tavern", point: [6, 51], enterPoint: [3, 50], obstacle: false },
             h0000ff: { cmd: "enter", room: "TPCAFireRoom", label: "Bonfire", point: [96, 13], enterPoint: [15, 94], obstacle: false },
             h55ffff: { cmd: "enter", room: "elevator", label: "Elevator", point: [66, 97], enterPoint: [64, 68], obstacle: false },
@@ -128,7 +128,7 @@ module.exports.ROOMS = {
         area: "TPCA-Apartments-areas.png",
         areaColors: {
             // exits
-            ff0000: { cmd: "enter", room: "TPCAHallway", label: "out", point: [4, 15], enterPoint: [32, 16], obstacle: false },
+            hff0000: { cmd: "enter", room: "TPCAHallway", label: "out", point: [4, 15], enterPoint: [32, 16], obstacle: false },
         },
     },
 
@@ -142,7 +142,7 @@ module.exports.ROOMS = {
         area: "GhostsOnlyRoom-areas.png",
         areaColors: {
             // exits
-            ff0000: { cmd: "enter", room: "TPCAHallway", label: "out", point: [4, 15], enterPoint: [32, 16], obstacle: false },
+            hff0000: { cmd: "enter", room: "TPCAHallway", label: "out", point: [4, 15], enterPoint: [32, 16], obstacle: false },
         },
     },
 
@@ -152,14 +152,15 @@ module.exports.ROOMS = {
         tint: "#ffffff",
         pageBg: "#292929",
         bubblesY: 50,
-        spawn: [17, 84, 60, 95],
+        spawn: [3, 3, 125, 95],
         area: "maproom-areas.png",
-        areaColors: {
+		areaColors: {
             // exits
-            ff0000: { cmd: "enter", room: "TPCAHallway", label: "out", point: [4, 15], enterPoint: [32, 16], obstacle: false },
+            hff0000: { cmd: "enter", room: "TPCAHallway", label: "Unceded territory", point: [10, 19], enterPoint: [117, 50], obstacle: false },
         },
 		things: {
             //sprite spreadsheets only 1 row ok?
+			maproomExit: { file: "TPCAmaproomExit.png", position: [9, 18], depthAdjust: 0, obstacle: false },
             maproom1: { file: "maproom1.png", position: [0, 0], depthAdjust:-150, visible: false },
             maproom2: { file: "maproom2.png", position: [0, 0], depthAdjust:-150, visible: false },
             maproom3: { file: "maproom3.png", position: [0, 0], depthAdjust:-150, visible: false },
@@ -178,7 +179,7 @@ module.exports.ROOMS = {
         area: "colourRoom-areas.png",
         areaColors: {
             // exits
-            ff0000: { cmd: "enter", room: "TPCAHallway", label: "out", point: [65, 94], enterPoint: [32, 16], obstacle: false },
+            hff0000: { cmd: "enter", room: "TPCAHallway", label: "out", point: [65, 94], enterPoint: [32, 16], obstacle: false },
         },
 		things: {
 			instrument: {file: "colourRoom-Music.png", position: [96, 15], obstacle: true, lightEmissionColour: "#FF0000" },

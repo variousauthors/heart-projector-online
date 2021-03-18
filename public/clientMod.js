@@ -725,13 +725,31 @@ function TPCAApartmentsTalk (playerId, bubble) {
 
 
 function TPCAMapRoomEnter(playerId, roomId) {
-    if (playerId == me.id) {
-				
-        longText = "Plan a trip together?";
-        longTextLines = -1;
-        longTextAlign = "center";
 	
+		var randomText = floor(random(1, 4));
 		
+		if (randomText == 1) {    
+			longText = "If we could go anywhere...";
+			longTextLines = -1;
+			longTextAlign = "center";
+		} else if (randomText == 2) {    
+			longText = "Where am I?";
+			longTextLines = -1;
+			longTextAlign = "center";
+		} else if (randomText == 3) {    
+			longText = "Do I belong here?";
+			longTextLines = -1;
+			longTextAlign = "center";
+		} else {
+			longText = "What are you doing here?";
+			longTextLines = -1;
+			longTextAlign = "center";
+		}
+
+
+	
+    if (playerId == me.id) {
+	
         var s = localStorage.getItem("maproom");
 
         if (s == null) {
