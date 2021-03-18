@@ -49,7 +49,7 @@ var canvasScale;
 var AVATAR_W = 10;
 var AVATAR_H = 18;
 //number of avatars in the sheets
-var AVATARS = 37;
+var AVATARS = 40;
 //the big file if used
 var ALL_AVATARS_SHEET = "allAvatars.png";
 //the number of frames for walk cycle and emote animation
@@ -955,7 +955,7 @@ function newGame() {
 
                     if (!players[p.id].ignore) {
                         //minimum y of speech bubbles depends on room, typically higher half
-                        var offY = ROOMS[me.room].bubblesY * ASSET_SCALE;
+                        var offY = ROOMS[me.room].bubblesY * (ASSET_SCALE / 3);
                         var newBubble = new Bubble(p.id, p.message, p.color, p.x, p.y, offY);
 
                         //calling a custom function 
@@ -985,7 +985,7 @@ function newGame() {
             try {
 
                 //minimum y of speech bubbles depends on room, typically higher half
-                var offY = ROOMS[np.room].bubblesY * ASSET_SCALE;
+                var offY = ROOMS[np.room].bubblesY * (ASSET_SCALE / 3);
                 var newBubble = new Bubble(np.id, np.message, 0, np.x, np.y, offY);
                 newBubble.color = color(np.labelColor)
 
