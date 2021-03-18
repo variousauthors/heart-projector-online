@@ -192,6 +192,18 @@ function getThingPosition (thing) {
     .map(n => n * ASSET_SCALE)
 }
 
+function getThingPosition (thing, normalizedPositionInRect) {
+	var dimensionScale = [ASSET_SCALE, ASSET_SCALE];
+	if(isDefined(thing.frames)) {
+		dimensionScale[0] *= 1.0 / thing.frames;
+	}
+	
+	return [
+		(thing.position[0] * ASSET_SCALE + normalizedPositionInRect[0] * thing.spriteGraphics.width * dimensionScale[0]),
+		(thing.position[1] * ASSET_SCALE + normalizedPositionInRect[1] * thing.spriteGraphics.height * dimensionScale[1])
+	];
+}
+
 function getDistanceBetween (player, position) {
   const { x: x1, y: y1 } = player // players have x, y
   const { x: x2, y: y2 } = position
@@ -709,6 +721,8 @@ function firstFloorEnter(playerId, roomId) {
 
 //Louise fucks around here
 
+var mapRoomImage;
+
 function TPCAApartmentsTalk (playerId, bubble) {
   if (isDefined(playerId) && playerId != me.id) {
     const player = players[playerId]
@@ -770,40 +784,95 @@ function TPCAColourRoomDrawSprite (playerId, sprite, drawingFunction) {
 		const thing = ROOMS.TPCAColourRoom.things[thingName];
 		
 		if (isDefined(thing.lightEmissionColour)) {
-			const distanceFromThings = distanceFormula(player.x, player.y, thing.position[0], thing.position[1])
-			const attenuationValue = 1 - clamp(0, distanceFromThings - 20, 150) / 150
+			const thingPos = getThingPosition(thing, [0.5, 0.5]);
+			const distanceFromThings = distanceFormula(player.x, player.y, thingPos[0], thingPos[1])
+			const attenuationValue = 1 - clamp(0, distanceFromThings - 1, 32) / 32;
 			const emittedColour = color(thing.lightEmissionColour);
-			const emittedRed = red(emittedColour)/255.0;
-			const emittedGreen = green(emittedColour)/255.0;
-			const emittedBlue = blue(emittedColour)/255.0;
+			const emittedRed = 3 * red(emittedColour)/255.0;
+			const emittedGreen = 3 *  green(emittedColour)/255.0;
+			const emittedBlue = 3 *  blue(emittedColour)/255.0;
 			
-			accumulatedLight[0] += emittedRed * attenuationValue
-			accumulatedLight[1] += emittedGreen * attenuationValue
-			accumulatedLight[2] += emittedBlue * attenuationValue
+			accumulatedLight[0] += emittedRed * attenuationValue;
+			accumulatedLight[1] += emittedGreen * attenuationValue;
+			accumulatedLight[2] += emittedBlue * attenuationValue;
 		};
 	}
 		
-		
-  if (isDefined(playerId) && playerId != me.id) {
-
-    //if (isDefined(player)) {
-      //const distance = getDistanceBetween(me, player.position)
-
-		if(!isDefined(player.colourRoomTintColors)) {
-
-        // somehow generate random colors
-
-			player.colourRoomTintColors = [
-				random(0, 255),
-				random(0, 255),
-				random(0, 255)];
+	if (isDefined(playerId) && playerId == me.id) {
+		for (var otherPlayerId in players) {
+			if (players.hasOwnProperty(otherPlayerId) && otherPlayerId != me.id) {
+				const otherPlayer = players[otherPlayerId];
+				
+				if(!isDefined(otherPlayer.colourRoomTintColors)) {
+					colorMode(HSB);
+					var randomColor = color(random(0.0, 360.0), 100, 70);
+					colorMode(RGB);
+					
+					otherPlayer.colourRoomTintColors = randomColor;
+				}
+			
+				const distanceFromOtherPlayer = distanceFormula(player.x, player.y, otherPlayer.x, otherPlayer.y)
+				const attenuationValue = 1 - clamp(0, distanceFromOtherPlayer - 1, 32) / 32;
+				const emittedRed = 2 * red(otherPlayer.colourRoomTintColors)/255.0;
+				const emittedGreen = 2 *  green(otherPlayer.colourRoomTintColors)/255.0;
+				const emittedBlue = 2 *  blue(otherPlayer.colourRoomTintColors)/255.0;
+				
+				accumulatedLight[0] += emittedRed * attenuationValue;
+				accumulatedLight[1] += emittedGreen * attenuationValue;
+				accumulatedLight[2] += emittedBlue * attenuationValue;
+			}
 		}
     }
 
-	  push();
-      tint(accumulatedLight[0] * 255, accumulatedLight[1] * 255, accumulatedLight[2] * 255);
-      drawingFunction();
-      noTint();
-      pop();
-  }
+	const playerImage = player.sprite.animation.spriteSheet.image;
+	const currentFrameCoords = player.sprite.animation.getFrameImage().frame;
+	const numFrames = player.sprite.animation.spriteSheet.frames.length;
+
+	// bleed some light from all the channels together, to make whiter-ish HDR colors
+	const lum = [
+		Math.max(0, 0.2126 * (accumulatedLight[0] - 1.0)),
+		Math.max(0, 0.7152 * (accumulatedLight[1] - 1.0)),
+		Math.max(0, 0.0722 * (accumulatedLight[2] - 1.0))
+	];
+
+	accumulatedLight[0] += lum[1] + lum[2];
+	accumulatedLight[1] += lum[0] + lum[2];
+	accumulatedLight[2] += lum[0] + lum[1];
+
+	if(!isDefined(mapRoomImage)) {
+		mapRoomImage = createImage(playerImage.width, playerImage.height);
+		mapRoomImage.loadPixels();
+	} else if(playerImage.width != mapRoomImage.width || playerImage.height != mapRoomImage.height) {
+		mapRoomImage.resize(playerImage.width, playerImage.height);
+	}
+	
+	for(var i = 0; i < mapRoomImage.pixels.length; ++i) {
+		mapRoomImage.pixels[i] = 255;
+	}
+	mapRoomImage.updatePixels();
+	
+	mapRoomImage.mask(playerImage);
+
+	push();
+	//drawingFunction();
+	
+	tint(accumulatedLight[0] * 255, accumulatedLight[1] * 255, accumulatedLight[2] * 255);
+	image(mapRoomImage, 0, 0, mapRoomImage.width / numFrames, mapRoomImage.height, currentFrameCoords.x, currentFrameCoords.y, currentFrameCoords.width, currentFrameCoords.height);
+
+	/*
+	const sx = currentFrameCoords.x;
+	const sy = currentFrameCoords.y;
+	const sw = currentFrameCoords.width;
+	const sh = currentFrameCoords.height;
+
+	const dx = -playerImage.width / numFrames * 0.5;
+	const dy = -playerImage.height * 0.5;
+	const dw = playerImage.width / numFrames;
+	const dh = playerImage.height;
+	blend(mapRoomImage, sx, sy, sw, sh, dx, dy, dw, dh, NORMAL);
+	*/
+	
+	noTint();
+	pop();
+}
   
