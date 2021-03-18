@@ -51,6 +51,20 @@ module.exports.initMod = function (io, gameState, DATA) {
         "Hello",
         "Another bot"
     ];
+	
+	global.TPCAApartmentsTalk = [
+		"let me out",
+		"I'm so lonely",
+		"It's strange how tired I am",
+		"hard to be motivated",
+		"I miss my mom",
+		"what time is it anymore?",
+		"do I feel sick?",
+		"I miss you",
+		"this is cabin fever",
+		"is anybody there?",
+	];
+	
 
     //load extended dictionary, this is 3Mb but only sits on the server and it's used by only one room
     const fs = require('fs');
