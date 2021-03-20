@@ -231,7 +231,7 @@ module.exports.ROOMS = {
             // exits
             h00ffff: { cmd: "enter", room: "TPCATavern", label: "Tavern", point: [119, 86], enterPoint: [10, 86], obstacle: false },
             hffff00: { cmd: "text", label: "The Filthy Lyre", txt: "Pffft!", align: "center", lines: 1, point: [45, 90], obstacle: true },
-            hff29ff: { cmd: "text", label: "The Filthy Lyre", txt: "Hey! Paws off, y'animal!", align: "center", lines: 1, point: [45, 90], obstacle: false },
+            hff29ff: { cmd: "textRandom", label: "The Filthy Lyre", txt: "Hey! Paws off, y'animal!|Bugger!|That tickles!", align: "center", lines: 1, point: [45, 90], obstacle: false },
         },
         things: {
             //lyre

@@ -2159,6 +2159,37 @@ function executeCommand(c) {
                     longTextLink = c.url;
 
             }
+
+	    case "textRandom":
+            if (c.txt != null) {
+
+                var preLongText = c.txt;
+	        var myOptions = preLongText.split("|");
+                var numOptions = myOptions.length;
+
+ 	        var pickOption = floor(random(0,numOptions));           
+
+		longText = myOptions[pickOption];		
+console.log(preLongText + " | " + pickOption + " | " + longText);
+
+                
+
+                if (c.lines != null)
+                    longTextLines = c.lines;
+                else
+                    longTextLines = 1;
+
+                if (c.align != null)
+                    longTextAlign = c.align;
+                else
+                    longTextAlign = "center";//or center
+
+                if (c.url == null)
+                    longTextLink = "";
+                else
+                    longTextLink = c.url;
+
+            }
             else
                 print("Warning for text: make sure to specify arg as text")
             break;
