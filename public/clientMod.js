@@ -780,21 +780,24 @@ function TPCAColourRoomDrawSprite (playerId, sprite, drawingFunction) {
 	const player = players[playerId]
 	const accumulatedLight = [0.0, 0.0, 0.0];
 	
+	const distanceScale = 1.0 / 32.0;
+	const attenuationA = 0;
+	const attenuationB = 2;
+	const attenuationFloor = 0.1;
+	
 	for (var thingName in ROOMS.TPCAColourRoom.things){
 		const thing = ROOMS.TPCAColourRoom.things[thingName];
 		
 		if (isDefined(thing.lightEmissionColour)) {
 			const thingPos = getThingPosition(thing, [0.5, 0.5]);
-			const distanceFromThings = distanceFormula(player.x, player.y, thingPos[0], thingPos[1])
-			const attenuationValue = 1 - clamp(0, distanceFromThings - 1, 32) / 32;
+			const distanceFromThings = distanceFormula(player.x, player.y - player.sprite.height * 0.5, thingPos[0], thingPos[1]) * distanceScale;
+			const attenuationValue = Math.max(0, 1.0 / (1.0 + attenuationA * distanceFromThings + attenuationB * distanceFromThings * distanceFromThings) - attenuationFloor);
 			const emittedColour = color(thing.lightEmissionColour);
-			const emittedRed = 3 * red(emittedColour)/255.0;
-			const emittedGreen = 3 *  green(emittedColour)/255.0;
-			const emittedBlue = 3 *  blue(emittedColour)/255.0;
+			const emittedColourXyz = rgb_to_cie(red(emittedColour)/255.0, green(emittedColour)/255.0, blue(emittedColour)/255.0).map(x => x * 2 * attenuationValue);
 			
-			accumulatedLight[0] += emittedRed * attenuationValue;
-			accumulatedLight[1] += emittedGreen * attenuationValue;
-			accumulatedLight[2] += emittedBlue * attenuationValue;
+			accumulatedLight[0] += emittedColourXyz[0];
+			accumulatedLight[1] += emittedColourXyz[1];
+			accumulatedLight[2] += emittedColourXyz[2];
 		};
 	}
 		
@@ -811,15 +814,13 @@ function TPCAColourRoomDrawSprite (playerId, sprite, drawingFunction) {
 					otherPlayer.colourRoomTintColors = randomColor;
 				}
 			
-				const distanceFromOtherPlayer = distanceFormula(player.x, player.y, otherPlayer.x, otherPlayer.y)
-				const attenuationValue = 1 - clamp(0, distanceFromOtherPlayer - 1, 32) / 32;
-				const emittedRed = 2 * red(otherPlayer.colourRoomTintColors)/255.0;
-				const emittedGreen = 2 *  green(otherPlayer.colourRoomTintColors)/255.0;
-				const emittedBlue = 2 *  blue(otherPlayer.colourRoomTintColors)/255.0;
+				const distanceFromOtherPlayer = distanceFormula(player.x, player.y, otherPlayer.x, otherPlayer.y) * distanceScale;
+				const attenuationValue = Math.max(0, 1.0 / (1.0 + attenuationA * distanceFromOtherPlayer + attenuationB * distanceFromOtherPlayer * distanceFromOtherPlayer) - attenuationFloor);
+				const emittedColourXyz = rgb_to_cie(red(otherPlayer.colourRoomTintColors)/255.0, green(otherPlayer.colourRoomTintColors)/255.0, blue(otherPlayer.colourRoomTintColors)/255.0).map(x => x * 1.4 * attenuationValue);
 				
-				accumulatedLight[0] += emittedRed * attenuationValue;
-				accumulatedLight[1] += emittedGreen * attenuationValue;
-				accumulatedLight[2] += emittedBlue * attenuationValue;
+				accumulatedLight[0] += emittedColourXyz[0];
+				accumulatedLight[1] += emittedColourXyz[1];
+				accumulatedLight[2] += emittedColourXyz[2];
 			}
 		}
     }
@@ -828,16 +829,18 @@ function TPCAColourRoomDrawSprite (playerId, sprite, drawingFunction) {
 	const currentFrameCoords = player.sprite.animation.getFrameImage().frame;
 	const numFrames = player.sprite.animation.spriteSheet.frames.length;
 
+	const accumulatedRgb = cie_to_rgb(accumulatedLight[0], accumulatedLight[1], accumulatedLight[2]);
+	
 	// bleed some light from all the channels together, to make whiter-ish HDR colors
 	const lum = [
-		Math.max(0, 0.2126 * (accumulatedLight[0] - 1.0)),
-		Math.max(0, 0.7152 * (accumulatedLight[1] - 1.0)),
-		Math.max(0, 0.0722 * (accumulatedLight[2] - 1.0))
+		Math.max(0, 0.2126 * (accumulatedRgb[0] - 1.0)),
+		Math.max(0, 0.7152 * (accumulatedRgb[1] - 1.0)),
+		Math.max(0, 0.0722 * (accumulatedRgb[2] - 1.0))
 	];
 
-	accumulatedLight[0] += lum[1] + lum[2];
-	accumulatedLight[1] += lum[0] + lum[2];
-	accumulatedLight[2] += lum[0] + lum[1];
+	accumulatedRgb[0] += lum[1] + lum[2];
+	accumulatedRgb[1] += lum[0] + lum[2];
+	accumulatedRgb[2] += lum[0] + lum[1]
 
 	if(!isDefined(mapRoomImage)) {
 		mapRoomImage = createImage(playerImage.width, playerImage.height);
@@ -856,7 +859,9 @@ function TPCAColourRoomDrawSprite (playerId, sprite, drawingFunction) {
 	push();
 	//drawingFunction();
 	
-	tint(accumulatedLight[0] * 255, accumulatedLight[1] * 255, accumulatedLight[2] * 255);
+	
+	
+	tint(accumulatedRgb[0] * 255, accumulatedRgb[1] * 255, accumulatedRgb[2] * 255);
 	image(mapRoomImage, 0, 0, mapRoomImage.width / numFrames, mapRoomImage.height, currentFrameCoords.x, currentFrameCoords.y, currentFrameCoords.width, currentFrameCoords.height);
 
 	/*
@@ -875,4 +880,42 @@ function TPCAColourRoomDrawSprite (playerId, sprite, drawingFunction) {
 	noTint();
 	pop();
 }
-  
+
+function cie_to_rgb(X, Y, Z)
+{
+	//Convert to RGB using Wide RGB D65 conversion
+	var red 	=  X * 1.656492 - Y * 0.354851 - Z * 0.255038;
+	var green 	= -X * 0.707196 + Y * 1.655397 + Z * 0.036152;
+	var blue 	=  X * 0.051713 - Y * 0.121364 + Z * 1.011530;
+	
+	if (isNaN(red))
+		red = 0;
+
+	if (isNaN(green))
+		green = 0;
+
+	if (isNaN(blue))
+		blue = 0;
+
+	return [red, green, blue];
+}
+
+
+function rgb_to_cie(red, green, blue)
+{
+	//RGB values to XYZ using the Wide RGB D65 conversion formula
+	var X 		= red * 0.664511 + green * 0.154324 + blue * 0.162028;
+	var Y 		= red * 0.283881 + green * 0.668433 + blue * 0.047685;
+	var Z 		= red * 0.000088 + green * 0.072310 + blue * 0.986039;
+
+	if (isNaN(X))
+		X = 0;
+
+	if (isNaN(Y))
+		Y = 0;	 
+
+	if (isNaN(Z))
+		Z = 0;	
+	
+	return [X, Y, Z];
+}
