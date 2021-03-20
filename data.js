@@ -444,6 +444,15 @@ module.exports.ROOMS = {
             h00ff00: { cmd: "enter", room: "oldspaceLounge", label: "Lounge", point: [4, 83], enterPoint: [124, 83], obstacle: false },
             h0078ff: { cmd: "enter", room: "oldspaceOutside", label: "Outside", point: [112, 97], enterPoint: [8, 75], obstacle: false },
         },
+		things: {
+			curationLeftScreen: { file: "screenLarge.png", frames: 1, position: [32, 63], visible:true, label: "A game", command: { cmd: "text", txt: "The gameplay fills your senses . . .", align: "left", lines: 4, url: "https://trasevol-dog.itch.io/embrace", point: [32, 80] } },
+			curationLeftScreenGlow: { file: "screenLargeGlow.png", frames: 2, frameDelay: 60, position: [22, 53], visible:true },
+			curationLeftPlacard: { file: "placardTable.png", frames: 1, position: [43, 67], visible:true, label: "A placard", command: { cmd: "text", txt: "Ayyyyy", align: "left", lines: 4, label: "A huggy game", point: [43, 80] } },
+			
+			curationProjectorScreen: { file: "screenProjectorBar.png", frames: 1, position: [99, 12], visible:true, label: "A game", command: { cmd: "text", txt: "The gameplay fills your senses . . .", align: "left", lines: 4, url: "https://trasevol-dog.itch.io/embrace", point: [103, 97] } },
+			curationProjectorScreenGlow: { file: "screenProjectorBarGlow.png", frames: 2, frameDelay: 60, position: [99, 12], visible:true },
+            curationProjectorPlacard: { file: "placardTableQuarterTurn.png", frames: 1, position: [87, 79], visible:true, label: "A placard", command: { cmd: "text", txt: "Ayyyyy", align: "left", lines: 4, label: "A huggy game", point: [86, 97] } },
+		}
     },
 
     oldspaceLounge: {
@@ -460,7 +469,19 @@ module.exports.ROOMS = {
             // exits
             hff00ea: { cmd: "enter", room: "oldspaceMain", label: "Arcade", point: [7, 80], enterPoint: [125, 79], obstacle: false },
             h00ff00: { cmd: "enter", room: "oldspaceBar", label: "Bar", point: [124, 83], enterPoint: [4, 83], obstacle: false },
+            h0000ff: { cmd: "enter", room: "elevator", label: "Elevator", point: [72, 99], enterPoint: [64, 68], obstacle: false },
         },
+		things: {
+			table: { file: "item_oldspace_lounge_table.png", frames: 1, position: [30, 68] },
+			
+            curationLeftScreen: { file: "screenMedium.png", frames: 1, position: [37, 69], visible:true, label: "A game", depthAdjust:14, command: { cmd: "text", txt: "The gameplay fills your senses . . .", align: "left", lines: 4, url: "https://trasevol-dog.itch.io/embrace", point: [38, 82] } },
+			curationLeftScreenGlow: { file: "screenMediumGlow.png", frames: 2, frameDelay: 60, position: [27, 59], visible:true, depthAdjust:4 },
+			curationLeftPlacard: { file: "placardTable.png", frames: 1, position: [45, 71], visible:true, label: "A placard", depthAdjust:12, command: { cmd: "text", txt: "Ayyyyy", align: "left", lines: 4, label: "A huggy game", point: [46, 82] } },
+
+			curationRightScreen: { file: "screenSmall.png", frames: 1, position: [60, 70], visible:true, label: "A game", depthAdjust:14, command: { cmd: "text", txt: "The gameplay fills your senses . . .", align: "left", lines: 4, url: "https://trasevol-dog.itch.io/embrace", point: [61, 82] } },
+			curationRightScreenGlow: { file: "screenSmallGlow.png", frames: 2, frameDelay: 60, position: [50, 60], visible:true, depthAdjust:4 },
+			curationRightPlacard: { file: "placardTable.png", frames: 1, position: [68, 71], visible:true, label: "A placard", depthAdjust:12, command: { cmd: "text", txt: "Ayyyyy", align: "left", lines: 4, label: "A huggy game", point: [69, 82] } },
+		}
     },
 
     oldspaceMain: {
@@ -523,7 +544,12 @@ module.exports.ROOMS = {
         //they can be animated, mouse reactive and trigger commands like the areas above
         things: {
             //sprite spreadsheets only 1 row ok?
-            glitchMoon: { file: "glitchMoon.png", frames: 1, frameDelay: 1, position: [102, 2], id: "glitchMoon", visible: false }
+            glitchMoon: { file: "glitchMoon.png", frames: 1, frameDelay: 1, position: [102, 2], id: "glitchMoon", visible: false },
+			chair: { file: "oldspaceOutsideChair.png", frames: 2, frameDelay: 40, position: [12, 26] },
+			
+			curationMainframeScreen: { file: "screenMedium.png", frames: 1, position: [54, 55], visible:true, label: "A game", command: { cmd: "text", txt: "The gameplay fills your senses . . .", align: "left", lines: 4, url: "https://trasevol-dog.itch.io/embrace", point: [56, 71] } },
+			curationMainframeScreenGlow: { file: "screenMediumGlow.png", frames: 2, frameDelay: 60, position: [44, 45], visible:true },
+			curationMainframePlacard: { file: "placardStraightOnWhite.png", frames: 1, position: [67, 55], visible:true, label: "A placard", command: { cmd: "text", txt: "Ayyyyy", align: "left", lines: 4, label: "A huggy game", point: [68, 71] } },
         }
     },
 

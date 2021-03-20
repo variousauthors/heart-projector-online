@@ -294,11 +294,131 @@ var curationData = {
                 screenGradientPath:"assets/monitorGradientGlow1.png",
                 placardGradientPath:"assets/monitorGradientGlow1.png"
             },
-        }
+        },
+		oldspaceLounge: {
+			left: {
+                thingId: "Left",
+                screenGradientPath:"assets/monitorGradientGlow1.png",
+                placardGradientPath:"assets/monitorGradientGlow1.png"
+            },
+            right: {
+                thingId: "Right",
+                screenGradientPath:"assets/monitorGradientGlow1.png",
+                placardGradientPath:"assets/monitorGradientGlow1.png"
+            },
+        },
+		oldspaceBar: {
+			left: {
+                thingId: "Left",
+                screenGradientPath:"assets/monitorGradientGlow1.png",
+                placardGradientPath:"assets/monitorGradientGlow1.png"
+            },
+			
+			projector: {
+                thingId: "Projector",
+                screenGradientPath:"assets/monitorGradientGlow1.png",
+                placardGradientPath:"assets/monitorGradientGlow1.png"
+            },
+		},
+		oldspaceOutside: {
+			mainframe: {
+                thingId: "Mainframe",
+                screenGradientPath:"assets/monitorGradientGlow1.png",
+                placardGradientPath:"assets/monitorGradientGlow1.png"
+            },
+		},
     }
 }
 
+// ALL THE OLD SPACE ROOM UPDATE METHODS START HERE
+
+// oldSpaceMain
 function oldspaceMainEnter(playerId, roomId)
+{
+	curatedRoomEnter(playerId, roomId);
+}
+
+function oldspaceMainUpdate() {
+	curatedRoomUpdate("oldspaceMain");
+}
+
+function oldspaceMainDrawThing(thingId, sprite, drawingFunction)
+{
+	curatedRoomDrawThing("oldspaceMain", thingId, sprite, drawingFunction);
+}
+
+// oldSpaceLounge
+function oldspaceLoungeEnter(playerId, roomId)
+{
+	curatedRoomEnter(playerId, roomId);
+}
+
+function oldspaceLoungeUpdate() {
+	curatedRoomUpdate("oldspaceLounge");
+}
+
+function oldspaceLoungeDrawThing(thingId, sprite, drawingFunction)
+{
+	curatedRoomDrawThing("oldspaceLounge", thingId, sprite, drawingFunction);
+}
+
+// oldSpaceBar
+function oldspaceBarEnter(playerId, roomId)
+{
+	curatedRoomEnter(playerId, roomId);
+}
+
+function oldspaceBarUpdate() {
+	curatedRoomUpdate("oldspaceBar");
+}
+
+function oldspaceBarDrawThing(thingId, sprite, drawingFunction)
+{
+	curatedRoomDrawThing("oldspaceBar", thingId, sprite, drawingFunction);
+}
+
+// oldSpaceOutside
+function oldspaceOutsideEnter(playerId, roomId)
+{
+    if (playerId == me.id) {
+		var p = players[playerId];
+		p.showGlitchMoon = (Math.random() > 0.9);
+		
+        var roomSprites = getSprites();
+        for (var i = 0; i < roomSprites.length; i++) {
+			
+			if (roomSprites[i].id == "glitchMoon") {
+				roomSprites[i].visible = p.showGlitchMoon;
+			}
+        }
+    }
+	
+	curatedRoomEnter(playerId, roomId);
+}
+
+function oldspaceOutsideUpdate()
+{	
+	if(me.showGlitchMoon) {
+		const sprite = getSprites()
+			.filter((sprite) => ensure(sprite.id, ''))
+			.find((s) => s.id == "glitchMoon");
+		
+		if (isDefined(sprite)) {
+			sprite.visible = (Math.random() > 0.001);
+		}
+	}
+	
+	curatedRoomUpdate("oldspaceOutside");
+}
+
+function oldspaceOutsideDrawThing(thingId, sprite, drawingFunction)
+{
+	curatedRoomDrawThing("oldspaceOutside", thingId, sprite, drawingFunction);
+}
+
+// CURATED ROOM FUNCTIONS START HERE 
+
+function curatedRoomEnter(playerId, roomId)
 {
 	const roomCurationData = curationData.rooms[roomId];
 	
@@ -311,7 +431,7 @@ function oldspaceMainEnter(playerId, roomId)
     }
 }
 
-function oldspaceMainUpdate()
+function curatedRoomUpdate(roomId)
 {
 	const roomSprites = getSprites();
 	
@@ -325,17 +445,23 @@ function oldspaceMainUpdate()
 	const tintColor = tintImage.get(0,0);
 	*/
 	
-	const roomId = "oldspaceMain";
-	
 	const roomCurationData = curationData.rooms[roomId];
 	
 	var closestCuration = null;
 	closestDistance = 0.0;
 	for (var roomName in roomCurationData) {
-	    const cd = roomCurationData[roomName];
+		const cd = roomCurationData[roomName];
+		
+		if(!isDefined(ROOMS[roomId].things)) throw "RoomDataError: missing things array in " + roomId;
+		
+		const screenThingName = "curation" + cd.thingId + "Screen"
+		const placardThingName = "curation" + cd.thingId + "Placard";
+		
+		if(!isDefined(ROOMS[roomId].things[screenThingName])) throw "RoomDataError: missing thing in " + roomId + ": " + screenThingName;
+		if(!isDefined(ROOMS[roomId].things[placardThingName])) throw "RoomDataError: missing thing in " + roomId + ": " + placardThingName;
 	    
-		checkMarker(ROOMS.oldspaceMain.things["curation" + cd.thingId + "Screen"]);
-		checkMarker(ROOMS.oldspaceMain.things["curation" + cd.thingId + "Placard"]);
+		checkMarker(ROOMS[roomId].things["curation" + cd.thingId + "Screen"]);
+		checkMarker(ROOMS[roomId].things["curation" + cd.thingId + "Placard"]);
 		
 		function checkMarker(marker)
 		{
@@ -361,17 +487,17 @@ function oldspaceMainUpdate()
 	{
         const cd = roomCurationData[roomName];
 
-        var screen = ROOMS.oldspaceMain.things["curation" + cd.thingId + "Screen"];
+        var screen = ROOMS[roomId].things["curation" + cd.thingId + "Screen"];
         if(screen != null) {
             screen.visible = true;
         }
 		
-        var placard = ROOMS.oldspaceMain.things["curation" + cd.thingId + "Placard"];
+        var placard = ROOMS[roomId].things["curation" + cd.thingId + "Placard"];
         if(placard != null) {
             placard.visible = true;
         }
         
-		var screenGlow = ROOMS.oldspaceMain.things["curation" + cd.thingId + "ScreenGlow"];
+		var screenGlow = ROOMS[roomId].things["curation" + cd.thingId + "ScreenGlow"];
 		var isHighlighted = cd === highlightedCuration;
 		
 		if(isHighlighted)
@@ -427,46 +553,14 @@ function oldspaceMainUpdate()
 	}
 }
 
-function oldspaceMainDrawThing(thingId, sprite, drawingFunction)
+function curatedRoomDrawThing(roomId, thingId, sprite, drawingFunction)
 {
-    const thing = ROOMS.oldspaceMain.things[thingId];
+	const thing = ROOMS[roomId].things[thingId];
 	if(thing.tint != null) {
 		tint(thing.tint);
 	}
 	
 	drawingFunction();
-}
-
-function oldspaceOutsideEnter(playerId, roomId) {
-    if (playerId == me.id) {
-		var p = players[playerId];
-		p.showGlitchMoon = (Math.random() > 0.9);
-		
-        var roomSprites = getSprites();
-        for (var i = 0; i < roomSprites.length; i++) {
-			
-			if (roomSprites[i].id == "glitchMoon") {
-				roomSprites[i].visible = p.showGlitchMoon;
-			}
-        }
-    }
-}
-
-//called every frame in a specific room - beware: this is client side, everything non deterministic and non server-driven
-//may misalign the players clients
-function oldspaceOutsideUpdate()
-{
-	if(me.showGlitchMoon) {
-		const sprite = getSprites()
-			.filter((sprite) => ensure(sprite.id, ''))
-			.find((s) => s.id == "glitchMoon");
-		
-		if (isDefined(sprite)) {
-			sprite.visible = (Math.random() > 0.001);
-		}
-	}
-	
-    //print("MOD: updating experiments");
 }
 
 // BRENDAN STUFF END
