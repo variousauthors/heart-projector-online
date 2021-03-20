@@ -87,7 +87,7 @@ module.exports.ROOMS = {
         area: "elevator-areas.png",
         areaColors: {
             // exits
-            h00ffff: { cmd: "enter", room: "oldspaceLounge", label: "Heart Projector", point: [66, 60], enterPoint: [50, 70], obstacle: false },
+            h00ffff: { cmd: "enter", room: "oldspaceLounge", label: "Heart Projector", point: [66, 60], enterPoint: [72, 99], obstacle: false },
             hff002a: { cmd: "enter", room: "TPCAHallway", label: "The Papercut Arcade", point: [66, 60], enterPoint: [89, 95], obstacle: false },
 			h0000ff: { cmd: "enter", room: "powellAndClark", label: "outside", point: [66, 60], enterPoint: [110, 90], obstacle: false },
 		},
@@ -545,11 +545,12 @@ module.exports.ROOMS = {
         things: {
             //sprite spreadsheets only 1 row ok?
             glitchMoon: { file: "glitchMoon.png", frames: 1, frameDelay: 1, position: [102, 2], id: "glitchMoon", visible: false },
-			chair: { file: "oldspaceOutsideChair.png", frames: 2, frameDelay: 40, position: [12, 26] },
+			chair: { file: "oldspaceOutsideChair.png", frames: 2, frameDelay: 40, position: [12, 25], depthAdjust:8 },
+			computer: { file: "oldspaceOutsideComputer.png", frames: 1, position: [63, 22], depthAdjust:0 },
 			
-			curationMainframeScreen: { file: "screenMedium.png", frames: 1, position: [54, 55], visible:true, label: "A game", command: { cmd: "text", txt: "The gameplay fills your senses . . .", align: "left", lines: 4, url: "https://trasevol-dog.itch.io/embrace", point: [56, 71] } },
-			curationMainframeScreenGlow: { file: "screenMediumGlow.png", frames: 2, frameDelay: 60, position: [44, 45], visible:true },
-			curationMainframePlacard: { file: "placardStraightOnWhite.png", frames: 1, position: [67, 55], visible:true, label: "A placard", command: { cmd: "text", txt: "Ayyyyy", align: "left", lines: 4, label: "A huggy game", point: [68, 71] } },
+			curationMainframeScreen: { file: "screenMedium.png", frames: 1, position: [66, 51], depthAdjust:12, visible:true, label: "A game", command: { cmd: "text", txt: "The gameplay fills your senses . . .", align: "left", lines: 4, url: "https://trasevol-dog.itch.io/embrace", point: [68, 69] } },
+			curationMainframeScreenGlow: { file: "screenMediumGlow.png", frames: 2, frameDelay: 60, position: [56, 41], depthAdjust:12, visible:true },
+			curationMainframePlacard: { file: "placardTableQuarterTurn.png", frames: 1, position: [80, 70], depthAdjust:-4, visible:true, label: "A placard", command: { cmd: "text", txt: "Ayyyyy", align: "left", lines: 4, label: "A huggy game", point: [76, 76] } },
         }
     },
 
