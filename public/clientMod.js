@@ -272,59 +272,49 @@ var curationData = {
             right: {
                 thingId: "Right",
                 screenGradientPath:"assets/monitorGradientGlow1.png",
-                placardGradientPath:"assets/monitorGradientGlow1.png"
             },
             left: {
                 thingId: "Left",
                 screenGradientPath:"assets/monitorGradientGlow1.png",
-                placardGradientPath:"assets/monitorGradientGlow1.png"
             },
 			tableLeft: {
                 thingId: "TableLeft",
                 screenGradientPath:"assets/monitorGradientGlow1.png",
-                placardGradientPath:"assets/monitorGradientGlow1.png"
             },
 			tableRight: {
                 thingId: "TableRight",
                 screenGradientPath:"assets/monitorGradientGlow1.png",
-                placardGradientPath:"assets/monitorGradientGlow1.png"
             },
             projector: {
                 thingId: "Projector",
                 screenGradientPath:"assets/monitorGradientGlow1.png",
-                placardGradientPath:"assets/monitorGradientGlow1.png"
             },
         },
 		oldspaceLounge: {
 			left: {
                 thingId: "Left",
                 screenGradientPath:"assets/monitorGradientGlow1.png",
-                placardGradientPath:"assets/monitorGradientGlow1.png"
             },
             right: {
                 thingId: "Right",
                 screenGradientPath:"assets/monitorGradientGlow1.png",
-                placardGradientPath:"assets/monitorGradientGlow1.png"
             },
         },
 		oldspaceBar: {
 			left: {
                 thingId: "Left",
                 screenGradientPath:"assets/monitorGradientGlow1.png",
-                placardGradientPath:"assets/monitorGradientGlow1.png"
             },
 			
 			projector: {
                 thingId: "Projector",
                 screenGradientPath:"assets/monitorGradientGlow1.png",
-                placardGradientPath:"assets/monitorGradientGlow1.png"
             },
 		},
 		oldspaceOutside: {
 			mainframe: {
                 thingId: "Mainframe",
                 screenGradientPath:"assets/monitorGradientGlow1.png",
-                placardGradientPath:"assets/monitorGradientGlow1.png"
             },
 		},
     }
@@ -426,7 +416,6 @@ function curatedRoomEnter(playerId, roomId)
 		for (var m in roomCurationData) {
 		    const cd = roomCurationData[m];
 			cd.screenGradientImg = loadImage(cd.screenGradientPath);
-			cd.placardGradientImg = loadImage(cd.placardGradientPath);
 		}
     }
 }
@@ -521,7 +510,7 @@ function curatedRoomUpdate(roomId)
             }
 
             if(placard != null) {
-				const placardLength = cd.placardGradientImg.width * cd.placardGradientImg.height;
+				const placardLength = cd.screenGradientImg.width * cd.screenGradientImg.height;
 				
                 if(placard.index == null) {
                     placard.index = 1;
@@ -529,11 +518,13 @@ function curatedRoomUpdate(roomId)
                     placard.index = (placard.index + 1) % placardLength;
                 }
 
-                const x = placard.index % cd.placardGradientImg.width;
-                const y = Math.floor(placard.index / cd.placardGradientImg.width);
-                const pixel = cd.placardGradientImg.get(x, y);
-
-                placard.tint = color(pixel[0], pixel[1], pixel[2], pixel[3]);
+                const x = placard.index % cd.screenGradientImg.width;
+                const y = Math.floor(placard.index / cd.screenGradientImg.width);
+                const pixel = cd.screenGradientImg.get(x, y);
+				
+				const saturatePercent = 0.2 * (pixel[3] / 255);
+				
+                placard.tint = lerpColor(color("#e2e1e8ff"), color(pixel[0], pixel[1], pixel[2]), saturatePercent);
             }
 		}
 		else
