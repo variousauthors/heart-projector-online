@@ -47,7 +47,7 @@ module.exports.ROOMS = {
         avatarScale: 2,
         tint: "#DAC7F0",
         pageBg: "#3b2751",
-        bubblesY: 160,
+        bubblesY: 50,
         spawn: [5, 76, 70, 95],
         area: "PowellAndClark-areas.png",
         areaColors: {
@@ -63,13 +63,13 @@ module.exports.ROOMS = {
     },
 
     stairwell: {
-        bg: "stairwell.png",
+        bg: "Stairwell.png",
         avatarScale: 2,
         tint: "#ffffff",
         pageBg: "#292929",
-        bubblesY: 160,
+        bubblesY: 50,
         spawn: [17, 84, 60, 95],
-        area: "stairwell-areas.png",
+        area: "Stairwell-areas.png",
         areaColors: {
             // exits
             h00ffff: { cmd: "enter", room: "oldspaceLounge", label: "Heart Projector", point: [67, 59], enterPoint: [50, 70], obstacle: false },
@@ -82,13 +82,17 @@ module.exports.ROOMS = {
         avatarScale: 2,
         tint: "#ffffff",
         pageBg: "#292929",
-        bubblesY: 160,
-        spawn: [17, 84, 60, 95],
+        bubblesY: 50,
+        spawn: [72, 73, 53, 63],
         area: "elevator-areas.png",
         areaColors: {
             // exits
             h00ffff: { cmd: "enter", room: "oldspaceLounge", label: "Heart Projector", point: [66, 60], enterPoint: [50, 70], obstacle: false },
-            hff002a: { cmd: "enter", room: "TPCAHallway", label: "The Papercut Arcade", point: [66, 60], enterPoint: [65, 90], obstacle: false },
+            hff002a: { cmd: "enter", room: "TPCAHallway", label: "The Papercut Arcade", point: [66, 60], enterPoint: [89, 95], obstacle: false },
+			h0000ff: { cmd: "enter", room: "powellAndClark", label: "outside", point: [66, 60], enterPoint: [110, 90], obstacle: false },
+		},
+		things: {
+			elevatorol: { file: "elevator-OL.png", position: [65, 39], depthAdjust: 126 },
         },
     },
 
@@ -97,15 +101,34 @@ module.exports.ROOMS = {
         avatarScale: 1.5,
         tint: "#ffffff",
         pageBg: "#292929",
-        bubblesY: 160,
+        bubblesY: 50,
         spawn: [17, 84, 60, 95],
         area: "TPCAhallway-areas.png",
         areaColors: {
             // exits
-            hff0000: { cmd: "enter", room: "TPCAGhostsOnlyRoom", label: "GHOSTS ONLY Room", point: [33, 13], enterPoint: [116, 78], obstacle: false },
+            hff0000: { cmd: "enter", room: "TPCAColourRoom", label: "COLOUR Room", point: [33, 13], enterPoint: [67, 94], obstacle: false },
             h00ff00: { cmd: "enter", room: "TPCAMapRoom", label: "War Room", point: [121, 52], enterPoint: [8, 75], obstacle: false },
-            hf000ff: { cmd: "enter", room: "TPCATavern", label: "Tavern", point: [121, 52], enterPoint: [3, 50], obstacle: false },
-            h0000ff: { cmd: "enter", room: "TPCAFireRoom", label: "Bonfire", point: [97, 4], enterPoint: [3, 50], obstacle: false },
+            hf000ff: { cmd: "enter", room: "TPCATavern", label: "Tavern", point: [10, 52], enterPoint: [118, 85], obstacle: false },
+            h0000ff: { cmd: "enter", room: "TPCAFireRoom", label: "Bonfire", point: [96, 13], enterPoint: [15, 94], obstacle: false },
+            h55ffff: { cmd: "enter", room: "elevator", label: "Elevator", point: [66, 97], enterPoint: [64, 68], obstacle: false },
+			h7c7c7c: { cmd: "enter", room: "TPCAApartments", label: "apart meant", point: [63, 7], enterPoint: [67, 94], obstacle: false },
+			
+			//placard
+            hfeff00: { cmd: "text", label: "placard", txt: "The Papercut Arcade collective works to create safer spaces to explore creativity and art with like-minded folks. We're proud to be sharing digital real estate with the folks at Heart Projector.", point: [66, 73], align: "center", lines: 6, },
+        },
+    },
+	
+	TPCAApartments: {
+        bg: "TPCA-Apartments.png",
+        avatarScale: 1,
+        tint: "#ffffff",
+        pageBg: "#292929",
+        bubblesY: 50,
+        spawn: [17, 84, 60, 95],
+        area: "TPCA-Apartments-areas.png",
+        areaColors: {
+            // exits
+            ff0000: { cmd: "enter", room: "TPCAHallway", label: "out", point: [4, 15], enterPoint: [32, 16], obstacle: false },
         },
     },
 
@@ -114,7 +137,7 @@ module.exports.ROOMS = {
         avatarScale: 1,
         tint: "#ffffff",
         pageBg: "#292929",
-        bubblesY: 160,
+        bubblesY: 50,
         spawn: [17, 84, 60, 95],
         area: "GhostsOnlyRoom-areas.png",
         areaColors: {
@@ -124,18 +147,287 @@ module.exports.ROOMS = {
     },
 
     TPCAMapRoom: {
-        bg: "MapRoom1.png",
+        bg: "maproom1.png",
         avatarScale: 2,
         tint: "#ffffff",
         pageBg: "#292929",
-        bubblesY: 160,
+        bubblesY: 50,
         spawn: [17, 84, 60, 95],
-        area: "MapRoom-areas.png",
+        area: "maproom-areas.png",
         areaColors: {
             // exits
             ff0000: { cmd: "enter", room: "TPCAHallway", label: "out", point: [4, 15], enterPoint: [32, 16], obstacle: false },
         },
+		things: {
+            //sprite spreadsheets only 1 row ok?
+            maproom1: { file: "maproom1.png", position: [0, 0], depthAdjust:-150, visible: false },
+            maproom2: { file: "maproom2.png", position: [0, 0], depthAdjust:-150, visible: false },
+            maproom3: { file: "maproom3.png", position: [0, 0], depthAdjust:-150, visible: false },
+            maproom4: { file: "maproom4.png", position: [0, 0], depthAdjust:-150, visible: false },
+			
+		},
     },
+
+    //Tavern Rooms
+    TPCATavern: {
+        bg: "TavernBackground.png",
+        avatarScale: 2,
+	frames: 3,
+	frameDelay: 40,
+        tint: "#ffffff",
+        pageBg: "#292929",
+        bubblesY: 160,
+        spawn: [120, 90, 110, 80],
+        area: "Tavern-animate-map.png",
+        areaColors: {
+            // exits
+            hff0000: { cmd: "enter", room: "TPCAHallway", label: "Hallway", point: [118, 85], enterPoint: [10, 52], obstacle: false },
+	    hff00ff: { cmd: "enter", room: "TavernBasement", label: "Basement", point: [9, 84], enterPoint: [119, 86], obstacle: false },
+            h0000ff: { cmd: "text", label: "The Bar", txt: "You're cut off!", align: "center", lines: 1, point: [45, 80], obstacle: true },
+            h00ff00: { cmd: "text", label: "Regular", txt: "No, you are!", align: "center", lines: 1, point: [90, 80], obstacle: true },
+	    hffff00: { cmd: "text", label: "Cozy Fireplace", align: "center", lines: 1, point: [90, 80], obstacle: true },
+            hff7f00: { cmd: "text", label: "Portrait", txt: "Paintings can't talk!", align: "center", lines: 1, point: [92, 75] },
+
+	},
+        things: {
+	    bartender: { file: "bartender.png", frames: 81, frameDelay: 30, position: [23, 57], depthAdjust: -2, visible:true },
+            patron: { file: "tavern-patron.png", frames: 2, frameDelay: 150, position: [71, 57], depthAdjust: -2, visible:true },
+	    roundtable: { file: "tavernroundtable.png", frames: 2, frameDelay: 50, position: [78, 84], depthAdjust: -2, visible:true, obstacle: true },
+            longtable: { file: "tavernlongtable.png", frames: 1, frameDelay: 50, position: [8, 82], depthAdjust: -2, visible:true, obstacle: true },
+        },
+    },
+	
+	    TPCAColourRoom: {
+        bg: "colourRoom.png",
+        avatarScale: 2,
+        tint: "#ffffff",
+        pageBg: "#292929",
+        bubblesY: 40,
+        spawn: [17, 84, 60, 95],
+        area: "colourRoom-areas.png",
+        areaColors: {
+            // exits
+            ff0000: { cmd: "enter", room: "TPCAHallway", label: "out", point: [65, 94], enterPoint: [32, 16], obstacle: false },
+        },
+		things: {
+			instrument: {file: "colourRoom-Music.png", position: [96, 15], obstacle: true, lightEmissionColour: "#FF0000" },
+			voice: {file: "colourRoom-Voice.png", position: [20, 73], frames: 3, frameDelay: 11, obstacle: true, lightEmissionColour: "#FF00FF"},
+			blender: {file: "colourRoom-Blender.png", position: [95, 58], obstacle: true, lightEmissionColour: "#0000FF"},
+			Footstep: {file: "colourRoom-Footstep.png", position: [21, 21], frames: 3, frameDelay: 10, obstacle: true, lightEmissionColour: "#00ff00" },
+		},
+    },
+    
+    TavernBasement: {
+        bg: "TavernBasementBackground.png",
+        avatarScale: 2,
+	frames: 2,
+	frameDelay: 40,
+        tint: "#ffffff",
+        pageBg: "#292929",
+        bubblesY: 160,
+        spawn: [120, 90, 110, 80],
+        area: "Tavern-basement-map.png",
+        areaColors: {
+            // exits
+            h00ffff: { cmd: "enter", room: "TPCATavern", label: "Upstairs", point: [119, 86], enterPoint: [10, 86], obstacle: false },
+            hffff00: { cmd: "text", label: "The Filthy Lyre", txt: "Pffft!", align: "center", lines: 1, point: [45, 90], obstacle: true },
+            hff29ff: { cmd: "text", label: "The Filthy Lyre", txt: "Hey! Paws off, y'animal!", align: "center", lines: 1, point: [45, 90], obstacle: false },
+        },
+        things: {
+            //lyre
+            lyre: { file: "TheFilthyLyre.png", frames: 2, frameDelay: 40, position: [21, 72], depthAdjust:3, visible: true },
+        },
+    },
+
+    //Fire Rooms    
+    
+    TPCAFireRoom: {
+        bg: "FireExit.png",
+        avatarScale: 2,
+        tint: "#ffffff",
+        pageBg: "#292929",
+        bubblesY: 50,
+        spawn: [15, 94, 5, 77],
+        area: "FireExit-areas.png",
+        areaColors: {
+            // exits
+            hf000ff: { cmd: "enter", room: "TPCAHallway", label: "Hall", point: [7, 83], enterPoint: [96, 22], obstacle: false },
+            hffff00: { cmd: "enter", room: "ForestPathShallow", label: "Forest", point: [113, 60], enterPoint: [12, 83], obstacle: false },
+            h0000ff: { cmd: "text", label: "Sign", txt: "Forest Loop Trail", align: "center", lines: 1, point: [78, 67] },
+        },
+        things: {
+            //scenery
+            bush: { file: "FireExit-bush.png", frames: 1, position: [0, 0], depthAdjust:3 },
+            trees: { file: "FireExit-trees.png", frames: 1, position: [0, 0], depthAdjust:126 },
+        },
+    },
+    
+    ForestPathShallow: {
+        bg: "ForestPath-Shallow.png",
+        avatarScale: 2,
+        tint: "#ffffff",
+        pageBg: "#292929",
+        bubblesY: 50,
+        spawn: [10, 80, 25, 85],
+        area: "ForestPath-Shallow-areas.png",
+        areaColors: {
+            // exits
+            hf000ff: { cmd: "enter", room: "TPCAFireRoom", label: "Civilization", point: [4, 86], enterPoint: [113, 60], obstacle: false },
+            h0000ff: { cmd: "enter", room: "ForestPathFork", label: "Forest Loop", point: [24, 69], enterPoint: [125, 87], obstacle: false },
+            hffff00: { cmd: "enter", room: "ForestPathLoop", label: "Forest Loop", point: [101, 67], enterPoint: [3, 80], obstacle: false },
+             h00fff0: { cmd: "enter", room: "ForestPathLakefront", label: "Lake", point: [125, 88], enterPoint: [125, 93], obstacle: false },
+            hff0000: { cmd: "text", label: "Sign", txt: "Loop Trail North", align: "center", lines: 1, point: [41, 75] },
+            h000fff: { cmd: "text", label: "Sign", txt: "Loop Trail East", align: "center", lines: 1, point: [107, 70] },
+        },
+        things: {
+            //scenery
+            trees: { file: "ForestPath-Shallow-trees.png", frames: 1, position: [0, 0], depthAdjust:126 },
+        },
+    },
+
+    ForestPathLakefront: {
+        bg: "ForestPath-Lakefront.png",
+        frames: 4,
+        frameDelay: 40,
+        avatarScale: 2,
+        tint: "#ffffff",
+        pageBg: "#292929",
+        bubblesY: 50,
+        spawn: [125, 93, 110, 80],
+        area: "ForestPath-Lakefront-areas.png",
+        areaColors: {
+            // exits
+            hf000ff: { cmd: "enter", room: "ForestPathFork", label: "Forest", point: [6, 87],  enterPoint: [4, 88], obstacle: false },
+            h0000ff: { cmd: "enter", room: "ForestPathShallow", label: "Forest", point: [125, 86],  enterPoint: [125, 93], obstacle: false },
+        },
+        things: {
+            //scenery
+            trees: { file: "ForestPath-Lakefront-trees.png", frames: 1, position: [0, 0], depthAdjust:126 },
+        },
+    },
+    
+    ForestPathFork: {
+        bg: "ForestPath-Fork-smoke.png",
+        frames: 3,
+        frameDelay: 50,
+        avatarScale: 2,
+        tint: "#ffffff",
+        pageBg: "#292929",
+        bubblesY: 50,
+        spawn: [127, 88, 108, 80],
+        area: "ForestPath-Fork-areas.png",
+        areaColors: {
+            // exits
+            h00ff00: { cmd: "enter", room: "ForestPathLakefront", label: "Lake", point: [4, 88],  enterPoint: [6, 87], obstacle: false },
+            h0000ff: { cmd: "enter", room: "Bonfire", label: "Bonfire Pit", point: [25, 63],  enterPoint: [62, 96], obstacle: false },
+            hfff000: { cmd: "enter", room: "ForestPathRest", label: "Forest Trail Loop", point: [93, 64],  enterPoint: [48, 60], obstacle: false },
+            hf000ff: { cmd: "enter", room: "ForestPathShallow", label: "Forest Entrance", point: [125, 87],  enterPoint: [24, 69], obstacle: false },       
+        },
+        things: {
+            //scenery
+            copse: { file: "ForestPath-Fork-copse.png", frames: 1, position: [0, 0], depthAdjust:-25 },
+            trees: { file: "ForestPath-Fork-trees.png", frames: 1, position: [0, 0], depthAdjust:126 },
+        },
+    },
+
+    ForestPathRest: {
+        bg: "ForestPath-Rest.png",
+        avatarScale: 2,
+        tint: "#ffffff",
+        pageBg: "#292929",
+        bubblesY: 50,
+        spawn: [107, 89, 76, 77],
+        area: "ForestPath-Rest-areas.png",
+        areaColors: {
+            // exits
+            hf000ff: { cmd: "enter", room: "ForestPathFork", label: "Forest Loop North", point: [51, 59],  enterPoint: [93, 64], obstacle: false },
+            h0000ff: { cmd: "enter", room: "ForestPathLoop", label: "Forest Loop South", point: [124, 89],  enterPoint: [77, 55], obstacle: false },
+        },
+        things: {
+            //scenery
+            copse: { file: "ForestPath-Rest-outhouse.png", frames: 1, position: [0, 0], depthAdjust:-10 },
+            trees: { file: "ForestPath-Rest-trees.png", frames: 1, position: [0, 0], depthAdjust:126 },
+        },
+    }, 
+
+    ForestPathLoop: {
+        bg: "ForestPath-Loop.png",
+        avatarScale: 2,
+        tint: "#ffffff",
+        pageBg: "#292929",
+        bubblesY: 50,
+        spawn: [15, 90, 5, 77],
+        area: "ForestPath-Loop-areas.png",
+        areaColors: {
+            // exits
+            hf000ff: { cmd: "enter", room: "ForestPathShallow", label: "Forest Entrance", point: [3, 80],  enterPoint: [101, 67], obstacle: false },       
+            h0000ff: { cmd: "enter", room: "ForestPathRest", label: "Forest Loop", point: [77, 55],  enterPoint: [124, 89], obstacle: false },
+            hffff00: { cmd: "enter", room: "ForestPathFountain", label: "??", point: [123, 92],  enterPoint: [8, 58], obstacle: false },
+            h00ff00: { cmd: "text", label: "Sign", txt: "Rest Area Ahead", align: "center", lines: 1, point: [71, 84] },
+        },
+        things: {
+            //scenery
+            trees: { file: "ForestPath-Loop-trees.png", frames: 1, position: [0, 0], depthAdjust:126 },
+        },
+    }, 
+    
+    ForestPathFountain: {
+        bg: "ForestPath-Fountain.png",
+        avatarScale: 2,
+        tint: "#ffffff",
+        pageBg: "#292929",
+        bubblesY: 50,
+        spawn: [65, 92, 32, 75],
+        area: "ForestPath-Fountain-areas.png",
+        secret: true,
+        areaColors: {
+            // exits
+            hffff00: { cmd: "enter", room: "ForestPathLoop", label: "Forest Loop", point: [8, 58],  enterPoint: [92, 72], obstacle: false },
+            h0ffff0: { cmd: "text", label: "Berries", txt: "The ripest berries are  \ntoo far back for you to  \npick them.", align: "center", lines: 3, point: [110, 89], obstacle: false },
+            h0000ff: { cmd: "text", label: "Berries", txt: "These berries aren't ripe.", align: "center", lines: 1, point: [61, 75], obstacle: false },
+            hff7d00: { cmd: "text", label: "Berries", txt: "You think these might \nbe blackberries?", align: "center", lines: 2, point: [111, 80], obstacle: false },
+            hff000f: { cmd: "text", label: "Berries", txt: "These bushes shudder as you \napproach and then become suddenly still. \nHuh, weird.", align: "center", lines: 4, point: [119, 80], obstacle: false },
+            h007d4b: { cmd: "text", label: "Berries", txt: "These berries are just right. \nYou swallow a fistful.", align: "center", lines: 2, point: [26, 86], obstacle: false },
+            hccff00: { cmd: "text", label: "Berries", txt: "These snozzberries taste \nlike snozzberries.", align: "center", lines: 2, point: [34, 92], obstacle: false },
+            h00ff00: { cmd: "text", label: "Fountain", txt: "There are coins in this fountain.", align: "center", lines: 1, point: [75, 89], obstacle: true },
+            hf000ff: { cmd: "text", label: "Fountain", txt: "You toss in a coin. \nMake a wish!", align: "center", lines: 2, point: [75, 89], obstacle: false },
+        },
+        things: {
+            //scenery
+            bush: { file: "ForestPath-Fountain-bush.png", frames: 1, position: [0, 0], depthAdjust:3 },
+            fountain: { file: "ForestPath-Fountain-waterfeature.png", frames: 5, frameDelay: 5, position: [77, 60], depthAdjust: -2, visible:true },
+            berryBush: { file: "ForestPath-Fountain-berries.png", frames: 1, position: [0, 0], depthAdjust:125 },
+            trees: { file: "ForestPath-Fountain-trees.png", frames: 1, position: [0, 0], depthAdjust:126 },
+        },
+    },    
+    
+    Bonfire: {
+        bg: "ForestPath-Bonfire.png",
+        frames: 10,
+        frameDelay: 90,
+        avatarScale: 2,
+        tint: "#ffffff",
+        pageBg: "#292929",
+        bubblesY: 50,
+        spawn: [111, 93, 83, 71],
+        area: "ForestPath-Bonfire-areas.png",
+        areaColors: {
+            // exits
+            hf000ff: { cmd: "enter", room: "ForestPathFork", label: "Forest Path", point: [62, 96],  enterPoint: [25, 63], obstacle: false },      
+        },
+        things: {
+            //scenery
+            fire: { file: "ForestPath-Bonfire-fire.png", frames: 9, frameDelay: 15, position: [55, 3], depthAdjust:20 },
+            smoke: { file: "ForestPath-Bonfire-smoke.png", frames: 11, frameDelay: 100, position: [52, 0], depthAdjust:-2 },
+            log1: { file: "ForestPath-Bonfire-Log1.png", position: [39, 88], depthAdjust:1 },
+            log2: { file: "ForestPath-Bonfire-Log2.png", position: [30, 71], depthAdjust:-2 },
+            log3: { file: "ForestPath-Bonfire-Log3.png", position: [75, 89], depthAdjust:1 },
+            log4: { file: "ForestPath-Bonfire-Log4.png", position: [95, 82], depthAdjust:1 },
+        },
+    }, 
+    
+    
+    //End Kay Added January 2021
 
     oldspaceBar: {
         bg: "room_oldspace_anim_bar.png",

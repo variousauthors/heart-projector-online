@@ -51,6 +51,20 @@ module.exports.initMod = function (io, gameState, DATA) {
         "Hello",
         "Another bot"
     ];
+	
+	global.TPCAApartmentsTalk = [
+		"let me out",
+		"I'm so lonely",
+		"It's strange how tired I am",
+		"hard to be motivated",
+		"I miss my mom",
+		"what time is it anymore?",
+		"do I feel sick?",
+		"I miss you",
+		"this is cabin fever",
+		"is anybody there?",
+	];
+	
 
     //load extended dictionary, this is 3Mb but only sits on the server and it's used by only one room
     const fs = require('fs');
@@ -129,6 +143,49 @@ module.exports.initMod = function (io, gameState, DATA) {
 
     }, random(1000, 2000));
 
+    // Tavern NPCs Start 
+    var npc_server = new NPC(
+        {
+            id: "server",
+            nickName: "Marigold",
+            room: "TPCATavern",
+            x: 23,
+            y: 66,
+            avatar: 39,
+            colors: [2, 2, 1, 5],
+            labelColor: "#1e839d"
+        });
+
+    npc_server.behavior = setTimeout(function ramble() {
+        var dice = random(0, 100);
+
+        if (dice < 15) {
+            //cleans bar
+            npc_server.talk("Yarf!");
+            npc_server.move(random(17, 113) * 2, random(76, 98) * 2);
+            npc_server.behavior = setTimeout(ramble, random(4000, 8000));   
+        }
+        else if (dice < 50) {
+            //mostly a chatterbox
+            npc_server.talk("Barf!");
+            npc_server.talk(global.paranoidTalk[Math.floor(random(0, global.paranoidTalk.length - 1))]);
+            npc_server.move(random(17, 113) * 2, random(76, 98) * 2);
+            npc_server.behavior = setTimeout(ramble, random(7000, 9000));
+        }
+        else {
+            //just wait
+            npc_server.move(random(17, 113) * 2, random(76, 98) * 2);
+            npc_server.behavior = setTimeout(ramble, random(1000, 3000));
+
+            //to kill the bot
+            //clearTimeout(npc.behavior);
+            //npc_server.delete();
+        }
+
+
+    }, random(1000, 2000));
+
+    // Tavern NPCs End
 
     global.VIPList = [];
 

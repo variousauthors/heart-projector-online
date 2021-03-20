@@ -526,6 +526,55 @@ function mirrorRoomTalk(playerId, bubble) {
 
 }
 
+function TPCATavernEnter(playerId, roomId) {
+    if (playerId == me.id) {
+        longText = "The smell of the fireplace greets you once again.";
+        longTextLines = -1;
+        longTextAlign = "center";
+    }
+}
+
+//Verily, Forsooth
+function TPCATavernTalk(playerId, bubble) {
+    if (playerId != me.id) {
+
+        var diceroll = random(1,100);
+        var verily = "";
+            if (diceroll < 10) {
+                verily = "Verily!";
+            }
+            else if (diceroll < 20) {
+                verily = "More ale!";
+	    }
+            else if (diceroll < 40) {
+                verily = "Lager lager lager lager!";
+	    }
+            else if (diceroll < 80) {
+                verily = "Hic!";
+	    }
+            else if (diceroll < 100) {
+                verily = "Forsooth?";
+	    }
+            else {
+                verily = "Hasht thousht heard the one bout the one-legged knight?";
+            }
+
+        bubble.message = verily;
+        bubble.tw = textWidth(bubble.message);
+        bubble.w = round(bubble.tw + TEXT_PADDING * 2);
+
+        bubble.x = round(bubble.px - bubble.w / 2);
+        if (bubble.x + bubble.w + BUBBLE_MARGIN > width) {
+            bubble.x = width - bubble.w - BUBBLE_MARGIN
+        }
+        if (bubble.x < BUBBLE_MARGIN) {
+            bubble.x = BUBBLE_MARGIN;
+        }
+
+    }
+
+}
+
 function censorshipRoomEnter(playerId, roomId) {
     if (playerId == me.id) {
         longText = "In the Censorship Room each word can only be uttered once and never again.";
@@ -705,3 +754,87 @@ function firstFloorEnter(playerId, roomId) {
         }
     }
 }
+
+
+//Louise fucks around here
+
+function TPCAApartmentsTalk (playerId, bubble) {
+  if (isDefined(playerId) && playerId != me.id) {
+    const player = players[playerId]
+
+    const distance = getDistanceBetween(me, player)
+    console.log(distance)
+
+    if (distance > 10) {
+      setBubbleMessageAndUpdateWidth(bubble, [Math.floor(random(0, global.TPCAApartmentsTalk.length - 1))]);
+	  
+    }
+  }
+}
+
+
+function TPCAMapRoomEnter(playerId, roomId) {
+    if (playerId == me.id) {
+				
+        longText = "Plan a trip together?";
+        longTextLines = -1;
+        longTextAlign = "center";
+	
+		
+        var s = localStorage.getItem("maproom");
+
+        if (s == null) {
+            s = floor(random(1, 5));
+            window.localStorage.setItem("maproom", s);
+        }
+
+        //getSprites is a p5 play function
+        ROOMS[roomId].things["maproom" + s].visible = true;
+    }
+}
+
+function TPCAColourRoomDrawSprite (playerId, sprite, drawingFunction) {
+	const player = players[playerId]
+	const accumulatedLight = [0.0, 0.0, 0.0];
+	
+	for (var thingName in ROOMS.TPCAColourRoom.things){
+		const thing = ROOMS.TPCAColourRoom.things[thingName];
+		
+		if (isDefined(thing.lightEmissionColour)) {
+			const distanceFromThings = distanceFormula(player.x, player.y, thing.position[0], thing.position[1])
+			const attenuationValue = 1 - clamp(0, distanceFromThings - 20, 150) / 150
+			const emittedColour = color(thing.lightEmissionColour);
+			const emittedRed = red(emittedColour)/255.0;
+			const emittedGreen = green(emittedColour)/255.0;
+			const emittedBlue = blue(emittedColour)/255.0;
+			
+			accumulatedLight[0] += emittedRed * attenuationValue
+			accumulatedLight[1] += emittedGreen * attenuationValue
+			accumulatedLight[2] += emittedBlue * attenuationValue
+		};
+	}
+		
+		
+  if (isDefined(playerId) && playerId != me.id) {
+
+    //if (isDefined(player)) {
+      //const distance = getDistanceBetween(me, player.position)
+
+		if(!isDefined(player.colourRoomTintColors)) {
+
+        // somehow generate random colors
+
+			player.colourRoomTintColors = [
+				random(0, 255),
+				random(0, 255),
+				random(0, 255)];
+		}
+    }
+
+	  push();
+      tint(accumulatedLight[0] * 255, accumulatedLight[1] * 255, accumulatedLight[2] * 255);
+      drawingFunction();
+      noTint();
+      pop();
+  }
+  
