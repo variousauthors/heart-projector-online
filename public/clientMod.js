@@ -803,25 +803,27 @@ function TPCAColourRoomDrawSprite (playerId, sprite, drawingFunction) {
 		
 	if (isDefined(playerId) && playerId == me.id) {
 		for (var otherPlayerId in players) {
-			if (players.hasOwnProperty(otherPlayerId) && otherPlayerId != me.id) {
-				const otherPlayer = players[otherPlayerId];
-				
-				if(!isDefined(otherPlayer.colourRoomTintColors)) {
-					colorMode(HSB);
-					var randomColor = color(random(0.0, 360.0), 100, 70);
-					colorMode(RGB);
-					
-					otherPlayer.colourRoomTintColors = randomColor;
-				}
+			if (!players.hasOwnProperty(otherPlayerId)) continue;
+			if (otherPlayerId == me.id) continue;
+
+			const otherPlayer = players[otherPlayerId];
+			if(otherPlayer.nickName == "") continue;
 			
-				const distanceFromOtherPlayer = distanceFormula(player.x, player.y, otherPlayer.x, otherPlayer.y) * distanceScale;
-				const attenuationValue = Math.max(0, 1.0 / (1.0 + attenuationA * distanceFromOtherPlayer + attenuationB * distanceFromOtherPlayer * distanceFromOtherPlayer) - attenuationFloor);
-				const emittedColourXyz = rgb_to_cie(red(otherPlayer.colourRoomTintColors)/255.0, green(otherPlayer.colourRoomTintColors)/255.0, blue(otherPlayer.colourRoomTintColors)/255.0).map(x => x * 1.4 * attenuationValue);
+			if(!isDefined(otherPlayer.colourRoomTintColors)) {
+				colorMode(HSB);
+				var randomColor = color(getNumberFromStringHash(otherPlayer.nickName,0.0, 360.0), 100, 70);
+				colorMode(RGB);
 				
-				accumulatedLight[0] += emittedColourXyz[0];
-				accumulatedLight[1] += emittedColourXyz[1];
-				accumulatedLight[2] += emittedColourXyz[2];
+				otherPlayer.colourRoomTintColors = randomColor;
 			}
+		
+			const distanceFromOtherPlayer = distanceFormula(player.x, player.y, otherPlayer.x, otherPlayer.y) * distanceScale;
+			const attenuationValue = Math.max(0, 1.0 / (1.0 + attenuationA * distanceFromOtherPlayer + attenuationB * distanceFromOtherPlayer * distanceFromOtherPlayer) - attenuationFloor);
+			const emittedColourXyz = rgb_to_cie(red(otherPlayer.colourRoomTintColors)/255.0, green(otherPlayer.colourRoomTintColors)/255.0, blue(otherPlayer.colourRoomTintColors)/255.0).map(x => x * 1.4 * attenuationValue);
+			
+			accumulatedLight[0] += emittedColourXyz[0];
+			accumulatedLight[1] += emittedColourXyz[1];
+			accumulatedLight[2] += emittedColourXyz[2];
 		}
     }
 
@@ -880,6 +882,24 @@ function TPCAColourRoomDrawSprite (playerId, sprite, drawingFunction) {
 	noTint();
 	pop();
 }
+
+function getNumberFromStringHash(string,inclusiveMin,inclusiveMax) {
+	const hash = getHashFromString(string);
+	const modulo = hash % 1000; // let's HOPE our hash function gives us a reasonable enough 'random' range that at least makes it from 0-1000, lol
+	const result = modulo / 1000.0 * inclusiveMax + inclusiveMin;
+	return result;
+}
+
+function getHashFromString(string) {
+  var hash = 0, i, chr;
+  if (string.length === 0) return hash;
+  for (i = 0; i < string.length; i++) {
+    chr   = string.charCodeAt(i);
+    hash  = ((hash << 5) - hash) + chr;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+};
 
 function cie_to_rgb(X, Y, Z)
 {
