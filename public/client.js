@@ -49,7 +49,7 @@ var canvasScale;
 var AVATAR_W = 10;
 var AVATAR_H = 18;
 //number of avatars in the sheets
-var AVATARS = 40;
+var AVATARS = 50;
 //the big file if used
 var ALL_AVATARS_SHEET = "allAvatars.png";
 //the number of frames for walk cycle and emote animation
@@ -2169,10 +2169,7 @@ function executeCommand(c) {
 
  	        var pickOption = floor(random(0,numOptions));           
 
-		longText = myOptions[pickOption];		
-console.log(preLongText + " | " + pickOption + " | " + longText);
-
-                
+		longText = myOptions[pickOption];                
 
                 if (c.lines != null)
                     longTextLines = c.lines;

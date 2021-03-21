@@ -526,6 +526,14 @@ function mirrorRoomTalk(playerId, bubble) {
 
 }
 
+function BonfireEnter(playerId, roomId) {
+    if (playerId == me.id) {
+        longText = "XXXXXXX XXXX XXXXX XXX XX XXXX X XXX";
+        longTextLines = -1;
+        longTextAlign = "center";
+    }
+}
+
 function TPCATavernEnter(playerId, roomId) {
     if (playerId == me.id) {
         longText = "The smell of the fireplace greets you once again.";

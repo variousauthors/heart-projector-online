@@ -65,6 +65,8 @@ module.exports.initMod = function (io, gameState, DATA) {
 		"is anybody there?",
 	];
 	
+	global.fireAdmin = "";
+
 
     //load extended dictionary, this is 3Mb but only sits on the server and it's used by only one room
     const fs = require('fs');
@@ -192,8 +194,8 @@ module.exports.initMod = function (io, gameState, DATA) {
             x: 22,
             y: 66,
             avatar: 37,
-            colors: [2, 2, 1, 5],
-            labelColor: "#1e839d"
+            colors: [4, 1, 6, 6],
+            labelColor: "#FFFF00"
         });
 
     npc_tal.behavior = setTimeout(function ramble() {
@@ -250,6 +252,17 @@ module.exports.experimentsTalkFilter = function (player, message) {
     return message;
 }
 
+
+//wouldn't it be funny if cetain rooms modified your messages?
+module.exports.BonfireTalkFilter = function (player, message) {
+console.log("Fire Admin: " + global.fireAdmin + " Me: " + player.id);
+    if (global.fireAdmin == player.id) {
+    	return message;
+    } else {
+    	return " ... ";
+    }
+
+}
 
 //wouldn't it be funny if cetain rooms modified your messages?
 module.exports.VIPRoomTalkFilter = function (player, message) {
@@ -495,6 +508,25 @@ module.exports.darkRoomTalkFilter = function (player, message) {
     }
 
     return arr.join(" ");
+}
+
+//player enters family room roles are assigned by the server
+module.exports.TPCAGreenRoomJoin = function (playerObject, roomId) {
+        console.log(playerObject.id + " joined GreenRoom");
+    if (global.fireAdmin == "" ) {
+        global.fireAdmin = playerObject.id;
+        console.log(playerObject.id + " becomes FIRE ADMIN!");
+    } else if (global.fireAdmin != "") {
+	global.fireAdmin = playerObject.id;
+	console.log("Someone else was Fire Admin: " + global.fireAdmin);
+    } else {
+    	console.log("Noone is Fire Admin? " + global.fireAdmin);
+    }
+
+    //assign a new role and send all the roles to the room
+
+    io.to("TPCAGreenRoom").emit('updateFireAdmin', playerObject.id, global.fireAdmin);
+
 }
 
 //player enters family room roles are assigned by the server

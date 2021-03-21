@@ -238,6 +238,24 @@ module.exports.ROOMS = {
             lyre: { file: "TheFilthyLyre.png", frames: 2, frameDelay: 40, position: [21, 72], depthAdjust:3, visible: true },
         },
     },
+    TPCAGreenRoom: {
+        bg: "greenroom.png",
+        avatarScale: 2,
+	frames: 2,
+	frameDelay: 40,
+        tint: "#ffffff",
+        pageBg: "#292929",
+        bubblesY: 160,
+        spawn: [120, 90, 110, 80],
+        area: "greenroom-map.png",
+        areaColors: {
+            // exits
+	      h00ff00: { cmd: "enter", room: "Bonfire", label: "Bonfire", point: [9, 84], enterPoint: [119, 86], obstacle: false },
+            //h00ffff: { cmd: "enter", room: "TPCATavern", label: "Tavern", point: [119, 86], enterPoint: [10, 86], obstacle: false },
+            //hffff00: { cmd: "text", label: "The Filthy Lyre", txt: "Pffft!", align: "center", lines: 1, point: [45, 90], obstacle: true },
+            //hff29ff: { cmd: "textRandom", label: "The Filthy Lyre", txt: "Hey! Paws off, y'animal!|Bugger!|That tickles!", align: "center", lines: 1, point: [45, 90], obstacle: false },
+        },
+    },
 
     //Fire Rooms    
     
