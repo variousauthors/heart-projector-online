@@ -528,7 +528,7 @@ function mirrorRoomTalk(playerId, bubble) {
 
 function BonfireEnter(playerId, roomId) {
     if (playerId == me.id) {
-        longText = "XXXXXXX XXXX XXXXX XXX XX XXXX X XXX";
+        longText = "The shadows grow deeper as you approach the fire.";
         longTextLines = -1;
         longTextAlign = "center";
     }

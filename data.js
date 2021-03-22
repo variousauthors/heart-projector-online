@@ -109,12 +109,22 @@ module.exports.ROOMS = {
             hff0000: { cmd: "enter", room: "TPCAColourRoom", label: "COLOUR Room", point: [33, 13], enterPoint: [67, 94], obstacle: false },
             h00ff00: { cmd: "enter", room: "TPCAMapRoom", label: "War Room", point: [121, 52], enterPoint: [8, 75], obstacle: false },
             hf000ff: { cmd: "enter", room: "TPCATavern", label: "Tavern", point: [10, 52], enterPoint: [118, 85], obstacle: false },
-            h0000ff: { cmd: "enter", room: "TPCAFireRoom", label: "Bonfire", point: [96, 13], enterPoint: [15, 94], obstacle: false },
+            h0000ff: { cmd: "enter", room: "TPCAFireRoom", label: "The Bonfire Effect", point: [96, 13], enterPoint: [15, 94], obstacle: false },
             h55ffff: { cmd: "enter", room: "elevator", label: "Elevator", point: [66, 97], enterPoint: [64, 68], obstacle: false },
-			h7c7c7c: { cmd: "enter", room: "TPCAApartments", label: "apart meant", point: [63, 7], enterPoint: [67, 94], obstacle: false },
+	    h7c7c7c: { cmd: "enter", room: "TPCAApartments", label: "apart meant", point: [63, 7], enterPoint: [67, 94], obstacle: false },
+	    h009999: { cmd: "enter", room: "TPCAWashRoom", label: "Universal Washroom", point: [116, 90], enterPoint: [11, 83], obstacle: false },
+
+
+h450000: {cmd: "text", label: "Tour Information Panel", txt: "No tours are currently scheduled.", point: [17, 91], align: "center", lines: 1, },
+h666633: {cmd: "text", label: "Exhibit Label", txt: "The Filthy Lyre. \nChristopher Alan Slater, 2021", point: [16, 67], align: "center", lines: 2, },
+h9966cc: {cmd: "text", label: "Exhibit Label", txt: "Untitled, \nLouise Chow, 2021", point: [21, 20], align: "center", lines: 2, },
+h669966: {cmd: "text", label: "Exhibit Label", txt: "Untitled, \nLouise Chow, 2021", point: [45, 19], align: "center", lines: 2, },
+hff6600: {cmd: "text", label: "Exhibit Label", txt: "The Bonfire Effect (narrative series).\nKay Slater, 2021\n\nAn exploration of intimacy via pixels, flames, and storytelling.\n\nScheduled story times will be posted on the tour info panel in the main hall. The bonfire can be visited anytime.", point: [82, 20], align: "center", lines: 11, },
+h6666cc: {cmd: "text", label: "Exhibit Label", txt: "Untitled, \nLouise Chow, 2021", point: [112, 67], align: "center", lines: 2, },
+hff9999: {cmd: "text", label: "Exhibit Label", txt: "All Genders Universal Washroom.\nKay Slater, 2021\n\nDigital sculpture.\n\nNo budget restrictions, homophobic and transantagonistic policies, or focused-on-code-only facilities managers (and architects) allowed dreaming space.", point: [115, 84], align: "center", lines: 11, },
 			
 			//placard
-            hfeff00: { cmd: "text", label: "placard", txt: "The Papercut Arcade collective works to create safer spaces to explore creativity and art with like-minded folks. We're proud to be sharing digital real estate with the folks at Heart Projector.", point: [66, 73], align: "center", lines: 6, },
+            hfeff00: { cmd: "text", label: "Exhibition Text", txt: "The Papercut Arcade collective works to create safer spaces to explore creativity and art with like-minded folks. We're proud to be sharing digital real estate with the folks at Heart Projector.", point: [66, 73], align: "center", lines: 6, },
         },
     },
 	
@@ -256,6 +266,63 @@ module.exports.ROOMS = {
             //hff29ff: { cmd: "textRandom", label: "The Filthy Lyre", txt: "Hey! Paws off, y'animal!|Bugger!|That tickles!", align: "center", lines: 1, point: [45, 90], obstacle: false },
         },
     },
+
+
+ //Universal Washroom    
+    
+    TPCAWashRoom: {
+        bg: "TPCAwashroomBackground.png",
+        avatarScale: 2,
+        tint: "#ffffff",
+        pageBg: "#292929",
+        bubblesY: 50,
+        spawn: [14, 87, 11, 80],
+        area: "TPCAwashroom-areas.png",
+        areaColors: {
+            // exits
+            hff8800: { cmd: "enter", room: "TPCAHallway", label: "Hall", point: [10, 84], enterPoint: [116, 90], obstacle: false },
+	    // areas of note
+            hbbcc88: { cmd: "text", label: "Hooks", txt: "At variable heights", align: "center", lines: 1, point: [19, 75], obstacle: false },
+            h55ffff: { cmd: "text", label: "Didactic Panel", txt: "This reality gives us near unlimited real estate to imagine accessible spaces we can only wish for as an artist-run community. With the swipe of my stylus, I can carve out rooms, add fixtures, and host folks in a way that I could never afford to or build IRL. I wanted to imagine a place where, even when we didn't need to have every meat-body need met, we could still make space for it. \n- Kay Slater.", align: "center", lines: 13, point: [11, 91], obstacle: false },
+            h889922: { cmd: "text", label: "Visual Fire Alarm", txt: "For non-auditory awareness", align: "center", lines: 1, point: [8, 91], obstacle: false },
+	    hff0000: { cmd: "text", label: "High Contrast Exit", txt: "", align: "center", lines: 1, point: [8, 91], obstacle: false },
+	    hffccff: { cmd: "text", label: "\"Running Man Exit\"", txt: "Green Means Go", align: "center", lines: 1, point: [16, 81], obstacle: false },
+	    h33aaaa: { cmd: "text", label: "High Contrast Baseboard", txt: "", align: "center", lines: 1, point: [54, 81], obstacle: false },
+	    hff00ff: { cmd: "text", label: "High Contrast Flooring", txt: "", align: "center", lines: 1, point: [28, 78], obstacle: false },
+	    h0000ff: { cmd: "text", label: "Tactile Walking Surface Indicator", txt: "", align: "center", lines: 1, point: [41, 79], obstacle: false },
+	    hff99ff: { cmd: "text", label: "Paper Towels and Receptacle", txt: "Near the sink.", align: "center", lines: 1, point: [23, 73], obstacle: false },
+	    hffeeff: { cmd: "text", label: "Repositionable Shelving", txt: "A place for bags and devices.", align: "center", lines: 1, point: [43, 76], obstacle: false },
+	    hfcbbbb: { cmd: "text", label: "Automated Soap Dispenser", txt: "With unscented soap.", align: "center", lines: 1, point: [43, 76], obstacle: false },
+	    h8bcccc: { cmd: "text", label: "Automated Fountain", txt: "With space for a bottle.", align: "center", lines: 1, point: [43, 76], obstacle: false },
+	    hffddcc: { cmd: "text", label: "Repositionable Sink", txt: "With Lever Handle Faucet", align: "center", lines: 1, point: [43, 76], obstacle: false },
+	    heebbcc: { cmd: "text", label: "Tiltable Mirror", txt: "With LED Lighting", align: "center", lines: 1, point: [43, 76], obstacle: false },
+	    hccffcc: { cmd: "text", label: "Assistance Call Button", txt: "Easy to push", align: "center", lines: 1, point: [65, 76], obstacle: false },
+	    hffaadd: { cmd: "text", label: "Power Outlet", txt: "At variable heights", align: "center", lines: 1, point: [65, 76], obstacle: false },
+	    h00ff00: { cmd: "text", label: "Sling", txt: "", align: "center", lines: 1, point: [75, 80], obstacle: false },
+	    hffff00: { cmd: "text", label: "Swing Away Grab Bar", txt: "", align: "center", lines: 1, point: [84, 75], obstacle: false },
+	    hffffdd: { cmd: "text", label: "Sanitary Waste Container", txt: "Within reach but not in transit area.", align: "center", lines: 1, point: [84, 75], obstacle: false },
+	    hffffcc: { cmd: "text", label: "Horizontal Grab Bar behind Toilet", txt: "", align: "center", lines: 1, point: [104, 79], obstacle: false },
+	    hffff33: { cmd: "text", label: "Automated Flushing Mechanism", txt: "No touch flush.", align: "center", lines: 1, point: [104, 79], obstacle: false },
+	    hffff99: { cmd: "text", label: "Padded Back Rest", txt: "Required for toilets with no back.", align: "center", lines: 1, point: [104, 79], obstacle: false },
+	    hffffbb: { cmd: "text", label: "Toilet", txt: "Floor Mounted Back-to-Wall", align: "center", lines: 1, point: [104, 79], obstacle: false },
+	    hffffaa: { cmd: "text", label: "Toilet Paper", txt: "Within reach.", align: "center", lines: 1, point: [104, 79], obstacle: false },
+	    h00bb00: { cmd: "text", label: "L-Shaped Grab Bar", txt: "", align: "center", lines: 1, point: [106, 84], obstacle: false },
+	    h008800: { cmd: "text", label: "Urinal", txt: "", align: "center", lines: 1, point: [116, 83], obstacle: false },
+	    h002200: { cmd: "text", label: "Vertical Grab Bar", txt: "For both sides of the urinal.", align: "center", lines: 1, point: [116, 83], obstacle: false },
+	    h77aaaa: { cmd: "text", label: "Colour Contrasted Wall", txt: "", align: "center", lines: 1, point: [100, 83], obstacle: false },
+	    haabbaa: { cmd: "text", label: "Moveable Garbage Bin", txt: "Out of the way.", align: "center", lines: 1, point: [16, 93], obstacle: false },
+	    h225522: { cmd: "text", label: "Baby Changing Table", txt: "", align: "center", lines: 1, point: [36, 93], obstacle: false },
+	    haa22aa: { cmd: "text", label: "Adult Changing Table", txt: "", align: "center", lines: 1, point: [75, 93], obstacle: false },
+
+        },
+
+        things: {
+            //scenery
+            changingTables: { file: "TPCAwashroomeForeground.png", frames: 1, position: [0, 0], depthAdjust:3 },
+	    sling: { file: "sling.png", frames: 1, position: [72, 25], depthAdjust:1 },
+        },
+    },
+
 
     //Fire Rooms    
     
@@ -408,7 +475,7 @@ module.exports.ROOMS = {
             h007d4b: { cmd: "text", label: "Berries", txt: "These berries are just right. \nYou swallow a fistful.", align: "center", lines: 2, point: [26, 86], obstacle: false },
             hccff00: { cmd: "text", label: "Berries", txt: "These snozzberries taste \nlike snozzberries.", align: "center", lines: 2, point: [34, 92], obstacle: false },
             h00ff00: { cmd: "text", label: "Fountain", txt: "There are coins in this fountain.", align: "center", lines: 1, point: [75, 89], obstacle: true },
-            hf000ff: { cmd: "text", label: "Fountain", txt: "You toss in a coin. \nMake a wish!", align: "center", lines: 2, point: [75, 89], obstacle: false },
+            hf000ff: { cmd: "textRandom", label: "Fountain", txt: "You toss in a coin. \nMake a wish!|You see various coins, \n at the bottom of the fountain.|Your wish will come true! \nWell done!.|\"You are worthy of love\", \nthe fountain whispers back to you.|Your lucky numbers are 3, 8, 38, 88|That wish is kinda weird.|You like like that was \na waste of money.|You decide to keep the coin.", align: "center", lines: 2, point: [75, 89], obstacle: false },
         },
         things: {
             //scenery
@@ -437,15 +504,15 @@ module.exports.ROOMS = {
             //scenery
             fire: { file: "ForestPath-Bonfire-fire.png", frames: 9, frameDelay: 15, position: [55, 3], depthAdjust:20 },
             smoke: { file: "ForestPath-Bonfire-smoke.png", frames: 11, frameDelay: 100, position: [52, 0], depthAdjust:-2 },
-            log1: { file: "ForestPath-Bonfire-Log1.png", position: [39, 88], depthAdjust:1 },
-            log2: { file: "ForestPath-Bonfire-Log2.png", position: [30, 71], depthAdjust:-2 },
-            log3: { file: "ForestPath-Bonfire-Log3.png", position: [75, 89], depthAdjust:1 },
-            log4: { file: "ForestPath-Bonfire-Log4.png", position: [95, 82], depthAdjust:1 },
+            marshmallow: { file: "marshmallow-100.png", frames: 100, frameDelay: 55, position: [36, 72], depthAdjust:1 },
+            crossedLeg: { file: "crossed-leg-44.png", frames: 44, frameDelay: 60, position: [28, 65], depthAdjust:-2 },
+            smoker: { file: "smoker-48.png", frames: 48, frameDelay:10, position: [85, 55], depthAdjust:1 },
+            serviceAnimal: { file: "service-animal-188.png", frames: 188, frameDelay: 35, position: [75, 79], depthAdjust:1 },
         },
     }, 
     
     
-    //End Kay Added January 2021
+    //End Kay Added March 2021
 
     oldspaceBar: {
         bg: "room_oldspace_anim_bar.png",

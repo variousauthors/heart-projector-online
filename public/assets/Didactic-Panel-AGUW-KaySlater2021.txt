@@ -1,0 +1,16 @@
+Didactic Panel: All Genders Universal Washroom (a digital sculpture).
+
+In both The Bonfire Effect, and All Genders Universal Washroom, I wanted to explore, and discuss the power and limitations of physical meeting spaces. During the COVID-19 pandemic, able-bodied folks complain about not being able to meet or gather in person, and how they are counting the days until they can again gather in person. This digital space provides us near unlimited real estate to imagine and create the kinds of spaces that I only wish we could access to as an artist-run community - whether or not we are able to return to in-person gatherings anytime soon. With the click of a button, and the swipe of my stylus, I can carve out rooms, create walls, add fixtures, and plan for bodies and care in a way that I could never afford to or build on my own. I can imagine a world where I could host for folks who could not normally come out and gather whether due to their own body restrictions or the restrictions imposed upon them by others, others' choices, or the facilities in which we choose to gather. While some of us struggle to be apart, still others will not find the world any more inviting or possible to navigate when the world races to return to /"normal/" and so I wanted to imagine a space where even if I didn't *need* to have every need met, I could still make room for it.
+
+- Kay Slater, 2021
+
+
+
+This digital reality provides us near unlimited real estate to imagine the kinds of spaces we can only wish we had access to as an artist-run community. With the click of a button and the swipe of my stylus, I can carve out rooms, add fixtures, and host folks in a way that I could never afford to or build on my own. While some of us struggle apart during the pandemic, still others will not find RL any more possible to navigate as the world races back to /"normal/" and so I wanted to imagine a place where, even when we didn't /*need/* to have every meat-body need met, we could still make space for it. - Kay Slater
+
+
+
+
+
+
+h55ffff: { cmd: "text", label: "Didactic Panel", txt: "You read the didactic text..." url: "../Didactic-Panel-AGUW-KaySlater2021", point: [91, 71] }
