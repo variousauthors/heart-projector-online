@@ -72,10 +72,33 @@ module.exports.ROOMS = {
         area: "Stairwell-areas.png",
         areaColors: {
             // exits
-            h00ffff: { cmd: "enter", room: "oldspaceLounge", label: "Heart Projector", point: [67, 59], enterPoint: [50, 70], obstacle: false },
-            hff002a: { cmd: "enter", room: "TPCAHallway", label: "The Papercut Arcade", point: [67, 59], enterPoint: [66, 99], obstacle: false },
+            h0000ff: { cmd: "enter", room: "stairwell2", label: "up", point: [81, 8], enterPoint: [61, 95], obstacle: false },
+            hff0000: { cmd: "enter", room: "powellAndClark", label: "down", point: [61, 95], enterPoint: [72, 77], obstacle: false },
         },
-    },
+		things: {
+			candle1: { file: "Stairwell-candle1.png", frames: 3, frameDelay: 5, position: [9, 24], depthAdjust:10, obstacle: true },
+            candle2: { file: "Stairwell-candle2.png", frames: 3, frameDelay: 8, position: [110, 55], depthAdjust: -20, obstacle: true},
+		},
+	},
+	
+	    stairwell2: {
+        bg: "Stairwell.png",
+        avatarScale: 2,
+        tint: "#ffffff",
+        pageBg: "#292929",
+        bubblesY: 50,
+        spawn: [17, 84, 60, 95],
+        area: "Stairwell-areas.png",
+        areaColors: {
+            // exits
+            h0000ff: { cmd: "enter", room: "stairwell", label: "up", point: [81, 8], enterPoint: [61, 95], obstacle: false },
+            hff0000: { cmd: "enter", room: "powellAndClark", label: "down", point: [61, 95], enterPoint: [72, 77], obstacle: false },
+        },
+		things: {
+			candle1: { file: "Stairwell-candle2.png", frames: 3, frameDelay: 6, position: [14, 25], depthAdjust:10, obstacle: true },
+            candle2: { file: "Stairwell-candle1.png", frames: 3, frameDelay: 10, position: [100, 52], depthAdjust: -20, obstacle: true},
+		},
+	},
 
     elevator: {
         bg: "elevator.png",
@@ -106,6 +129,7 @@ module.exports.ROOMS = {
         area: "TPCAhallway-areas.png",
         areaColors: {
             // exits
+<<<<<<< HEAD
             hff0000: { cmd: "enter", room: "TPCAColourRoom", label: "COLOUR Room", point: [33, 13], enterPoint: [67, 94], obstacle: false },
             h00ff00: { cmd: "enter", room: "TPCAMapRoom", label: "War Room", point: [121, 52], enterPoint: [8, 75], obstacle: false },
             hf000ff: { cmd: "enter", room: "TPCATavern", label: "Tavern", point: [10, 52], enterPoint: [118, 85], obstacle: false },
@@ -125,22 +149,47 @@ hff9999: {cmd: "text", label: "Exhibit Label", txt: "All Genders Universal Washr
 			
 			//placard
             hfeff00: { cmd: "text", label: "Exhibition Text", txt: "The Papercut Arcade collective works to create safer spaces to explore creativity and art with like-minded folks. We're proud to be sharing digital real estate with the folks at Heart Projector.", point: [66, 73], align: "center", lines: 6, },
+=======
+            h7c7c7c: { cmd: "enter", room: "TPCAcheckin", label: "Check-Up Room", point: [8, 30], enterPoint: [38, 62], obstacle: false },
+			      h00ffee: { cmd: "enter", room: "TPCAcheckin", label: "Go to work", point: [120, 30], enterPoint: [86, 67], obstacle: false },
+            h00ff00: { cmd: "enter", room: "TPCAMapRoom", label: "Map Room", point: [121, 60], obstacle: false },
+            hf000ff: { cmd: "enter", room: "TPCATavern", label: "The Filthy Lyre", point: [8, 61], enterPoint: [3, 50], obstacle: false },
+            h0000ff: { cmd: "enter", room: "TPCAFireRoom", label: "Bonfire", point: [96, 13], enterPoint: [15, 94], obstacle: false },
+            h55ffff: { cmd: "enter", room: "elevator", label: "Elevator", point: [66, 97], enterPoint: [64, 68], obstacle: false },
+			      hff0000: { cmd: "enter", room: "TPCAColourRoom", label: "Lost and Found", point: [32, 12], enterPoint: [67, 94], obstacle: false },
+			
+			//placard
+            hfeff00: { cmd: "text", label: "The Papercut Arcade", txt: "The Papercut Arcade collective works to create safer spaces to explore creativity and art with like-minded folks. We're proud to be sharing digital real estate with the folks at Heart Projector.", point: [66, 73], align: "center", lines: 6, },
+>>>>>>> master
         },
     },
 	
-	TPCAApartments: {
-        bg: "TPCA-Apartments.png",
-        avatarScale: 1,
+	TPCAcheckin: {
+        bg: "TPCA-checkin.png",
+        avatarScale: 2,
         tint: "#ffffff",
         pageBg: "#292929",
         bubblesY: 50,
         spawn: [17, 84, 60, 95],
-        area: "TPCA-Apartments-areas.png",
+        area: "TPCA-checkin-areas.png",
         areaColors: {
             // exits
-            ff0000: { cmd: "enter", room: "TPCAHallway", label: "out", point: [4, 15], enterPoint: [32, 16], obstacle: false },
-        },
-    },
+            h0000ff: { cmd: "enter", room: "TPCAHallway", label: "exit", point: [18, 74], enterPoint: [12, 30], obstacle: false },
+			hff0000: { cmd: "enter", room: "TPCAHallway", label: "exit", point: [94, 44], enterPoint: [120, 30], obstacle: false },
+			hf000ff: { cmd: "text", label: "sense", txt: "Someone cares about you.", align: "center", lines: 1, point: [25, 58], obstacle: false },
+			hfff000: { cmd: "text", label: "marvel", txt: "That's unusual.", align: "center", lines: 1, point: [70, 45], obstacle: false },
+        	h00ff00: { cmd: "text", label: "spectate", txt: "This wasn't in the medical books!", align: "center", lines: 1, point: [84, 45], obstacle: false },
+			h7000ff: { cmd: "text", label: "wonder", txt: "A strong reaction?", align: "center", lines: 1, point: [83, 75], obstacle: false },
+			h00feff: { cmd: "text", label: "consider", txt: "More questions to ask.", align: "center", lines: 1, point: [86, 70], obstacle: false },
+        	hffae00: { cmd: "text", label: "observe", txt: "A curious sample.", align: "center", lines: 1, point: [90, 80], obstacle: false },
+		},
+		things: {
+			mri: { file: "TPCA-checkin-mri.png", frames: 4, frameDelay: 5, position: [63, 17], depthAdjust:-2 },
+            skelly: { file: "TPCA-checkin-skelly.png", frames: 4, frameDelay: 20, position: [79, 14], depthAdjust: -2},
+            heart: { file: "TPCA-checkin-heart.png", frames: 2, frameDelay: 30, position: [103, 32]},
+			middle: { file: "TPCA-checkin-middle.png", position: [47, 11], depthAdjust: 50, obstacle: true},	
+		},
+	},
 
     TPCAGhostsOnlyRoom: {
         bg: "GhostsOnlyRoom.png",
@@ -152,7 +201,7 @@ hff9999: {cmd: "text", label: "Exhibit Label", txt: "All Genders Universal Washr
         area: "GhostsOnlyRoom-areas.png",
         areaColors: {
             // exits
-            ff0000: { cmd: "enter", room: "TPCAHallway", label: "out", point: [4, 15], enterPoint: [32, 16], obstacle: false },
+            hff0000: { cmd: "enter", room: "TPCAHallway", label: "out", point: [4, 15], enterPoint: [32, 16], obstacle: false },
         },
     },
 
@@ -162,14 +211,15 @@ hff9999: {cmd: "text", label: "Exhibit Label", txt: "All Genders Universal Washr
         tint: "#ffffff",
         pageBg: "#292929",
         bubblesY: 50,
-        spawn: [17, 84, 60, 95],
+        spawn: [3, 3, 125, 95],
         area: "maproom-areas.png",
-        areaColors: {
+		areaColors: {
             // exits
-            ff0000: { cmd: "enter", room: "TPCAHallway", label: "out", point: [4, 15], enterPoint: [32, 16], obstacle: false },
+            hff0000: { cmd: "enter", room: "TPCAHallway", label: "Unceded territory", point: [10, 19], enterPoint: [114, 60], obstacle: false },
         },
 		things: {
             //sprite spreadsheets only 1 row ok?
+			maproomExit: { file: "TPCAmaproomExit.png", position: [9, 18], depthAdjust: 0, obstacle: false },
             maproom1: { file: "maproom1.png", position: [0, 0], depthAdjust:-150, visible: false },
             maproom2: { file: "maproom2.png", position: [0, 0], depthAdjust:-150, visible: false },
             maproom3: { file: "maproom3.png", position: [0, 0], depthAdjust:-150, visible: false },
@@ -217,13 +267,13 @@ hff9999: {cmd: "text", label: "Exhibit Label", txt: "All Genders Universal Washr
         area: "colourRoom-areas.png",
         areaColors: {
             // exits
-            ff0000: { cmd: "enter", room: "TPCAHallway", label: "out", point: [65, 94], enterPoint: [32, 16], obstacle: false },
+            hff0000: { cmd: "enter", room: "TPCAHallway", label: "out", point: [65, 94], enterPoint: [32, 16], obstacle: false },
         },
 		things: {
-			instrument: {file: "colourRoom-Music.png", position: [96, 15], obstacle: true, lightEmissionColour: "#FF0000" },
-			voice: {file: "colourRoom-Voice.png", position: [20, 73], frames: 3, frameDelay: 11, obstacle: true, lightEmissionColour: "#FF00FF"},
-			blender: {file: "colourRoom-Blender.png", position: [95, 58], obstacle: true, lightEmissionColour: "#0000FF"},
-			Footstep: {file: "colourRoom-Footstep.png", position: [21, 21], frames: 3, frameDelay: 10, obstacle: true, lightEmissionColour: "#00ff00" },
+			instrument: {file: "colourRoom-Music.png", position: [96, 15], obstacle: true, lightEmissionColour: "#e8d42e" },
+			voice: {file: "colourRoom-Voice.png", position: [20, 73], frames: 3, frameDelay: 11, obstacle: true, lightEmissionColour: "#e82e3a"},
+			blender: {file: "colourRoom-Blender.png", position: [95, 58], obstacle: true, lightEmissionColour: "#73dff4"},
+			Footstep: {file: "colourRoom-Footstep.png", position: [21, 21], frames: 3, frameDelay: 10, obstacle: true, lightEmissionColour: "#ac73f4" },
 		},
     },
     
@@ -272,7 +322,7 @@ hff9999: {cmd: "text", label: "Exhibit Label", txt: "All Genders Universal Washr
     
     TPCAWashRoom: {
         bg: "TPCAwashroomBackground.png",
-        avatarScale: 3,
+        avatarScale: 2,
         tint: "#ffffff",
         pageBg: "#292929",
         bubblesY: 50,
@@ -283,7 +333,7 @@ hff9999: {cmd: "text", label: "Exhibit Label", txt: "All Genders Universal Washr
             hff8800: { cmd: "enter", room: "TPCAHallway", label: "Hall", point: [10, 84], enterPoint: [116, 90], obstacle: false },
 	    // areas of note
             hbbcc88: { cmd: "text", label: "Hooks", txt: "At variable heights", align: "center", lines: 1, point: [19, 75], obstacle: false },
-            h55ffff: { cmd: "text", label: "Didactic Panel", txt: "This reality gives us near unlimited real estate to imagine accessible spaces we can only wish for as an artist-run community. With the swipe of my stylus, I can carve out rooms, add fixtures, and host folks in a way that I could never afford to or build IRL. I wanted to imagine a place where, even when we didn't need to have every body's needs met, we could still make space for it. \n- Kay Slater.", align: "center", lines: 13, point: [11, 91], obstacle: false },
+            h55ffff: { cmd: "text", label: "Didactic Panel", txt: "This reality gives us near unlimited real estate to imagine accessible spaces we can only wish for as an artist-run community. With the swipe of my stylus, I can carve out rooms, add fixtures, and host folks in a way that I could never afford to or build IRL. I wanted to imagine a place where, even when we didn't need to have every meat-body need met, we could still make space for it. \n- Kay Slater.", align: "center", lines: 13, point: [11, 91], obstacle: false },
             h889922: { cmd: "text", label: "Visual Fire Alarm", txt: "For non-auditory awareness", align: "center", lines: 1, point: [8, 91], obstacle: false },
 	    hff0000: { cmd: "text", label: "High Contrast Exit", txt: "", align: "center", lines: 1, point: [8, 91], obstacle: false },
 	    hffccff: { cmd: "text", label: "\"Running Man Exit\"", txt: "Green Means Go", align: "center", lines: 1, point: [16, 81], obstacle: false },
@@ -1002,7 +1052,5 @@ hff9999: {cmd: "text", label: "Exhibit Label", txt: "All Genders Universal Washr
             VIPTable: { file: "VIP-table.png", position: [20, 65] },
             VIPCouch: { file: "VIP-couch.png", position: [87, 68] },
         }
-
-    },
-
+	},
 };
