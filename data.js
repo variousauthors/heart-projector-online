@@ -272,7 +272,7 @@ hff9999: {cmd: "text", label: "Exhibit Label", txt: "All Genders Universal Washr
     
     TPCAWashRoom: {
         bg: "TPCAwashroomBackground.png",
-        avatarScale: 2,
+        avatarScale: 3,
         tint: "#ffffff",
         pageBg: "#292929",
         bubblesY: 50,
@@ -283,7 +283,7 @@ hff9999: {cmd: "text", label: "Exhibit Label", txt: "All Genders Universal Washr
             hff8800: { cmd: "enter", room: "TPCAHallway", label: "Hall", point: [10, 84], enterPoint: [116, 90], obstacle: false },
 	    // areas of note
             hbbcc88: { cmd: "text", label: "Hooks", txt: "At variable heights", align: "center", lines: 1, point: [19, 75], obstacle: false },
-            h55ffff: { cmd: "text", label: "Didactic Panel", txt: "This reality gives us near unlimited real estate to imagine accessible spaces we can only wish for as an artist-run community. With the swipe of my stylus, I can carve out rooms, add fixtures, and host folks in a way that I could never afford to or build IRL. I wanted to imagine a place where, even when we didn't need to have every meat-body need met, we could still make space for it. \n- Kay Slater.", align: "center", lines: 13, point: [11, 91], obstacle: false },
+            h55ffff: { cmd: "text", label: "Didactic Panel", txt: "This reality gives us near unlimited real estate to imagine accessible spaces we can only wish for as an artist-run community. With the swipe of my stylus, I can carve out rooms, add fixtures, and host folks in a way that I could never afford to or build IRL. I wanted to imagine a place where, even when we didn't need to have every body's needs met, we could still make space for it. \n- Kay Slater.", align: "center", lines: 13, point: [11, 91], obstacle: false },
             h889922: { cmd: "text", label: "Visual Fire Alarm", txt: "For non-auditory awareness", align: "center", lines: 1, point: [8, 91], obstacle: false },
 	    hff0000: { cmd: "text", label: "High Contrast Exit", txt: "", align: "center", lines: 1, point: [8, 91], obstacle: false },
 	    hffccff: { cmd: "text", label: "\"Running Man Exit\"", txt: "Green Means Go", align: "center", lines: 1, point: [16, 81], obstacle: false },
