@@ -192,6 +192,18 @@ function getThingPosition (thing) {
     .map(n => n * ASSET_SCALE)
 }
 
+function getThingPosition (thing, normalizedPositionInRect) {
+	var dimensionScale = [ASSET_SCALE, ASSET_SCALE];
+	if(isDefined(thing.frames)) {
+		dimensionScale[0] *= 1.0 / thing.frames;
+	}
+	
+	return [
+		(thing.position[0] * ASSET_SCALE + normalizedPositionInRect[0] * thing.spriteGraphics.width * dimensionScale[0]),
+		(thing.position[1] * ASSET_SCALE + normalizedPositionInRect[1] * thing.spriteGraphics.height * dimensionScale[1])
+	];
+}
+
 function getDistanceBetween (player, position) {
   const { x: x1, y: y1 } = player // players have x, y
   const { x: x2, y: y2 } = position
@@ -779,6 +791,8 @@ function firstFloorEnter(playerId, roomId) {
 
 //Louise fucks around here
 
+var mapRoomImage;
+
 function TPCAApartmentsTalk (playerId, bubble) {
   if (isDefined(playerId) && playerId != me.id) {
     const player = players[playerId]
@@ -795,13 +809,31 @@ function TPCAApartmentsTalk (playerId, bubble) {
 
 
 function TPCAMapRoomEnter(playerId, roomId) {
-    if (playerId == me.id) {
-				
-        longText = "Plan a trip together?";
-        longTextLines = -1;
-        longTextAlign = "center";
 	
+		var randomText = floor(random(1, 4));
 		
+		if (randomText == 1) {    
+			longText = "If we could go anywhere...";
+			longTextLines = -1;
+			longTextAlign = "center";
+		} else if (randomText == 2) {    
+			longText = "Where am I?";
+			longTextLines = -1;
+			longTextAlign = "center";
+		} else if (randomText == 3) {    
+			longText = "Do I belong here?";
+			longTextLines = -1;
+			longTextAlign = "center";
+		} else {
+			longText = "What are you doing here?";
+			longTextLines = -1;
+			longTextAlign = "center";
+		}
+
+
+	
+    if (playerId == me.id) {
+	
         var s = localStorage.getItem("maproom");
 
         if (s == null) {
@@ -818,44 +850,162 @@ function TPCAColourRoomDrawSprite (playerId, sprite, drawingFunction) {
 	const player = players[playerId]
 	const accumulatedLight = [0.0, 0.0, 0.0];
 	
+	const distanceScale = 1.0 / 32.0;
+	const attenuationA = 0;
+	const attenuationB = 2;
+	const attenuationFloor = 0.1;
+	
 	for (var thingName in ROOMS.TPCAColourRoom.things){
 		const thing = ROOMS.TPCAColourRoom.things[thingName];
 		
 		if (isDefined(thing.lightEmissionColour)) {
-			const distanceFromThings = distanceFormula(player.x, player.y, thing.position[0], thing.position[1])
-			const attenuationValue = 1 - clamp(0, distanceFromThings - 20, 150) / 150
+			const thingPos = getThingPosition(thing, [0.5, 0.5]);
+			const distanceFromThings = distanceFormula(player.x, player.y - player.sprite.height * 0.5, thingPos[0], thingPos[1]) * distanceScale;
+			const attenuationValue = Math.max(0, 1.0 / (1.0 + attenuationA * distanceFromThings + attenuationB * distanceFromThings * distanceFromThings) - attenuationFloor);
 			const emittedColour = color(thing.lightEmissionColour);
-			const emittedRed = red(emittedColour)/255.0;
-			const emittedGreen = green(emittedColour)/255.0;
-			const emittedBlue = blue(emittedColour)/255.0;
+			const emittedColourXyz = rgb_to_cie(red(emittedColour)/255.0, green(emittedColour)/255.0, blue(emittedColour)/255.0).map(x => x * 2 * attenuationValue);
 			
-			accumulatedLight[0] += emittedRed * attenuationValue
-			accumulatedLight[1] += emittedGreen * attenuationValue
-			accumulatedLight[2] += emittedBlue * attenuationValue
+			accumulatedLight[0] += emittedColourXyz[0];
+			accumulatedLight[1] += emittedColourXyz[1];
+			accumulatedLight[2] += emittedColourXyz[2];
 		};
 	}
 		
+	if (isDefined(playerId) && playerId == me.id) {
+		for (var otherPlayerId in players) {
+			if (!players.hasOwnProperty(otherPlayerId)) continue;
+			if (otherPlayerId == me.id) continue;
+
+			const otherPlayer = players[otherPlayerId];
+			if(otherPlayer.nickName == "") continue;
+			
+			if(!isDefined(otherPlayer.colourRoomTintColors)) {
+				colorMode(HSB);
+				var randomColor = color(getNumberFromStringHash(otherPlayer.nickName,0.0, 360.0), 100, 70);
+				colorMode(RGB);
+				
+				otherPlayer.colourRoomTintColors = randomColor;
+			}
 		
-  if (isDefined(playerId) && playerId != me.id) {
-
-    //if (isDefined(player)) {
-      //const distance = getDistanceBetween(me, player.position)
-
-		if(!isDefined(player.colourRoomTintColors)) {
-
-        // somehow generate random colors
-
-			player.colourRoomTintColors = [
-				random(0, 255),
-				random(0, 255),
-				random(0, 255)];
+			const distanceFromOtherPlayer = distanceFormula(player.x, player.y, otherPlayer.x, otherPlayer.y) * distanceScale;
+			const attenuationValue = Math.max(0, 1.0 / (1.0 + attenuationA * distanceFromOtherPlayer + attenuationB * distanceFromOtherPlayer * distanceFromOtherPlayer) - attenuationFloor);
+			const emittedColourXyz = rgb_to_cie(red(otherPlayer.colourRoomTintColors)/255.0, green(otherPlayer.colourRoomTintColors)/255.0, blue(otherPlayer.colourRoomTintColors)/255.0).map(x => x * 1.4 * attenuationValue);
+			
+			accumulatedLight[0] += emittedColourXyz[0];
+			accumulatedLight[1] += emittedColourXyz[1];
+			accumulatedLight[2] += emittedColourXyz[2];
 		}
     }
 
-	  push();
-      tint(accumulatedLight[0] * 255, accumulatedLight[1] * 255, accumulatedLight[2] * 255);
-      drawingFunction();
-      noTint();
-      pop();
+	const playerImage = player.sprite.animation.spriteSheet.image;
+	const currentFrameCoords = player.sprite.animation.getFrameImage().frame;
+	const numFrames = player.sprite.animation.spriteSheet.frames.length;
+
+	const accumulatedRgb = cie_to_rgb(accumulatedLight[0], accumulatedLight[1], accumulatedLight[2]);
+	
+	// bleed some light from all the channels together, to make whiter-ish HDR colors
+	const lum = [
+		Math.max(0, 0.2126 * (accumulatedRgb[0] - 1.0)),
+		Math.max(0, 0.7152 * (accumulatedRgb[1] - 1.0)),
+		Math.max(0, 0.0722 * (accumulatedRgb[2] - 1.0))
+	];
+
+	accumulatedRgb[0] += lum[1] + lum[2];
+	accumulatedRgb[1] += lum[0] + lum[2];
+	accumulatedRgb[2] += lum[0] + lum[1]
+
+	if(!isDefined(mapRoomImage)) {
+		mapRoomImage = createImage(playerImage.width, playerImage.height);
+		mapRoomImage.loadPixels();
+	} else if(playerImage.width != mapRoomImage.width || playerImage.height != mapRoomImage.height) {
+		mapRoomImage.resize(playerImage.width, playerImage.height);
+	}
+	
+	for(var i = 0; i < mapRoomImage.pixels.length; ++i) {
+		mapRoomImage.pixels[i] = 255;
+	}
+	mapRoomImage.updatePixels();
+	
+	mapRoomImage.mask(playerImage);
+
+	push();
+	//drawingFunction();
+	
+	
+	
+	tint(accumulatedRgb[0] * 255, accumulatedRgb[1] * 255, accumulatedRgb[2] * 255);
+	image(mapRoomImage, 0, 0, mapRoomImage.width / numFrames, mapRoomImage.height, currentFrameCoords.x, currentFrameCoords.y, currentFrameCoords.width, currentFrameCoords.height);
+
+	/*
+	const sx = currentFrameCoords.x;
+	const sy = currentFrameCoords.y;
+	const sw = currentFrameCoords.width;
+	const sh = currentFrameCoords.height;
+
+	const dx = -playerImage.width / numFrames * 0.5;
+	const dy = -playerImage.height * 0.5;
+	const dw = playerImage.width / numFrames;
+	const dh = playerImage.height;
+	blend(mapRoomImage, sx, sy, sw, sh, dx, dy, dw, dh, NORMAL);
+	*/
+	
+	noTint();
+	pop();
+}
+
+function getNumberFromStringHash(string,inclusiveMin,inclusiveMax) {
+	const hash = getHashFromString(string);
+	const modulo = hash % 1000; // let's HOPE our hash function gives us a reasonable enough 'random' range that at least makes it from 0-1000, lol
+	const result = modulo / 1000.0 * inclusiveMax + inclusiveMin;
+	return result;
+}
+
+function getHashFromString(string) {
+  var hash = 0, i, chr;
+  if (string.length === 0) return hash;
+  for (i = 0; i < string.length; i++) {
+    chr   = string.charCodeAt(i);
+    hash  = ((hash << 5) - hash) + chr;
+    hash |= 0; // Convert to 32bit integer
   }
-  
+  return hash;
+};
+
+function cie_to_rgb(X, Y, Z)
+{
+	//Convert to RGB using Wide RGB D65 conversion
+	var red 	=  X * 1.656492 - Y * 0.354851 - Z * 0.255038;
+	var green 	= -X * 0.707196 + Y * 1.655397 + Z * 0.036152;
+	var blue 	=  X * 0.051713 - Y * 0.121364 + Z * 1.011530;
+	
+	if (isNaN(red))
+		red = 0;
+
+	if (isNaN(green))
+		green = 0;
+
+	if (isNaN(blue))
+		blue = 0;
+
+	return [red, green, blue];
+}
+
+
+function rgb_to_cie(red, green, blue)
+{
+	//RGB values to XYZ using the Wide RGB D65 conversion formula
+	var X 		= red * 0.664511 + green * 0.154324 + blue * 0.162028;
+	var Y 		= red * 0.283881 + green * 0.668433 + blue * 0.047685;
+	var Z 		= red * 0.000088 + green * 0.072310 + blue * 0.986039;
+
+	if (isNaN(X))
+		X = 0;
+
+	if (isNaN(Y))
+		Y = 0;	 
+
+	if (isNaN(Z))
+		Z = 0;	
+	
+	return [X, Y, Z];
+}
