@@ -168,7 +168,6 @@ module.exports.initMod = function (io, gameState, DATA) {
         else if (dice < 50) {
             //mostly a chatterbox
             npc_server.talk("Barf!");
-            npc_server.talk(global.paranoidTalk[Math.floor(random(0, global.paranoidTalk.length - 1))]);
             npc_server.move(random(17, 113) * 2, random(76, 98) * 2);
             npc_server.behavior = setTimeout(ramble, random(7000, 9000));
         }
@@ -180,6 +179,46 @@ module.exports.initMod = function (io, gameState, DATA) {
             //to kill the bot
             //clearTimeout(npc.behavior);
             //npc_server.delete();
+        }
+
+
+    }, random(1000, 2000));
+    
+    var npc_tal = new NPC(
+        {
+            id: "tal",
+            nickName: "Tal",
+            room: "TPCATavern",
+            x: 22,
+            y: 66,
+            avatar: 37,
+            colors: [2, 2, 1, 5],
+            labelColor: "#1e839d"
+        });
+
+    npc_tal.behavior = setTimeout(function ramble() {
+        var dice = random(0, 100);
+
+        if (dice < 15) {
+            //cleans bar
+            npc_tal.talk("Yarf!");
+            npc_tal.move(random(17, 113) * 2, random(76, 98) * 2);
+            npc_tal.behavior = setTimeout(ramble, random(4000, 8000));   
+        }
+        else if (dice < 50) {
+            //mostly a chatterbox
+            npc_tal.talk("Barf!");
+            npc_tal.move(random(17, 113) * 2, random(76, 98) * 2);
+            npc_tal.behavior = setTimeout(ramble, random(7000, 9000));
+        }
+        else {
+            //just wait
+            npc_tal.move(random(17, 113) * 2, random(76, 98) * 2);
+            npc_tal.behavior = setTimeout(ramble, random(1000, 3000));
+
+            //to kill the bot
+            //clearTimeout(npc.behavior);
+            //npc_tal.delete();
         }
 
 

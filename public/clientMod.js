@@ -732,23 +732,44 @@ function TPCATavernTalk(playerId, bubble) {
 
         var diceroll = random(1,100);
         var verily = "";
-            if (diceroll < 10) {
-                verily = "Verily!";
+            if (diceroll < 1) {
+                verily = "Don't ask about the painting...";
             }
+            else if (diceroll < 10) {
+                verily = "Tell us a tale!";
+	    }
             else if (diceroll < 20) {
                 verily = "More ale!";
 	    }
-            else if (diceroll < 40) {
-                verily = "Lager lager lager lager!";
+            else if (diceroll < 30) {
+                verily = "Bee-yoo-tee-ful!";
 	    }
+            else if (diceroll < 40) {
+                verily = "Bwahaha!";
+	    }
+            else if (diceroll < 45) {
+                verily = "Why it's his missus innit?";
+	    }
+            else if (diceroll < 50) {
+                verily = "What timeizzit?";
+            }
+            else if (diceroll < 60) {
+                verily = "Nah, this one's on me!";
+            }
+            else if (diceroll < 70) {
+                verily = "I.P.A... horsepiss!";
+            }
             else if (diceroll < 80) {
                 verily = "Hic!";
+            }
+            else if (diceroll < 90) {
+                verily = "Bla blah bla...";
 	    }
             else if (diceroll < 100) {
                 verily = "Forsooth?";
 	    }
             else {
-                verily = "Hasht thousht heard the one bout the one-legged knight?";
+                verily = "Hasht thousht heard the one bout the three-legged knight?";
             }
 
         bubble.message = verily;
@@ -968,13 +989,31 @@ function TPCAApartmentsTalk (playerId, bubble) {
 
 
 function TPCAMapRoomEnter(playerId, roomId) {
-    if (playerId == me.id) {
-				
-        longText = "Plan a trip together?";
-        longTextLines = -1;
-        longTextAlign = "center";
 	
+		var randomText = floor(random(1, 4));
 		
+		if (randomText == 1) {    
+			longText = "If we could go anywhere...";
+			longTextLines = -1;
+			longTextAlign = "center";
+		} else if (randomText == 2) {    
+			longText = "Where am I?";
+			longTextLines = -1;
+			longTextAlign = "center";
+		} else if (randomText == 3) {    
+			longText = "Do I belong here?";
+			longTextLines = -1;
+			longTextAlign = "center";
+		} else {
+			longText = "What are you doing here?";
+			longTextLines = -1;
+			longTextAlign = "center";
+		}
+
+
+	
+    if (playerId == me.id) {
+	
         var s = localStorage.getItem("maproom");
 
         if (s == null) {
@@ -1014,25 +1053,27 @@ function TPCAColourRoomDrawSprite (playerId, sprite, drawingFunction) {
 		
 	if (isDefined(playerId) && playerId == me.id) {
 		for (var otherPlayerId in players) {
-			if (players.hasOwnProperty(otherPlayerId) && otherPlayerId != me.id) {
-				const otherPlayer = players[otherPlayerId];
-				
-				if(!isDefined(otherPlayer.colourRoomTintColors)) {
-					colorMode(HSB);
-					var randomColor = color(random(0.0, 360.0), 100, 70);
-					colorMode(RGB);
-					
-					otherPlayer.colourRoomTintColors = randomColor;
-				}
+			if (!players.hasOwnProperty(otherPlayerId)) continue;
+			if (otherPlayerId == me.id) continue;
+
+			const otherPlayer = players[otherPlayerId];
+			if(otherPlayer.nickName == "") continue;
 			
-				const distanceFromOtherPlayer = distanceFormula(player.x, player.y, otherPlayer.x, otherPlayer.y) * distanceScale;
-				const attenuationValue = Math.max(0, 1.0 / (1.0 + attenuationA * distanceFromOtherPlayer + attenuationB * distanceFromOtherPlayer * distanceFromOtherPlayer) - attenuationFloor);
-				const emittedColourXyz = rgb_to_cie(red(otherPlayer.colourRoomTintColors)/255.0, green(otherPlayer.colourRoomTintColors)/255.0, blue(otherPlayer.colourRoomTintColors)/255.0).map(x => x * 1.4 * attenuationValue);
+			if(!isDefined(otherPlayer.colourRoomTintColors)) {
+				colorMode(HSB);
+				var randomColor = color(getNumberFromStringHash(otherPlayer.nickName,0.0, 360.0), 100, 70);
+				colorMode(RGB);
 				
-				accumulatedLight[0] += emittedColourXyz[0];
-				accumulatedLight[1] += emittedColourXyz[1];
-				accumulatedLight[2] += emittedColourXyz[2];
+				otherPlayer.colourRoomTintColors = randomColor;
 			}
+		
+			const distanceFromOtherPlayer = distanceFormula(player.x, player.y, otherPlayer.x, otherPlayer.y) * distanceScale;
+			const attenuationValue = Math.max(0, 1.0 / (1.0 + attenuationA * distanceFromOtherPlayer + attenuationB * distanceFromOtherPlayer * distanceFromOtherPlayer) - attenuationFloor);
+			const emittedColourXyz = rgb_to_cie(red(otherPlayer.colourRoomTintColors)/255.0, green(otherPlayer.colourRoomTintColors)/255.0, blue(otherPlayer.colourRoomTintColors)/255.0).map(x => x * 1.4 * attenuationValue);
+			
+			accumulatedLight[0] += emittedColourXyz[0];
+			accumulatedLight[1] += emittedColourXyz[1];
+			accumulatedLight[2] += emittedColourXyz[2];
 		}
     }
 
@@ -1091,6 +1132,24 @@ function TPCAColourRoomDrawSprite (playerId, sprite, drawingFunction) {
 	noTint();
 	pop();
 }
+
+function getNumberFromStringHash(string,inclusiveMin,inclusiveMax) {
+	const hash = getHashFromString(string);
+	const modulo = hash % 1000; // let's HOPE our hash function gives us a reasonable enough 'random' range that at least makes it from 0-1000, lol
+	const result = modulo / 1000.0 * inclusiveMax + inclusiveMin;
+	return result;
+}
+
+function getHashFromString(string) {
+  var hash = 0, i, chr;
+  if (string.length === 0) return hash;
+  for (i = 0; i < string.length; i++) {
+    chr   = string.charCodeAt(i);
+    hash  = ((hash << 5) - hash) + chr;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+};
 
 function cie_to_rgb(X, Y, Z)
 {
