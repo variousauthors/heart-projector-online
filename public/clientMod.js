@@ -272,49 +272,99 @@ var curationData = {
             right: {
                 thingId: "Right",
                 screenGradientPath:"assets/monitorGradientGlow1.png",
+				placardTitleText:"Testing Game 1",
+				placardDescriptionText:"\"A test description 1.\"",
+				placardAuthorText:"A videogame by Author1",
+				gameplayText:"The gameplay1 fills your senses...",
+				gameplayUrl:"https://itch.io/game1"
             },
             left: {
                 thingId: "Left",
                 screenGradientPath:"assets/monitorGradientGlow1.png",
+				placardTitleText:"Testing Game 2",
+				placardDescriptionText:"\"A test description 2.\"",
+				placardAuthorText:"A videogame by Author2",
+				gameplayText:"The gameplay2 fills your senses...",
+				gameplayUrl:"https://itch.io/game2"
             },
 			tableLeft: {
                 thingId: "TableLeft",
                 screenGradientPath:"assets/monitorGradientGlow1.png",
+				placardTitleText:"Testing Game 3",
+				placardDescriptionText:"\"A test description 3.\"",
+				placardAuthorText:"A videogame by Author3",
+				gameplayText:"The gameplay3 fills your senses...",
+				gameplayUrl:"https://itch.io/game3"
             },
 			tableRight: {
                 thingId: "TableRight",
                 screenGradientPath:"assets/monitorGradientGlow1.png",
+				placardTitleText:"Testing Game 4",
+				placardDescriptionText:"\"A test description 4.\"",
+				placardAuthorText:"A videogame by Author4",
+				gameplayText:"The gameplay4 fills your senses...",
+				gameplayUrl:"https://itch.io/game4"
             },
             projector: {
                 thingId: "Projector",
                 screenGradientPath:"assets/monitorGradientGlow1.png",
+				placardTitleText:"Testing Game 5",
+				placardDescriptionText:"\"A test description 5.\"",
+				placardAuthorText:"A videogame by Author5",
+				gameplayText:"The gameplay5 fills your senses...",
+				gameplayUrl:"https://itch.io/game5"
             },
         },
 		oldspaceLounge: {
 			left: {
                 thingId: "Left",
                 screenGradientPath:"assets/monitorGradientGlow1.png",
+				placardTitleText:"Testing Game 6",
+				placardDescriptionText:"\"A test description 6.\"",
+				placardAuthorText:"A videogame by Author6",
+				gameplayText:"The gameplay6 fills your senses...",
+				gameplayUrl:"https://itch.io/game6"
             },
             right: {
                 thingId: "Right",
                 screenGradientPath:"assets/monitorGradientGlow1.png",
+				placardTitleText:"Testing Game 7",
+				placardDescriptionText:"\"A test description 7.\"",
+				placardAuthorText:"A videogame by Author7",
+				gameplayText:"The gameplay7 fills your senses...",
+				gameplayUrl:"https://itch.io/game7"
             },
         },
 		oldspaceBar: {
 			left: {
                 thingId: "Left",
                 screenGradientPath:"assets/monitorGradientGlow1.png",
+				placardTitleText:"Testing Game 8",
+				placardDescriptionText:"\"A test description 8.\"",
+				placardAuthorText:"A videogame by Author8",
+				gameplayText:"The gameplay8 fills your senses...",
+				gameplayUrl:"https://itch.io/game8"
             },
 			
 			projector: {
                 thingId: "Projector",
                 screenGradientPath:"assets/monitorGradientGlow1.png",
+				placardTitleText:"Testing Game 9",
+				placardDescriptionText:"\"A test description 9.\"",
+				placardAuthorText:"A videogame by Author9",
+				gameplayText:"The gameplay9 fills your senses...",
+				gameplayUrl:"https://itch.io/game9"
             },
 		},
 		oldspaceOutside: {
 			mainframe: {
                 thingId: "Mainframe",
                 screenGradientPath:"assets/monitorGradientGlow1.png",
+				placardTitleText:"Testing Game 10",
+				placardDescriptionText:"\"a test description 10.\"",
+				placardAuthorText:"A videogame by Author10",
+				gameplayText:"The gameplay10 fills your senses...",
+				gameplayUrl:"https://itch.io/game10"
             },
 		},
     }
@@ -416,6 +466,51 @@ function curatedRoomEnter(playerId, roomId)
 		for (var m in roomCurationData) {
 		    const cd = roomCurationData[m];
 			cd.screenGradientImg = loadImage(cd.screenGradientPath);
+			
+			const screenThingId = "curation" + cd.thingId + "Screen";
+			const placardThingId = "curation" + cd.thingId + "Placard";
+			
+			if(isDefined(ROOMS[roomId].things[placardThingId].command.txt)) {
+				var placardString = "";
+				
+				if(isDefined(cd.placardTitleText)) {
+					placardString += cd.placardTitleText + '\n';
+				} else {
+					placardString += "An untitled videogame\n";
+				}
+				
+				if(isDefined(cd.placardAuthorText)) {
+					placardString += cd.placardAuthorText + '\n';
+				}
+				
+				if(isDefined(cd.placardDescriptionText)) {
+					placardString += cd.placardDescriptionText + '\n';
+				}
+				
+				if(placardString == "") {
+					placardString = "An unmarked placard.";
+				}
+				
+				ROOMS[roomId].things[placardThingId].command.txt = placardString;
+			}
+			
+			if(isDefined(ROOMS[roomId].things[screenThingId].command.txt)) {
+				var gameplayString = "";
+				
+				if(isDefined(cd.gameplayText)) {
+					gameplayString += cd.gameplayText;
+				}
+				
+				if(gameplayString == "") {
+					gameplayString = "The gameplay fills your senses...";
+				}
+				
+				ROOMS[roomId].things[screenThingId].command.txt = gameplayString;
+			}
+			
+			if(isDefined(ROOMS[roomId].things[screenThingId].command.url)) {
+				ROOMS[roomId].things[screenThingId].command.url = cd.gameplayUrl;
+			}
 		}
     }
 }
