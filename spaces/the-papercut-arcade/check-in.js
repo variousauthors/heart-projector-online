@@ -5,12 +5,12 @@ module.exports = {
         tint: "#ffffff",
         pageBg: "#292929",
         bubblesY: 50,
-        spawn: [17, 84, 60, 95],
+        spawn: [37, 88, 22, 70],
         area: "TPCA-checkin-areas.png",
         areaColors: {
             // exits
-            h0000ff: { cmd: "enter", room: "TPCAHallway", label: "exit", point: [18, 74], enterPoint: [12, 30], obstacle: false },
-			hff0000: { cmd: "enter", room: "TPCAHallway", label: "exit", point: [94, 44], enterPoint: [120, 30], obstacle: false },
+            h0000ff: { cmd: "enter", room: "TPCAHallway2", label: "exit", point: [18, 74], enterPoint: [11, 48], obstacle: false },
+			hff0000: { cmd: "enter", room: "TPCAHallway2", label: "exit", point: [94, 44], enterPoint: [117, 48], obstacle: false },
 			hf000ff: { cmd: "text", label: "sense", txt: "Someone cares about you.", align: "center", lines: 1, point: [25, 58], obstacle: false },
 			hfff000: { cmd: "text", label: "marvel", txt: "That's unusual.", align: "center", lines: 1, point: [70, 45], obstacle: false },
         	h00ff00: { cmd: "text", label: "spectate", txt: "This wasn't in the medical books!", align: "center", lines: 1, point: [84, 45], obstacle: false },

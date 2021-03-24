@@ -9,7 +9,7 @@ module.exports = {
         area: "maproom-areas.png",
 		areaColors: {
             // exits
-            hff0000: { cmd: "enter", room: "TPCAHallway", label: "Unceded territory", point: [10, 19], enterPoint: [114, 60], obstacle: false },
+            hff0000: { cmd: "enter", room: "TPCAHallway1", label: "Unceded territory", point: [10, 19], enterPoint: [115, 43], obstacle: false },
         },
 		things: {
             //sprite spreadsheets only 1 row ok?
@@ -21,5 +21,4 @@ module.exports = {
 			
 		},
     },
-
 }

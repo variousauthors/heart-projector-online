@@ -123,5 +123,4 @@ module.exports = {
 			curationMainframePlacard: { file: "placardTableQuarterTurn.png", frames: 1, position: [80, 70], depthAdjust:-4, visible:true, label: "A placard", command: { cmd: "text", txt: "Ayyyyy", align: "left", lines: 4, label: "A huggy game", point: [76, 76] } },
         }
     },
-
 }
