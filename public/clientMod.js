@@ -718,6 +718,14 @@ function mirrorRoomTalk(playerId, bubble) {
 
 }
 
+function BonfireEnter(playerId, roomId) {
+    if (playerId == me.id) {
+        longText = "The shadows grow deeper as you approach the fire.";
+        longTextLines = -1;
+        longTextAlign = "center";
+    }
+}
+
 function TPCATavernEnter(playerId, roomId) {
     if (playerId == me.id) {
         longText = "The smell of the fireplace greets you once again.";
