@@ -1,5 +1,5 @@
 module.exports = {
-	    TPCAColourRoom: {
+	  TPCAColourRoom: {
         bg: "colourRoom.png",
         avatarScale: 2,
         tint: "#ffffff",
@@ -9,7 +9,7 @@ module.exports = {
         area: "colourRoom-areas.png",
         areaColors: {
             // exits
-            hff0000: { cmd: "enter", room: "TPCAHallway", label: "out", point: [65, 94], enterPoint: [32, 16], obstacle: false },
+            hff0000: { cmd: "enter", room: "TPCAHallway2", label: "out", point: [65, 94], enterPoint: [32, 16], obstacle: false },
         },
 		things: {
 			instrument: {file: "colourRoom-Music.png", position: [96, 15], obstacle: true, lightEmissionColour: "#e8d42e" },

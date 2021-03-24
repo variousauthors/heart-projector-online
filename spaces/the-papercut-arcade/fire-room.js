@@ -1,6 +1,4 @@
 module.exports = {
-    //Fire Rooms    
-    
     TPCAFireRoom: {
         bg: "FireExit.png",
         avatarScale: 2,
@@ -11,7 +9,7 @@ module.exports = {
         area: "FireExit-areas.png",
         areaColors: {
             // exits
-            hf000ff: { cmd: "enter", room: "TPCAHallway", label: "Hall", point: [7, 83], enterPoint: [96, 22], obstacle: false },
+            hf000ff: { cmd: "enter", room: "TPCAHallway2", label: "Hall", point: [7, 83], enterPoint: [96, 22], obstacle: false },
             hffff00: { cmd: "enter", room: "ForestPathShallow", label: "Forest", point: [113, 60], enterPoint: [12, 83], obstacle: false },
             h0000ff: { cmd: "text", label: "Sign", txt: "Forest Loop Trail", align: "center", lines: 1, point: [78, 67] },
         },
@@ -150,7 +148,7 @@ module.exports = {
             h007d4b: { cmd: "text", label: "Berries", txt: "These berries are just right. \nYou swallow a fistful.", align: "center", lines: 2, point: [26, 86], obstacle: false },
             hccff00: { cmd: "text", label: "Berries", txt: "These snozzberries taste \nlike snozzberries.", align: "center", lines: 2, point: [34, 92], obstacle: false },
             h00ff00: { cmd: "text", label: "Fountain", txt: "There are coins in this fountain.", align: "center", lines: 1, point: [75, 89], obstacle: true },
-            hf000ff: { cmd: "text", label: "Fountain", txt: "You toss in a coin. \nMake a wish!", align: "center", lines: 2, point: [75, 89], obstacle: false },
+            hf000ff: { cmd: "textRandom", label: "Fountain", txt: "You toss in a coin. \nMake a wish!|You see various coins, \n at the bottom of the fountain.|Your wish will come true! \nWell done!.|\"You are worthy of love\", \nthe fountain whispers back to you.|Your lucky numbers are 3, 8, 38, 88|That wish is kinda weird.|You like like that was \na waste of money.|You decide to keep the coin.", align: "center", lines: 2, point: [75, 89], obstacle: false },
         },
         things: {
             //scenery
@@ -176,16 +174,34 @@ module.exports = {
             hf000ff: { cmd: "enter", room: "ForestPathFork", label: "Forest Path", point: [62, 96],  enterPoint: [25, 63], obstacle: false },      
         },
         things: {
-            //scenery
+             //scenery
             fire: { file: "ForestPath-Bonfire-fire.png", frames: 9, frameDelay: 15, position: [55, 3], depthAdjust:20 },
             smoke: { file: "ForestPath-Bonfire-smoke.png", frames: 11, frameDelay: 100, position: [52, 0], depthAdjust:-2 },
-            log1: { file: "ForestPath-Bonfire-Log1.png", position: [39, 88], depthAdjust:1 },
-            log2: { file: "ForestPath-Bonfire-Log2.png", position: [30, 71], depthAdjust:-2 },
-            log3: { file: "ForestPath-Bonfire-Log3.png", position: [75, 89], depthAdjust:1 },
-            log4: { file: "ForestPath-Bonfire-Log4.png", position: [95, 82], depthAdjust:1 },
+            marshmallow: { file: "marshmallow-100.png", frames: 100, frameDelay: 55, position: [36, 72], depthAdjust:1 },
+            crossedLeg: { file: "crossed-leg-44.png", frames: 44, frameDelay: 60, position: [28, 65], depthAdjust:-2 },
+            smoker: { file: "smoker-48.png", frames: 48, frameDelay:10, position: [85, 55], depthAdjust:1 },
+            serviceAnimal: { file: "service-animal-188.png", frames: 188, frameDelay: 35, position: [75, 79], depthAdjust:1 },
         },
     }, 
     
-    
-    //End Kay Added January 2021
+    TPCAGreenRoom: {
+        bg: "greenroom.png",
+        avatarScale: 2,
+	frames: 2,
+	frameDelay: 40,
+        tint: "#ffffff",
+        pageBg: "#292929",
+        bubblesY: 160,
+        spawn: [120, 90, 110, 80],
+        area: "greenroom-map.png",
+        areaColors: {
+            // exits
+	      h00ff00: { cmd: "enter", room: "Bonfire", label: "Bonfire", point: [9, 84], enterPoint: [119, 86], obstacle: false },
+            //h00ffff: { cmd: "enter", room: "TPCATavern", label: "Tavern", point: [119, 86], enterPoint: [10, 86], obstacle: false },
+            //hffff00: { cmd: "text", label: "The Filthy Lyre", txt: "Pffft!", align: "center", lines: 1, point: [45, 90], obstacle: true },
+            //hff29ff: { cmd: "textRandom", label: "The Filthy Lyre", txt: "Hey! Paws off, y'animal!|Bugger!|That tickles!", align: "center", lines: 1, point: [45, 90], obstacle: false },
+        },
+    },
+
+
 }

@@ -5,6 +5,7 @@ const mapRoom = require("./map-room");
 const colourRoom = require("./colour-room");
 const tavern = require("./tavern");
 const fireRoom = require("./fire-room");
+const washroom = require("./washroom");
 
 module.exports = {
   ...hallway,
@@ -14,4 +15,5 @@ module.exports = {
   ...colourRoom,
   ...tavern,
   ...fireRoom,
+  ...washroom,
 }
