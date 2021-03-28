@@ -726,9 +726,41 @@ function BonfireEnter(playerId, roomId) {
     }
 }
 
+function ForestPathWaterfall2Enter(playerId, roomId) {
+    if (playerId == me.id) {
+        longText = "SPLASH! \nYou swim back to the peer and eventually dry off.";
+        longTextLines = -1;
+        longTextAlign = "center";
+    }
+}
+
 function TPCATavernEnter(playerId, roomId) {
     if (playerId == me.id) {
         longText = "The smell of the fireplace greets you once again.";
+        longTextLines = -1;
+        longTextAlign = "center";
+    }
+}
+
+function MouseTunnelA1Enter(playerId, roomId) {
+    if (playerId == me.id) {
+        longText = "You've wandered into the mouse tunnels.\n\nWait, where do they lead?";
+        longTextLines = -1;
+        longTextAlign = "center";
+    }
+}
+
+function MouseTunnelB1Enter(playerId, roomId) {
+    if (playerId == me.id) {
+        longText = "You've wandered into the mouse tunnels.\n\nWait, where do they lead?";
+        longTextLines = -1;
+        longTextAlign = "center";
+    }
+}
+
+function MouseTunnelC1Enter(playerId, roomId) {
+    if (playerId == me.id) {
+        longText = "You've wandered into the mouse tunnels.\n\nWait, where do they lead?";
         longTextLines = -1;
         longTextAlign = "center";
     }
