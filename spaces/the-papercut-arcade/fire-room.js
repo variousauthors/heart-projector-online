@@ -75,7 +75,7 @@ module.exports = {
     },
 
     ForestPathLakeBridge: {
-        bg: "ForestPath-Lakebridge.png",
+        bg: "ForestPath-LakeBridge.png",
         frames: 3,
         frameDelay: 40,
         avatarScale: 2.25,
@@ -83,7 +83,7 @@ module.exports = {
         pageBg: "#292929",
         bubblesY: 50,
         spawn: [30, 83, 7, 80],
-        area: "ForestPath-Lakebridge-areas.png",
+        area: "ForestPath-LakeBridge-areas.png",
         areaColors: {
             // exits
            hffff00: { cmd: "enter", room: "ForestPathLakefront", label: "Lake Path Entrance", point: [6, 84],  enterPoint: [125, 86], obstacle: false },
@@ -301,8 +301,8 @@ ForestPathLakeNorthFork: {
         },
         things: {
             //scenery,
-            trees: { file: "ForestPath-LakeLoop-Northfork-trees.png", frames: 1, position: [0, 0], depthAdjust:126 },
-            sign: { file: "ForestPath-LakeLoop-Northfork-sign.png", frames: 1, position: [74, 58], depthAdjust:-1 },
+            trees: { file: "ForestPath-LakeLoop-NorthFork-trees.png", frames: 1, position: [0, 0], depthAdjust:126 },
+            sign: { file: "ForestPath-LakeLoop-NorthFork-sign.png", frames: 1, position: [74, 58], depthAdjust:-1 },
         },
     },
 
