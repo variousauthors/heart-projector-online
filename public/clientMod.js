@@ -726,9 +726,41 @@ function BonfireEnter(playerId, roomId) {
     }
 }
 
+function ForestPathWaterfall2Enter(playerId, roomId) {
+    if (playerId == me.id) {
+        longText = "SPLASH! \nYou swim back to the peer and eventually dry off.";
+        longTextLines = -1;
+        longTextAlign = "center";
+    }
+}
+
 function TPCATavernEnter(playerId, roomId) {
     if (playerId == me.id) {
         longText = "The smell of the fireplace greets you once again.";
+        longTextLines = -1;
+        longTextAlign = "center";
+    }
+}
+
+function MouseTunnelA1Enter(playerId, roomId) {
+    if (playerId == me.id) {
+        longText = "You've wandered into the mouse tunnels.\n\nWait, where do they lead?";
+        longTextLines = -1;
+        longTextAlign = "center";
+    }
+}
+
+function MouseTunnelB1Enter(playerId, roomId) {
+    if (playerId == me.id) {
+        longText = "You've wandered into the mouse tunnels.\n\nWait, where do they lead?";
+        longTextLines = -1;
+        longTextAlign = "center";
+    }
+}
+
+function MouseTunnelC1Enter(playerId, roomId) {
+    if (playerId == me.id) {
+        longText = "You've wandered into the mouse tunnels.\n\nWait, where do they lead?";
         longTextLines = -1;
         longTextAlign = "center";
     }
@@ -746,11 +778,20 @@ function TPCATavernTalk(playerId, bubble) {
             else if (diceroll < 10) {
                 verily = "Tell us a tale!";
 	    }
+	    else if (diceroll < 15) {
+                verily = "Was that a mouse?!";
+	    }
             else if (diceroll < 20) {
                 verily = "More ale!";
 	    }
+	    else if (diceroll < 25) {
+                verily = "Creepy portrait...";
+	    }
             else if (diceroll < 30) {
                 verily = "Bee-yoo-tee-ful!";
+	    }
+	    else if (diceroll < 35) {
+                verily = "I think I'll have a ploughman's...";
 	    }
             else if (diceroll < 40) {
                 verily = "Bwahaha!";
@@ -761,20 +802,35 @@ function TPCATavernTalk(playerId, bubble) {
             else if (diceroll < 50) {
                 verily = "What timeizzit?";
             }
+	    else if (diceroll < 55) {
+                verily = "Then he did it again!";
+	    }
             else if (diceroll < 60) {
                 verily = "Nah, this one's on me!";
             }
+	    else if (diceroll < 65) {
+                verily = "No he didn't!";
+	    }
             else if (diceroll < 70) {
-                verily = "I.P.A... horsepiss!";
+                verily = "I.P.A = horsepiss!";
             }
+	    else if (diceroll < 75) {
+                verily = "Big as me forearm!";
+	    }
             else if (diceroll < 80) {
                 verily = "Hic!";
             }
+	    else if (diceroll < 85) {
+                verily = "Not sure why it's called that.";
+	    }
             else if (diceroll < 90) {
                 verily = "Bla blah bla...";
 	    }
+	    else if (diceroll < 95) {
+                verily = "Bollocks!";
+	    }
             else if (diceroll < 100) {
-                verily = "Forsooth?";
+                verily = "Some who enter the basement never return...";
 	    }
             else {
                 verily = "Hasht thousht heard the one bout the three-legged knight?";
