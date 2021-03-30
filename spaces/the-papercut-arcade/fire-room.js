@@ -12,6 +12,8 @@ module.exports = {
             hf000ff: { cmd: "enter", room: "TPCAHallway2", label: "Hall", point: [7, 83], enterPoint: [96, 22], obstacle: false },
             hffff00: { cmd: "enter", room: "ForestPathShallow", label: "Forest", point: [113, 60], enterPoint: [12, 83], obstacle: false },
             h0000ff: { cmd: "text", label: "Sign", txt: "Forest Loop Trail", align: "center", lines: 1, point: [78, 67] },
+            h00ffff: { cmd: "text", label: "Bushes", txt: "Thimbleberry shrubs line the path.", align: "center", lines: 1, point: [60, 75] },
+            hff0000: { cmd: "text", label: "", txt: "The Moon lights up the night sky.", align: "center", lines: 1, point: [102, 65] },
         },
         things: {
             //scenery
@@ -36,6 +38,7 @@ module.exports = {
              h00fff0: { cmd: "enter", room: "ForestPathLakefront", label: "Towards the Lake", point: [125, 88], enterPoint: [6, 88], obstacle: false },
             hff0000: { cmd: "text", label: "Sign", txt: "Loop Trail Northwest", align: "center", lines: 1, point: [41, 75] },
             h000fff: { cmd: "text", label: "Sign", txt: "Loop Trail Northeast", align: "center", lines: 1, point: [107, 70] },
+            hff9900: { cmd: "text", label: "Forest", txt: "Large Western Redcedars grow amongst Western Hemlock and Douglas-Fir trees.", align: "center", lines: 3, point: [34, 79] },
         },
         things: {
             //scenery
@@ -43,7 +46,11 @@ module.exports = {
         },
     },
 
-    ForestPathFork: {        bg: "ForestPath-Fork-smoke.png",        frames: 3,        frameDelay: 50,        avatarScale: 2,        tint: "#ffffff",        pageBg: "#292929",        bubblesY: 50,        spawn: [127, 88, 108, 80],        area: "ForestPath-Fork-areas.png",        areaColors: {            // exits            h00ff00: { cmd: "enter", room: "ForestPathLakeWest", label: "West", point: [12, 86],  enterPoint: [112, 87], obstacle: false },            h0000ff: { cmd: "enter", room: "Bonfire", label: "Northwest", point: [25, 63],  enterPoint: [62, 96], obstacle: false },            hfff000: { cmd: "enter", room: "ForestPathRest", label: "Northeast", point: [93, 64],  enterPoint: [17, 80], obstacle: false },            hf000ff: { cmd: "enter", room: "ForestPathShallow", label: "Southeast", point: [118, 87],  enterPoint: [24, 69], obstacle: false },               },        things: {            //scenery            copse: { file: "ForestPath-Fork-copse.png", frames: 1, position: [0, 0], depthAdjust:-25 },            trees: { file: "ForestPath-Fork-trees.png", frames: 1, position: [0, 0], depthAdjust:126 },        },    },
+    ForestPathFork: {        bg: "ForestPath-Fork-smoke.png",        frames: 3,        frameDelay: 50,        avatarScale: 2,        tint: "#ffffff",        pageBg: "#292929",        bubblesY: 50,        spawn: [114, 88, 108, 80],        area: "ForestPath-Fork-areas.png",        areaColors: {            // exits            h00ff00: { cmd: "enter", room: "ForestPathLakeWest", label: "West", point: [12, 86],  enterPoint: [112, 87], obstacle: false },            h0000ff: { cmd: "enter", room: "Bonfire", label: "Northwest", point: [25, 63],  enterPoint: [62, 96], obstacle: false },            hfff000: { cmd: "enter", room: "ForestPathRest", label: "Northeast", point: [93, 64],  enterPoint: [17, 80], obstacle: false },            hf000ff: { cmd: "enter", room: "ForestPathShallow", label: "Southeast", point: [118, 87],  enterPoint: [24, 69], obstacle: false },  
+            hff0000: { cmd: "text", label: "Forest", txt: "Chickadees flit in and out of the Douglas-fir trees. \nTheir calls become more pronounced as you enter the area. \n\"Chickadee-dee-dee-dee!\"", point: [111, 82], lines: 5, obstacle: false }, 
+            hff66ff: { cmd: "text", label: "Forest", txt: "A thick layer of ferns and mosses \nsurround these old growth Redcedar trees.", point: [36, 81], lines: 3, align: "center", obstacle: false },
+            hff6600: { cmd: "text", label: "Forest", txt: "A thin line of smoke can be seen \nin the distance. The smell of it becomes more pronounced as you walk to the Northwest.", lines: 4, align: "center", point: [32, 69], obstacle: false },       
+            h00ffff: { cmd: "text", label: "Forest", txt: "A single Nuthatch repeats the warning calls of the nearby Chickadees, but seems less concerned by your presence.", lines: 4, align: "center", point: [32, 69], obstacle: false },        },        things: {            //scenery            copse: { file: "ForestPath-Fork-copse.png", frames: 1, position: [0, 0], depthAdjust:-25 },            trees: { file: "ForestPath-Fork-trees.png", frames: 1, position: [0, 0], depthAdjust:126 },        },    },
 
     ForestPathLakefront: {
         bg: "ForestPath-Lakefront.png",
@@ -111,12 +118,13 @@ module.exports = {
            h00ffff: { cmd: "text", label: "Sign", txt: "Lake Loop Trail North", align: "center", lines: 1, point: [81, 64], obstacle: false},
            hffff00: { cmd: "text", label: "Sign", txt: "Lake Pixel", align: "center", lines: 1, point: [81, 64], obstacle: false},
            h00ff00: { cmd: "text", label: "Sign", txt: "Pixel Falls", align: "center", lines: 1, point: [81, 64], obstacle: false},
-           hff00ff: { cmd: "text", label: "Wetlands", txt: "Digiskunk Cabbage Swamp", align: "center", lines: 1, point: [65, 70], obstacle: false},
+           hff00ff: { cmd: "text", label: "Wetlands", txt: "The swampy wetlands are covered in Skunk Cabbage; their bright yellow flowers popping brightly against the marshy browns and dirty greys.", align: "center", lines: 4, point: [65, 70], obstacle: false},
+           h009900: { cmd: "text", label: "Wetlands", txt: "The Skunk Cabbage are packed in on the east side of the bridge, their yellow flowers swarming with bugs.", align: "center", lines: 3, point: [93, 88], obstacle: false},
         },
         things: {
             //scenery
             marshbarrierfront: { file: "ForestPath-Swamp-leftBarrier.png", frames: 1, position: [53, 41], depthAdjust:126 },
-            marshbarrierback: { file: "ForestPath-Swamp-rightBarrier.png", frames: 1, position: [91, 66], depthAdjust:-7 },
+            marshbarrierback: { file: "ForestPath-Swamp-rightBarrier.png", frames: 1, position: [91, 66], depthAdjust:-35 },
         },
     },
 
@@ -257,6 +265,11 @@ module.exports = {
             hff00ff: { cmd: "enter", room: "ForestPathSwamp", label: "South", point: [96, 93],  enterPoint: [60, 48], obstacle: false },
             h00ff00: { cmd: "text", label: "Sign", txt: "Lake Loop Trail West", align: "center", lines: 1, point: [86, 79] },
             hff0000: { cmd: "text", label: "Sign", txt: "Lake Loop Trail East \nLake Pixel 500 M", align: "center", lines: 2, point: [86, 79] },
+            hffff00: { cmd: "text", label: "Forest", txt: "This area is predominantly populated by Western Hemlock.", align: "center", lines: 2, point: [25, 75] },
+            hff0066: { cmd: "text", label: "Forest", txt: "The trees in this area are young and less dense. They are shadowed by larger growth trees off to the North.", align: "center", lines: 4, point: [60, 77] },
+            hff6600: { cmd: "text", label: "Forest", txt: "There are many signs of deer in this growth of Hemlock.", align: "center", lines: 2, point: [86, 79] },
+            h0066ff: { cmd: "text", label: "Forest Floor", txt: "The ground is littered with many Hemlock pinecones in varying colours from purple to brown. ", align: "center", lines: 3, point: [90, 85] },
+            h006600: { cmd: "text", label: "Forest", txt: "The ground is very wet along the south side of the path. Your footwear becomes caked in mud whenever you venture off the path.", align: "center", lines: 4, point: [42, 83] },
 
         },
 	things: {
@@ -282,10 +295,14 @@ ForestPathLakeNorthFork: {
             hff0000: { cmd: "text", label: "Sign", txt: "Lake Loop Trail West", point: [73, 83], obstacle: false },
             h00ffff: { cmd: "text", label: "Sign", txt: "Rest Area \nForest Loop Trail", lines: 2, point: [73, 83], obstacle: false },
             hffff00: { cmd: "text", label: "Sign", txt: "Lake Loop Trail East \nLake Pixel 1KM", lines: 2, point: [73, 83], obstacle: false },
+            hff9900: { cmd: "text", label: "Forest", txt: "You look out into the green and allow the stillness to overtake you. The tranquil silence eventually becomes freckled with the gentle sounds of bugs and the sighs of moving trees.", lines: 6, point: [76, 81], obstacle: false },
+            h006600: { cmd: "text", label: "Forest", txt: "You detect the faintly sour stench of human waste coming from the south, mixed in with smell of the wet earth and pine trees.", lines: 4, point: [51, 81], obstacle: false },
+            h9933ff: { cmd: "text", label: "Forest", txt: "The smell of the wet earth and gently rotting plant matter comes from this direction. The lower branches of the Western Hemlock along the south side of this path suggest to you that this area is a common snacking zone for deer.", lines: 7, point: [87, 82], obstacle: false },
         },
         things: {
             //scenery,
             trees: { file: "ForestPath-LakeLoop-Northfork-trees.png", frames: 1, position: [0, 0], depthAdjust:126 },
+            sign: { file: "ForestPath-LakeLoop-Northfork-sign.png", frames: 1, position: [74, 58], depthAdjust:-1 },
         },
     },
 
@@ -304,6 +321,10 @@ ForestPathLakeNorthFork: {
             hff00ff: { cmd: "enter", room: "ForestPathLakeWest", label: "South", point: [40, 90],  enterPoint: [55, 61], obstacle: false },
             h00ff00: { cmd: "text", label: "Sign", txt: "Lake Loop Trail East", align: "center", lines: 1, point: [60, 79] },
             hff0000: { cmd: "text", label: "Sign", txt: "Lake Loop Trail South", align: "center", lines: 1, point: [60, 79] },
+            h0000ff: { cmd: "text", label: "Forest", txt: "The forest seems to go on forever. It's very peaceful here.", align: "center", lines: 2, point: [112, 77] },
+            hff6600: { cmd: "text", label: "Forest", txt: "Giant\nWestern\nRedcedar\ntrees\ntower\nover\nyou.", align: "center", lines: 7, point: [80, 80] },
+            hffff00: { cmd: "text", label: "Forest", txt: "The moonlight dances upon and weaves through the interwoven branches of the rainforest.", align: "center", lines: 3, point: [40, 80] },
+            h009900: { cmd: "text", label: "Forest", txt: "That is one giant Western Redcedar. You strain to see the top, and fail.\nWow!", align: "center", lines: 4, point: [38, 85] },
         },
         things: {
             //scenery,
@@ -326,6 +347,10 @@ ForestPathLakeNorthFork: {
             hff00ff: { cmd: "enter", room: "ForestPathNorthwest", label: "North", point: [55, 61],  enterPoint: [40, 90], obstacle: false },
             h00ff00: { cmd: "text", label: "Sign", txt: "Forest Loop Trail", align: "center", lines: 1, point: [44, 78] },
             hff0000: { cmd: "text", label: "Sign", txt: "Lake Loop Trail", align: "center", lines: 1, point: [44, 79] },
+            hffff00: { cmd: "text", label: "Forest", txt: "A few Grey-Cheeked Thrushes hop about around a grove of Western Hemlock.", align: "center", lines: 3, align: "center", point: [76, 76] },
+            hff6600: { cmd: "text", label: "Forest", txt: "A thicket of Douglas-fir grow from a dense bed of sword ferns and salal. The earth is very moist here.", align: "center", lines: 4, align: "center", point: [44, 75] },
+            h0000ff: { cmd: "text", label: "Forest undergrowth", txt: "Salal shrubs creep and weave a leathery armour under the conifer boughs.", align: "center", lines: 3, align: "center", point: [57, 84] },
+
         },
         things: {
             //scenery
@@ -374,6 +399,9 @@ ForestPathLakeNorthFork: {
             h0000ff: { cmd: "enter", room: "ForestPathRest", label: "North", point: [77, 55],  enterPoint: [124, 89], obstacle: false },
             hffff00: { cmd: "enter", room: "ForestPathFountain", label: "??", point: [123, 92],  enterPoint: [8, 58], obstacle: false },
             h00ff00: { cmd: "text", label: "Sign", txt: "Rest Area Ahead \nForest Loop Trail", align: "center", lines: 2, point: [71, 84] },
+            hff0000: { cmd: "text", label: "Forest", txt: "The Douglas-fir and Western Hemlock grows densely.", align: "center", lines: 2, point: [45, 75] },
+            h006600: { cmd: "text", label: "Forest", txt: "The forest off to the East is dark and full of shadows...", align: "center", lines: 2, point: [45, 95] },
+            h00ffff: { cmd: "text", label: "Forest floor", txt: "The ground on either side of the path is covered a thick layer in moss and ferns.", align: "center", lines: 3, point: [42, 88] },
         },
         things: {
             //scenery

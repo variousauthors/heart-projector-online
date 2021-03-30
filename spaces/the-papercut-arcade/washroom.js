@@ -27,7 +27,7 @@ module.exports = {
 	    heebbcc: { cmd: "text", label: "Tiltable Mirror", txt: "With LED Lighting", align: "center", lines: 1, point: [43, 76], obstacle: false },
 	    hccffcc: { cmd: "text", label: "Assistance Call Button", txt: "Easy to push", align: "center", lines: 1, point: [65, 76], obstacle: false },
 	    hffaadd: { cmd: "text", label: "Power Outlet", txt: "At variable heights", align: "center", lines: 1, point: [65, 76], obstacle: false },
-	    h00ff00: { cmd: "text", label: "Sling", txt: "", align: "center", lines: 1, point: [75, 80], obstacle: false },
+	    h00ff00: { cmd: "text", label: "Sling", txt: "U-Sling with Full Head Support", align: "center", lines: 1, point: [75, 80], obstacle: false },
 	    hffff00: { cmd: "text", label: "Swing Away Grab Bar", txt: "", align: "center", lines: 1, point: [84, 75], obstacle: false },
 	    hffffdd: { cmd: "text", label: "Sanitary Waste Container", txt: "Within reach but not in transit area.", align: "center", lines: 1, point: [84, 75], obstacle: false },
 	    hffffcc: { cmd: "text", label: "Horizontal Grab Bar behind Toilet", txt: "", align: "center", lines: 1, point: [104, 79], obstacle: false },
