@@ -231,7 +231,15 @@ Things are quite asynchronous here. This is the startup sequence:
 * if server restarts the assets and room data is kept on the clients and that's also a connect > playerJoined sequence
 */
 
+const imageCache = {}
 
+function cacheLoadImage (filename) {
+  if (imageCache[filename] === undefined) {
+    imageCache[filename] = loadImage(ASSETS_FOLDER + filename);
+  }
+
+  return imageCache[filename]
+}
 
 //setup is called when all the assets have been loaded
 function preload() {
@@ -437,12 +445,12 @@ function setup() {
                         var room = ROOMS[roomId];
 
                         if (room.bg != null)
-                            room.bgGraphics = loadImage(ASSETS_FOLDER + room.bg);
+                            room.bgGraphics = cacheLoadImage(room.bg);
                         else
                             console.log("WARNING: room " + roomId + " has no background graphics");
 
                         if (room.area != null)
-                            room.areaGraphics = loadImage(ASSETS_FOLDER + room.area);
+                            room.areaGraphics = cacheLoadImage(room.area);
                         else
                             console.log("WARNING: room " + roomId + " has no area graphics");
 
@@ -456,7 +464,7 @@ function setup() {
                         if (ROOMS[roomId].things != null)
                             for (var id in ROOMS[roomId].things) {
                                 var spr = ROOMS[roomId].things[id];
-                                spr.spriteGraphics = loadImage(ASSETS_FOLDER + spr.file);
+                                spr.spriteGraphics = cacheLoadImage(spr.file);
                             }
                     }
                 }
@@ -465,7 +473,7 @@ function setup() {
                 var imageData = DATA.IMAGES;
                 IMAGES = {};
                 for (var i = 0; i < imageData.length; i++) {
-                    IMAGES[imageData[i][0]] = loadImage(ASSETS_FOLDER + imageData[i][1]);
+                    IMAGES[imageData[i][0]] = cacheLoadImage(imageData[i][1]);
                 }
 
                 //load the misc images from data
