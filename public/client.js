@@ -241,6 +241,24 @@ function cacheLoadImage (filename) {
   return imageCache[filename]
 }
 
+function lazyLoadImageFromCache (filename) {
+  return () => {
+    if (imageCache[filename] === undefined) {
+      console.log('cached', filename)
+
+      imageCache[filename] = new Promise((resolve, reject) => {
+        console.log('start loading', filename)
+        loadImage(ASSETS_FOLDER + filename, (img) => {
+          console.log('done loading', filename)
+          resolve(img)
+        }, reject)
+      })
+    }
+
+    return imageCache[filename]
+  } 
+}
+
 //setup is called when all the assets have been loaded
 function preload() {
 
@@ -445,7 +463,8 @@ function setup() {
                         var room = ROOMS[roomId];
 
                         if (room.bg != null)
-                            room.bgGraphics = cacheLoadImage(room.bg);
+                            // room.bgGraphics = cacheLoadImage(room.bg);
+                            room.bgGraphics = lazyLoadImageFromCache(room.bg)
                         else
                             console.log("WARNING: room " + roomId + " has no background graphics");
 
@@ -504,9 +523,11 @@ function draw() {
         for (var roomId in ROOMS) {
             var room = ROOMS[roomId];
 
+            /* for now assuming we don't care if the bg is loaded
             if (room.bgGraphics != null)
                 if (room.bgGraphics.width == 1)
                     dataLoaded = false;
+                    */
 
             if (room.areaGraphics != null)
                 if (room.areaGraphics.width == 1)
@@ -699,6 +720,7 @@ function newGame() {
     //when somebody joins the game create a new player
     socket.on("playerJoined",
         function (p) {
+          console.log('playerJoined', p)
             try {
 
 
@@ -741,23 +763,33 @@ function newGame() {
                     else
                         document.body.style.backgroundColor = PAGE_COLOR;
 
+                    // test the madness
+                    if (ROOMS[p.room].test != null) {
+                      ROOMS[p.room].test().then((img) => {
+                        console.log('loaded', img)
+                      })
+                    }
+
                     //load level background
 
                     if (ROOMS[p.room].bgGraphics != null) {
-                        //can be static or spreadsheet
-                        var bgg = ROOMS[p.room].bgGraphics;
+                        ROOMS[p.room].bgGraphics().then((bgg) => {
+                          console.log('loaded image', p.room)
+                          // can be static or spreadsheet
+                          // var bgg = ROOMS[p.room].bgGraphics;
 
-                        //find frame number
-                        var f = 1;
-                        if (ROOMS[p.room].frames != null)
+                          //find frame number
+                          var f = 1;
+                          if (ROOMS[p.room].frames != null)
                             f = ROOMS[p.room].frames;
 
-                        var ss = loadSpriteSheet(bgg, NATIVE_WIDTH, NATIVE_HEIGHT, f);
-                        bg = loadAnimation(ss);
+                          var ss = loadSpriteSheet(bgg, NATIVE_WIDTH, NATIVE_HEIGHT, f);
+                          bg = loadAnimation(ss);
 
-                        if (ROOMS[p.room].frameDelay != null) {
+                          if (ROOMS[p.room].frameDelay != null) {
                             bg.frameDelay = ROOMS[p.room].frameDelay;
-                        }
+                          }
+                        })
                     }
 
                     if (ROOMS[p.room].avatarScale == null)
