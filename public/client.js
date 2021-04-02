@@ -244,14 +244,9 @@ function cacheLoadImage (filename) {
 function lazyLoadImageFromCache (filename) {
   return () => {
     if (imageCache[filename] === undefined) {
-      console.log('cached', filename)
 
       imageCache[filename] = new Promise((resolve, reject) => {
-        console.log('start loading', filename)
-        loadImage(ASSETS_FOLDER + filename, (img) => {
-          console.log('done loading', filename)
-          resolve(img)
-        }, reject)
+        loadImage(ASSETS_FOLDER + filename, resolve, reject)
       })
     }
 
@@ -463,13 +458,12 @@ function setup() {
                         var room = ROOMS[roomId];
 
                         if (room.bg != null)
-                            // room.bgGraphics = cacheLoadImage(room.bg);
                             room.bgGraphics = lazyLoadImageFromCache(room.bg)
                         else
                             console.log("WARNING: room " + roomId + " has no background graphics");
 
                         if (room.area != null)
-                            room.areaGraphics = cacheLoadImage(room.area);
+                            room.areaGraphics = lazyLoadImageFromCache(room.area)
                         else
                             console.log("WARNING: room " + roomId + " has no area graphics");
 
@@ -483,7 +477,7 @@ function setup() {
                         if (ROOMS[roomId].things != null)
                             for (var id in ROOMS[roomId].things) {
                                 var spr = ROOMS[roomId].things[id];
-                                spr.spriteGraphics = cacheLoadImage(spr.file);
+                                spr.spriteGraphics = lazyLoadImageFromCache(spr.file)
                             }
                     }
                 }
@@ -527,11 +521,11 @@ function draw() {
             if (room.bgGraphics != null)
                 if (room.bgGraphics.width == 1)
                     dataLoaded = false;
-                    */
-
+              
             if (room.areaGraphics != null)
                 if (room.areaGraphics.width == 1)
                     dataLoaded = false;
+                    */
 
             if (room.musicLoop != null)
                 if (!room.musicLoop.isLoaded())
@@ -795,9 +789,12 @@ function newGame() {
                     if (ROOMS[p.room].avatarScale == null)
                         ROOMS[p.room].avatarScale = 2;
 
-                    areas = ROOMS[p.room].areaGraphics;
-                    if (areas == null)
-                        print("ERROR: no area assigned to  " + p.room);
+                    ROOMS[p.room].areaGraphics().then((img) => {
+                      areas = img
+
+                      if (areas == null)
+                          print("ERROR: no area assigned to  " + p.room);
+                    });
 
                     //create sprites
                     if (ROOMS[p.room].things != null)
@@ -2450,19 +2447,20 @@ function tintGraphics(img, colorString) {
 //create a sprite from a "thing" object found in data
 function createThing(thing, id) {
 
-    var f = 1;
+  var f = 1;
 
-    if (thing.frames != null)
-        f = thing.frames;
+  if (thing.frames != null)
+    f = thing.frames;
 
-    var sw = floor(thing.spriteGraphics.width / f);
-    var sh = thing.spriteGraphics.height;
+  return thing.spriteGraphics().then((spriteGraphics) => {
+    var sw = floor(spriteGraphics.width / f);
+    var sh = spriteGraphics.height;
 
-    var ss = loadSpriteSheet(thing.spriteGraphics, sw, sh, f);
+    var ss = loadSpriteSheet(spriteGraphics, sw, sh, f);
     var animation = loadAnimation(ss);
 
     if (thing.frameDelay != null)
-        animation.frameDelay = thing.frameDelay;
+      animation.frameDelay = thing.frameDelay;
 
 
     //the "real" position is the bottom left
@@ -2472,62 +2470,64 @@ function createThing(thing, id) {
     var newSprite = createSprite(floor(thing.position[0] + sw / 2) * ASSET_SCALE + ox, floor(thing.position[1] + sh / 2) * ASSET_SCALE + oy);
     newSprite.addAnimation("default", animation);
 
-	var depthAdjust = 0;
-	if(thing.depthAdjust != null) {
-		depthAdjust = thing.depthAdjust;
-	}
-	
+    var depthAdjust = 0;
+    if (thing.depthAdjust != null) {
+      depthAdjust = thing.depthAdjust;
+    }
+
     newSprite.depthOffset = floor(sh / 2) - 4 + depthAdjust; //4 magic fucking number due to rounding
 
     newSprite.id = id;
 
     newSprite.scale = ASSET_SCALE;
 
-	newSprite.originalDraw = newSprite.draw;
+    newSprite.originalDraw = newSprite.draw;
     newSprite.draw = function () {
-		const roomId = newSprite.roomId;
-		
-		if (!thing.ignore && (thing.visible == null || thing.visible == true)) {
-			if (thing.transparent)
-				tint(255, 100);
-			
-			if(roomId && window[roomId + "DrawThing"] != null) {
-				window[roomId + "DrawThing"](id, thing, newSprite.originalDraw);
-			}
-			else {
-				newSprite.originalDraw();
-			}
-			
-			noTint();
-		}
-	};
-	
+      const roomId = newSprite.roomId;
+
+      if (!thing.ignore && (thing.visible == null || thing.visible == true)) {
+        if (thing.transparent)
+          tint(255, 100);
+
+        if (roomId && window[roomId + "DrawThing"] != null) {
+          window[roomId + "DrawThing"](id, thing, newSprite.originalDraw);
+        }
+        else {
+          newSprite.originalDraw();
+        }
+
+        noTint();
+      }
+    };
+
 
 
     //if label make it rollover reactive
     newSprite.label = thing.label;
     if (thing.label != null) {
 
-        newSprite.onMouseOver = function () {
-            rolledSprite = this;
-        };
+      newSprite.onMouseOver = function () {
+        rolledSprite = this;
+      };
 
-        newSprite.onMouseOut = function () {
-            if (rolledSprite == this)
-                rolledSprite = null;
-        };
+      newSprite.onMouseOut = function () {
+        if (rolledSprite == this)
+          rolledSprite = null;
+      };
     }
     //if command, make it interactive like an area
     if (thing.command != null) {
-        newSprite.command = thing.command;
+      newSprite.command = thing.command;
 
-        newSprite.onMouseReleased = function () {
-            if (rolledSprite == this)
-                moveToCommand(this.command);
-        };
+      newSprite.onMouseReleased = function () {
+        if (rolledSprite == this)
+          moveToCommand(this.command);
+      };
     }
 
     return newSprite;
+
+  })
 }
 
 
