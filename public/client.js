@@ -714,7 +714,6 @@ function newGame() {
     //when somebody joins the game create a new player
     socket.on("playerJoined",
         function (p) {
-          console.log('playerJoined', p)
             try {
 
 
@@ -757,21 +756,10 @@ function newGame() {
                     else
                         document.body.style.backgroundColor = PAGE_COLOR;
 
-                    // test the madness
-                    if (ROOMS[p.room].test != null) {
-                      ROOMS[p.room].test().then((img) => {
-                        console.log('loaded', img)
-                      })
-                    }
-
                     //load level background
 
                     if (ROOMS[p.room].bgGraphics != null) {
                         ROOMS[p.room].bgGraphics().then((bgg) => {
-                          console.log('loaded image', p.room)
-                          // can be static or spreadsheet
-                          // var bgg = ROOMS[p.room].bgGraphics;
-
                           //find frame number
                           var f = 1;
                           if (ROOMS[p.room].frames != null)
