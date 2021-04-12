@@ -458,12 +458,12 @@ function setup() {
                         var room = ROOMS[roomId];
 
                         if (room.bg != null)
-                            room.bgGraphics = lazyLoadImageFromCache(room.bg)
+                            room.loadBgGraphics = lazyLoadImageFromCache(room.bg)
                         else
                             console.log("WARNING: room " + roomId + " has no background graphics");
 
                         if (room.area != null)
-                            room.areaGraphics = lazyLoadImageFromCache(room.area)
+                            room.loadAreaGraphics = lazyLoadImageFromCache(room.area)
                         else
                             console.log("WARNING: room " + roomId + " has no area graphics");
 
@@ -477,7 +477,7 @@ function setup() {
                         if (ROOMS[roomId].things != null)
                             for (var id in ROOMS[roomId].things) {
                                 var spr = ROOMS[roomId].things[id];
-                                spr.spriteGraphics = lazyLoadImageFromCache(spr.file)
+                                spr.loadSpriteGraphics = lazyLoadImageFromCache(spr.file)
                             }
                     }
                 }
@@ -723,6 +723,8 @@ function newGame() {
                 p.destinationX = p.x;
                 p.destinationY = p.y;
 
+                const loadingAssets = []
+
                 //if it's me///////////
                 if (socket.id == p.id) {
                     rolledSprite = null;
@@ -757,67 +759,82 @@ function newGame() {
                         document.body.style.backgroundColor = PAGE_COLOR;
 
                     //load level background
+                    screen = "loading"
 
-                    if (ROOMS[p.room].bgGraphics != null) {
-                        ROOMS[p.room].bgGraphics().then((bgg) => {
-                          //find frame number
-                          var f = 1;
-                          if (ROOMS[p.room].frames != null)
-                            f = ROOMS[p.room].frames;
+                    if (ROOMS[p.room].loadBgGraphics != null) {
+                        loadingAssets.push(
+                          ROOMS[p.room].loadBgGraphics().then((bgg) => {
+                            //find frame number
+                            var f = 1;
+                            if (ROOMS[p.room].frames != null)
+                              f = ROOMS[p.room].frames;
 
-                          var ss = loadSpriteSheet(bgg, NATIVE_WIDTH, NATIVE_HEIGHT, f);
-                          bg = loadAnimation(ss);
+                            var ss = loadSpriteSheet(bgg, NATIVE_WIDTH, NATIVE_HEIGHT, f);
+                            bg = loadAnimation(ss);
 
-                          if (ROOMS[p.room].frameDelay != null) {
-                            bg.frameDelay = ROOMS[p.room].frameDelay;
-                          }
-                        })
+                            if (ROOMS[p.room].frameDelay != null) {
+                              bg.frameDelay = ROOMS[p.room].frameDelay;
+                            }
+
+                            ROOMS[p.room].bgGraphics = bgg
+                          })
+                        )
                     }
 
-                    if (ROOMS[p.room].avatarScale == null)
+                    if (ROOMS[p.room].avatarScale == null) {
                         ROOMS[p.room].avatarScale = 2;
+                    }
 
-                    ROOMS[p.room].areaGraphics().then((img) => {
-                      areas = img
+                    loadingAssets.push(
+                      ROOMS[p.room].loadAreaGraphics().then((img) => {
+                        areas = img
 
-                      if (areas == null)
+                        if (areas == null) {
                           print("ERROR: no area assigned to  " + p.room);
-                    });
+                        }
+
+                        ROOMS[p.room].areaGraphics = img
+                      })
+                    )
 
                     //create sprites
-                    if (ROOMS[p.room].things != null)
+                    if (ROOMS[p.room].things != null) {
                         for (var tId in ROOMS[p.room].things) {
 
                             var thing = ROOMS[p.room].things[tId];
 
-                            const newSprite = createThing(thing, tId);
-							newSprite.roomId = p.room;
+                            loadingAssets.push(
+                              createThing(thing, tId).then(newSprite => {
+                                newSprite.roomId = p.room;
+                              })
+                            )
                         }//
-
-
-                    //start the music if any
-                    //music is synched across clients
-                    if (ROOMS[p.room].musicLoop != null && SOUND) {
-                        var vol = 1;
-                        if (ROOMS[p.room].musicVolume != null)
-                            vol = ROOMS[p.room].musicVolume;
-
-                        //all music "starts" at server's last restart
-                        var now = Date.now();
-                        //time difference in seconds
-                        var timeDiff = (now - START_TIME) / 1000;
-                        //figure out at what point of the loop
-                        var l = ROOMS[p.room].musicLoop;
-                        var startTime = timeDiff % l.duration();
-                        l.loop(0, 1, vol, startTime);
                     }
 
+                    // once all the assets have loaded
+                    Promise.all(loadingAssets).then(() => {
+                      //start the music if any
+                      //music is synched across clients
+                      if (ROOMS[p.room].musicLoop != null && SOUND) {
+                          var vol = 1;
+                          if (ROOMS[p.room].musicVolume != null)
+                              vol = ROOMS[p.room].musicVolume;
 
-                    //initialize the mod if any
-                    if (window.initMod != null) {
-                        window.initMod(p.id, p.room);
-                    }
+                          //all music "starts" at server's last restart
+                          var now = Date.now();
+                          //time difference in seconds
+                          var timeDiff = (now - START_TIME) / 1000;
+                          //figure out at what point of the loop
+                          var l = ROOMS[p.room].musicLoop;
+                          var startTime = timeDiff % l.duration();
+                          l.loop(0, 1, vol, startTime);
+                      }
 
+                      //initialize the mod if any
+                      if (window.initMod != null) {
+                          window.initMod(p.id, p.room);
+                      }
+                    })
                 }//it me
                 else {
                     //
@@ -840,30 +857,34 @@ function newGame() {
                     });
                 }
 
-                if (p.new && p.nickName != "" && firstLog) {
-                    var spark = createSprite(p.x, p.y - AVATAR_H + 1);
-                    spark.addAnimation("spark", appearEffect);
-                    spark.scale = ASSET_SCALE;
-                    spark.life = 60;
-                    if (SOUND)
-                        appearSound.play();
+                // once all the assets have loaded
+                Promise.all(loadingAssets).then(() => {
+                  if (p.new && p.nickName != "" && firstLog) {
+                      var spark = createSprite(p.x, p.y - AVATAR_H + 1);
+                      spark.addAnimation("spark", appearEffect);
+                      spark.scale = ASSET_SCALE;
+                      spark.life = 60;
+                      if (SOUND)
+                          appearSound.play();
 
-                    if (p.id == me.id) {
-                        longText = SETTINGS.INTRO_TEXT;
-                        longTextLines = 1;
-                        longTextAlign = "center";//or center
-                    }
+                      if (p.id == me.id) {
+                          longText = SETTINGS.INTRO_TEXT;
+                          longTextLines = 1;
+                          longTextAlign = "center";//or center
+                      }
 
-                    firstLog = false;
-                }
+                      firstLog = false;
+                  }
 
-                console.log("There are now " + Object.keys(players).length + " players in this room");
+                  console.log("There are now " + Object.keys(players).length + " players in this room");
 
-                //calling a custom function roomnameEnter if it exists
-                if (window[p.room + "Enter"] != null) {
-                    window[p.room + "Enter"](p.id, p.room);
-                }
+                  //calling a custom function roomnameEnter if it exists
+                  if (window[p.room + "Enter"] != null) {
+                      window[p.room + "Enter"](p.id, p.room);
+                  }
 
+                  screen = "game"
+                })
             }
             catch (e) {
                 console.log("Error on playerJoined");
@@ -1182,6 +1203,11 @@ function update() {
         menuGroup.draw();
 
     }
+    else if (screen == "loading") {
+        fill(UI_BG);
+        rect(0, 0, WIDTH, HEIGHT);
+        fill(LABEL_NEUTRAL_COLOR);
+    } 
     else if (screen == "error") {
         //end state, displays a message in full screen
         textFont(font, FONT_SIZE);
@@ -2440,7 +2466,9 @@ function createThing(thing, id) {
   if (thing.frames != null)
     f = thing.frames;
 
-  return thing.spriteGraphics().then((spriteGraphics) => {
+  return thing.loadSpriteGraphics().then((spriteGraphics) => {
+    thing.spriteGraphics = spriteGraphics
+
     var sw = floor(spriteGraphics.width / f);
     var sh = spriteGraphics.height;
 
