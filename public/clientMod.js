@@ -198,10 +198,12 @@ function getThingPosition (thing, normalizedPositionInRect) {
 		dimensionScale[0] *= 1.0 / thing.frames;
 	}
 	
-	return [
+  const result = [
 		(thing.position[0] * ASSET_SCALE + normalizedPositionInRect[0] * thing.spriteGraphics.width * dimensionScale[0]),
 		(thing.position[1] * ASSET_SCALE + normalizedPositionInRect[1] * thing.spriteGraphics.height * dimensionScale[1])
 	];
+
+  return result
 }
 
 function getDistanceBetween (player, position) {
@@ -1086,7 +1088,9 @@ function TPCAMapRoomEnter(playerId, roomId) {
         }
 
         //getSprites is a p5 play function
-        ROOMS[roomId].things["maproom" + s].visible = true;
+        if (ROOMS[roomId].things["maproom" + s]) {
+          ROOMS[roomId].things["maproom" + s].visible = true;
+        }
     }
 }
 
@@ -1139,7 +1143,7 @@ function TPCAColourRoomDrawSprite (playerId, sprite, drawingFunction) {
 			accumulatedLight[1] += emittedColourXyz[1];
 			accumulatedLight[2] += emittedColourXyz[2];
 		}
-    }
+  }
 
 	const playerImage = player.sprite.animation.spriteSheet.image;
 	const currentFrameCoords = player.sprite.animation.getFrameImage().frame;
